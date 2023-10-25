@@ -2,6 +2,8 @@ package org.example;
 
 import org.example.tasks.Homework01;
 
+import java.util.Arrays;
+
 /**
  * Entry point
  */
@@ -12,8 +14,9 @@ public class Main {
         System.out.println("Hello world!");
 
         // Homework 01-2 (31.10.2023) - Insertion sort:
-        int[] unsortedArray = new int[]{10, 23, 2, 11, 7, 100, 45, 1, 33, 18};
-        Homework01 homeWork01 = new Homework01(unsortedArray);
-        homeWork01.insertionSortAndPrintResult();
+        int[] array = new int[]{10, 23, 5, 11, 7, 100, 45, 1, 33, 18};
+        System.out.println("Unsorted array: " + Arrays.toString(array));
+        Homework01.insertionSort(array);
+        System.out.println("Sorted array: " + Arrays.toString(array));
     }
 }
