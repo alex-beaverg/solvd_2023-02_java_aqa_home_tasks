@@ -47,29 +47,41 @@ public class Main {
         Schedule afternoonOdd = new Schedule("Afternoon", "Odd days");
         // Employees:
         Employee johnSmith = new Employee("John", "Smith",
-                new Address("Minsk", "Old str.", 5), therapeuticDepartment, departmentHead, beforeNoonEven);
+                new Address("Minsk", "Old str.", 5, 100),
+                therapeuticDepartment, departmentHead, beforeNoonEven);
         Employee alexWhite = new Employee("Alex", "White",
-                new Address("Minsk", "New str.", 10), surgeryDepartment, departmentHead, beforeNoonOdd);
+                new Address("Minsk", "New str.", 10, 215),
+                surgeryDepartment, departmentHead, beforeNoonOdd);
         Employee samGray = new Employee("Sam", "Gray",
-                new Address("Minsk", "Old str.", 12), emergencyDepartment, departmentHead, afternoonEven);
+                new Address("Minsk", "Old str.", 12, 33),
+                emergencyDepartment, departmentHead, afternoonEven);
         Employee jackBlack = new Employee("Jack", "Black",
-                new Address("Minsk", "Green str.", 22), xRayDepartment, departmentHead, afternoonOdd);
+                new Address("Minsk", "Green str.", 22, 45),
+                xRayDepartment, departmentHead, afternoonOdd);
         Employee emmaGreet = new Employee("Emma", "Greet",
-                new Address("Minsk", "Yellow str.", 1), therapeuticDepartment, doctor, afternoonEven);
+                new Address("Minsk", "Yellow str.", 1, 1),
+                therapeuticDepartment, doctor, afternoonEven);
         Employee bobTorn = new Employee("Bob", "Torn",
-                new Address("Minsk", "Green str.", 31), surgeryDepartment, doctor, afternoonOdd);
+                new Address("Minsk", "Green str.", 31, 75),
+                surgeryDepartment, doctor, afternoonOdd);
         Employee jamesBrown = new Employee("James", "Brown",
-                new Address("Minsk", "New str.", 15), emergencyDepartment, doctor, beforeNoonEven);
+                new Address("Minsk", "New str.", 15, 42),
+                emergencyDepartment, doctor, beforeNoonEven);
         Employee karinaGold = new Employee("Karina", "Gold",
-                new Address("Minsk", "Red str.", 11), xRayDepartment, doctor, beforeNoonOdd);
+                new Address("Minsk", "Red str.", 11, 23),
+                xRayDepartment, doctor, beforeNoonOdd);
         Employee helgaMoon = new Employee("Helga", "Moon",
-                new Address("Minsk", "Green str.", 32), therapeuticDepartment, nurse, beforeNoonOdd);
+                new Address("Minsk", "Green str.", 32, 56),
+                therapeuticDepartment, nurse, beforeNoonOdd);
         Employee steeveHawk = new Employee("Steeve", "Hawk",
-                new Address("Minsk", "Red str.", 2), surgeryDepartment, nurse, beforeNoonEven);
+                new Address("Minsk", "Red str.", 2, 7),
+                surgeryDepartment, nurse, beforeNoonEven);
         Employee jennyJoy = new Employee("Jenny", "Joy",
-                new Address("Minsk", "Yellow str.", 15), emergencyDepartment, nurse, afternoonOdd);
+                new Address("Minsk", "Yellow str.", 15, 12),
+                emergencyDepartment, nurse, afternoonOdd);
         Employee kellyHorn = new Employee("Kelly", "Horn",
-                new Address("Minsk", "Black str.", 12), xRayDepartment, nurse, afternoonEven);
+                new Address("Minsk", "Black str.", 12, 66),
+                xRayDepartment, nurse, afternoonEven);
         // Employee lists:
         Employee[] hospitalEmployees = new Employee[] {johnSmith, alexWhite, samGray, jackBlack, emmaGreet, bobTorn,
                 jamesBrown, karinaGold, helgaMoon, steeveHawk, jennyJoy, kellyHorn};
@@ -98,25 +110,25 @@ public class Main {
         xRayRoom.setListOfEquipment(xRayRoomEquipment);
         // Patients:
         Patient jerryGordon = new Patient("Jerry", "Gordon",
-                new Address("Brest", "West str.", 13), therapeuticDepartment);
+                new Address("Brest", "West str.", 13, 99), therapeuticDepartment);
         Patient miaCandy = new Patient("Mia", "Candy",
-                new Address("Minsk", "Green str.", 19), therapeuticDepartment);
+                new Address("Minsk", "Green str.", 19, 49), therapeuticDepartment);
         Patient lisaChristy = new Patient("Lisa", "Christy",
-                new Address("Vilnius", "Main str.", 25), surgeryDepartment);
+                new Address("Vilnius", "Main str.", 25, 84), surgeryDepartment);
         Patient donGordon = new Patient("Don", "Gordon",
-                new Address("Brest", "East str.", 33), surgeryDepartment);
+                new Address("Brest", "East str.", 33, 36), surgeryDepartment);
         Patient georgeHolland = new Patient("George", "Holland",
-                new Address("Warsaw", "Second str.", 77), xRayDepartment);
+                new Address("Warsaw", "Second str.", 77, 24), xRayDepartment);
         Patient milaHunt = new Patient("Mila", "Hunt",
-                new Address("Minsk", "Red str.", 8), xRayDepartment);
+                new Address("Minsk", "Red str.", 8, 47), xRayDepartment);
         Patient andyBond = new Patient(emergencyDepartment);
         andyBond.setFirstName("Andy");
         andyBond.setLastName("Bond");
-        andyBond.setAddress(new Address("Minsk", "Old str.", 89));
+        andyBond.setAddress(new Address("Minsk", "Old str.", 89, 17));
         Patient deanJordan = new Patient(emergencyDepartment);
         deanJordan.setFirstName("Dean");
         deanJordan.setLastName("Jordan");
-        deanJordan.setAddress(new Address("Warsaw", "First str.", 2));
+        deanJordan.setAddress(new Address("Warsaw", "First str.", 2, 21));
         // Patient lists:
         Patient[] hospitalPatients = new Patient[] {jerryGordon, miaCandy, lisaChristy, donGordon, georgeHolland,
                 milaHunt, andyBond, deanJordan};

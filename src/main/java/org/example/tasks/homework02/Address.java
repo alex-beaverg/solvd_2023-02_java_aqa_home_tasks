@@ -4,11 +4,13 @@ public class Address {
     private String city;
     private String street;
     private int houseNumber;
+    private int flatNumber;
 
-    public Address(String city, String street, int houseNumber) {
+    public Address(String city, String street, int houseNumber, int flatNumber) {
         this.city = city;
         this.street = street;
         this.houseNumber = houseNumber;
+        this.flatNumber = flatNumber;
     }
 
     public String getCity() {
@@ -33,5 +35,13 @@ public class Address {
 
     public void setHouseNumber(int houseNumber) {
         this.houseNumber = houseNumber;
+    }
+
+    public int getFlatNumber() {
+        return flatNumber;
+    }
+
+    public void setFlatNumber(int flatNumber) {
+        this.flatNumber = flatNumber;
     }
 }
