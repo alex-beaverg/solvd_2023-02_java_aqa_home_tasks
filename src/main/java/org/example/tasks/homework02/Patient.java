@@ -6,11 +6,15 @@ public class Patient {
     private Address address;
     private Department department;
 
+    public Patient(Department department) {
+        this.department = department;
+    }
+
     public Patient(String firstName, String lastName, Address address, Department department) {
+        this(department);
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
-        this.department = department;
     }
 
     public String getFirstName() {

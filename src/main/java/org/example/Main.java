@@ -86,12 +86,16 @@ public class Main {
         Equipment computer = new Equipment("Computer");
         Equipment scales = new Equipment("Scales");
         Equipment stethoscope = new Equipment("Stethoscope");
-        // Equipment list:
-        Equipment[] equipment = new Equipment[] {computer, scales, stethoscope};
-        therapeuticRoom.setListOfEquipment(equipment);
-        surgeryRoom.setListOfEquipment(equipment);
-        emergencyRoom.setListOfEquipment(equipment);
-        xRayRoom.setListOfEquipment(equipment);
+        Equipment xRayMachine = new Equipment("X-Ray machine");
+        Equipment surgeryTable = new Equipment("Surgery table");
+        // Equipment lists:
+        Equipment[] generalEquipment = new Equipment[] {computer, scales, stethoscope};
+        therapeuticRoom.setListOfEquipment(generalEquipment);
+        emergencyRoom.setListOfEquipment(generalEquipment);
+        Equipment[] surgeryRoomEquipment = new Equipment[] {computer, scales, stethoscope, surgeryTable};
+        surgeryRoom.setListOfEquipment(surgeryRoomEquipment);
+        Equipment[] xRayRoomEquipment = new Equipment[] {computer, scales, stethoscope, xRayMachine};
+        xRayRoom.setListOfEquipment(xRayRoomEquipment);
         // Patients:
         Patient jerryGordon = new Patient("Jerry", "Gordon",
                 new Address("Brest", "West str.", 13), therapeuticDepartment);
@@ -105,10 +109,14 @@ public class Main {
                 new Address("Warsaw", "Second str.", 77), xRayDepartment);
         Patient milaHunt = new Patient("Mila", "Hunt",
                 new Address("Minsk", "Red str.", 8), xRayDepartment);
-        Patient andyBond = new Patient("Andy", "Bond",
-                new Address("Minsk", "Old str.", 89), emergencyDepartment);
-        Patient deanJordan = new Patient("Dean", "Jordan",
-                new Address("Warsaw", "First str.", 2), emergencyDepartment);
+        Patient andyBond = new Patient(emergencyDepartment);
+        andyBond.setFirstName("Andy");
+        andyBond.setLastName("Bond");
+        andyBond.setAddress(new Address("Minsk", "Old str.", 89));
+        Patient deanJordan = new Patient(emergencyDepartment);
+        deanJordan.setFirstName("Dean");
+        deanJordan.setLastName("Jordan");
+        deanJordan.setAddress(new Address("Warsaw", "First str.", 2));
         // Patient lists:
         Patient[] hospitalPatients = new Patient[] {jerryGordon, miaCandy, lisaChristy, donGordon, georgeHolland,
                 milaHunt, andyBond, deanJordan};
