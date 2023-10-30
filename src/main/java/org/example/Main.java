@@ -29,16 +29,15 @@ public class Main {
         OfficeRoom[] secondFloorOfficeRooms = new OfficeRoom[] {surgeryRoom, xRayRoom};
         secondFloor.setOfficeRooms(secondFloorOfficeRooms);
         // Departments:
-        Department emergencyDepartment = new Department("Emergency department", emergencyRoom);
-        Department therapeuticDepartment = new Department("Therapeutic department", therapeuticRoom);
-        Department surgeryDepartment = new Department("Surgery department", surgeryRoom);
-        Department xRayDepartment = new Department("X-Ray department", xRayRoom);
+        Department emergencyDept = new Department("Emergency department", emergencyRoom);
+        Department therapeuticDept = new Department("Therapeutic department", therapeuticRoom);
+        Department surgeryDept = new Department("Surgery department", surgeryRoom);
+        Department xRayDept = new Department("X-Ray department", xRayRoom);
         // Department list:
-        Department[] departments = new Department[] {emergencyDepartment, therapeuticDepartment,
-                surgeryDepartment, xRayDepartment};
+        Department[] departments = new Department[] {emergencyDept, therapeuticDept, surgeryDept, xRayDept};
         hospital.setDepartments(departments);
         // Positions:
-        Position departmentHead = new Position("Department head");
+        Position deptHead = new Position("Department head");
         Position doctor = new Position("Doctor");
         Position nurse = new Position("Nurse");
         // Schedules:
@@ -49,52 +48,52 @@ public class Main {
         // Employees:
         Employee johnSmith = new Employee("John", "Smith", 55,
                 new Address("Minsk", "Old str.", 5, 100),
-                therapeuticDepartment, departmentHead, beforeNoonEven);
+                therapeuticDept, deptHead, beforeNoonEven);
         Employee alexWhite = new Employee("Alex", "White", 51,
                 new Address("Minsk", "New str.", 10, 215),
-                surgeryDepartment, departmentHead, beforeNoonOdd);
+                surgeryDept, deptHead, beforeNoonOdd);
         Employee samGray = new Employee("Sam", "Gray", 45,
                 new Address("Minsk", "Old str.", 12, 33),
-                emergencyDepartment, departmentHead, afternoonEven);
+                emergencyDept, deptHead, afternoonEven);
         Employee jackBlack = new Employee("Jack", "Black", 40,
                 new Address("Minsk", "Green str.", 22, 45),
-                xRayDepartment, departmentHead, afternoonOdd);
+                xRayDept, deptHead, afternoonOdd);
         Employee emmaGreet = new Employee("Emma", "Greet", 29,
                 new Address("Minsk", "Yellow str.", 1, 1),
-                therapeuticDepartment, doctor, afternoonEven);
+                therapeuticDept, doctor, afternoonEven);
         Employee bobTorn = new Employee("Bob", "Torn", 31,
                 new Address("Minsk", "Green str.", 31, 75),
-                surgeryDepartment, doctor, afternoonOdd);
+                surgeryDept, doctor, afternoonOdd);
         Employee jamesBrown = new Employee("James", "Brown", 30,
                 new Address("Minsk", "New str.", 15, 42),
-                emergencyDepartment, doctor, beforeNoonEven);
+                emergencyDept, doctor, beforeNoonEven);
         Employee karinaGold = new Employee("Karina", "Gold", 33,
                 new Address("Minsk", "Red str.", 11, 23),
-                xRayDepartment, doctor, beforeNoonOdd);
+                xRayDept, doctor, beforeNoonOdd);
         Employee helgaMoon = new Employee("Helga", "Moon", 25,
                 new Address("Minsk", "Green str.", 32, 56),
-                therapeuticDepartment, nurse, beforeNoonOdd);
+                therapeuticDept, nurse, beforeNoonOdd);
         Employee steeveHawk = new Employee("Steeve", "Hawk", 24,
                 new Address("Minsk", "Red str.", 2, 7),
-                surgeryDepartment, nurse, beforeNoonEven);
+                surgeryDept, nurse, beforeNoonEven);
         Employee jennyJoy = new Employee("Jenny", "Joy", 27,
                 new Address("Minsk", "Yellow str.", 15, 12),
-                emergencyDepartment, nurse, afternoonOdd);
+                emergencyDept, nurse, afternoonOdd);
         Employee kellyHorn = new Employee("Kelly", "Horn", 25,
                 new Address("Minsk", "Black str.", 12, 66),
-                xRayDepartment, nurse, afternoonEven);
+                xRayDept, nurse, afternoonEven);
         // Employee lists:
         Employee[] hospitalEmployees = new Employee[] {johnSmith, alexWhite, samGray, jackBlack, emmaGreet, bobTorn,
                 jamesBrown, karinaGold, helgaMoon, steeveHawk, jennyJoy, kellyHorn};
         hospital.setEmployees(hospitalEmployees);
-        Employee[] therapeuticDepartmentEmployees = new Employee[] {johnSmith, emmaGreet, helgaMoon};
-        therapeuticDepartment.setEmployees(therapeuticDepartmentEmployees);
-        Employee[] surgeryDepartmentEmployees = new Employee[] {alexWhite, bobTorn, steeveHawk};
-        surgeryDepartment.setEmployees(surgeryDepartmentEmployees);
-        Employee[] emergencyDepartmentEmployees = new Employee[] {samGray, jamesBrown, jennyJoy};
-        emergencyDepartment.setEmployees(emergencyDepartmentEmployees);
-        Employee[] xRayDepartmentEmployees = new Employee[] {jackBlack, karinaGold, kellyHorn};
-        xRayDepartment.setEmployees(xRayDepartmentEmployees);
+        Employee[] therapeuticDeptEmployees = new Employee[] {johnSmith, emmaGreet, helgaMoon};
+        therapeuticDept.setEmployees(therapeuticDeptEmployees);
+        Employee[] surgeryDeptEmployees = new Employee[] {alexWhite, bobTorn, steeveHawk};
+        surgeryDept.setEmployees(surgeryDeptEmployees);
+        Employee[] emergencyDeptEmployees = new Employee[] {samGray, jamesBrown, jennyJoy};
+        emergencyDept.setEmployees(emergencyDeptEmployees);
+        Employee[] xRayDeptEmployees = new Employee[] {jackBlack, karinaGold, kellyHorn};
+        xRayDept.setEmployees(xRayDeptEmployees);
         // Equipment:
         Equipment computer = new Equipment("Computer");
         Equipment scales = new Equipment("Scales");
@@ -110,39 +109,39 @@ public class Main {
         Equipment[] xRayRoomEquipment = new Equipment[] {computer, scales, stethoscope, xRayMachine};
         xRayRoom.setListOfEquipment(xRayRoomEquipment);
         // Patients:
-        Patient andyBond = new Patient(emergencyDepartment);
+        Patient andyBond = new Patient(emergencyDept);
         andyBond.setFirstName("Andy");
         andyBond.setLastName("Bond");
         andyBond.setAge(55);
         andyBond.setAddress(new Address("Minsk", "Old str.", 89, 17));
-        Patient deanJordan = new Patient(emergencyDepartment);
+        Patient deanJordan = new Patient(emergencyDept);
         deanJordan.setFirstName("Dean");
         deanJordan.setLastName("Jordan");
         deanJordan.setAge(36);
         deanJordan.setAddress(new Address("Warsaw", "First str.", 2, 21));
         Patient jerryGordon = new Patient("Jerry", "Gordon", 33,
-                new Address("Brest", "West str.", 13, 99), therapeuticDepartment);
+                new Address("Brest", "West str.", 13, 99), therapeuticDept);
         Patient miaCandy = new Patient("Mia", "Candy", 31,
-                new Address("Minsk", "Green str.", 19, 49), therapeuticDepartment);
+                new Address("Minsk", "Green str.", 19, 49), therapeuticDept);
         Patient lisaChristy = new Patient("Lisa", "Christy", 25,
-                new Address("Vilnius", "Main str.", 25, 84), surgeryDepartment);
+                new Address("Vilnius", "Main str.", 25, 84), surgeryDept);
         Patient donGordon = new Patient("Don", "Gordon", 29,
-                new Address("Brest", "East str.", 33, 36), surgeryDepartment);
+                new Address("Brest", "East str.", 33, 36), surgeryDept);
         Patient georgeHolland = new Patient("George", "Holland", 41,
-                new Address("Warsaw", "Second str.", 77, 24), xRayDepartment);
+                new Address("Warsaw", "Second str.", 77, 24), xRayDept);
         Patient milaHunt = new Patient("Mila", "Hunt", 40,
-                new Address("Minsk", "Red str.", 8, 47), xRayDepartment);
+                new Address("Minsk", "Red str.", 8, 47), xRayDept);
         // Patient lists:
         Patient[] hospitalPatients = new Patient[] {jerryGordon, miaCandy, lisaChristy, donGordon, georgeHolland,
                 milaHunt, andyBond, deanJordan};
         hospital.setPatients(hospitalPatients);
-        Patient[] emergencyDepartmentPatients = new Patient[] {andyBond, deanJordan};
-        emergencyDepartment.setPatients(emergencyDepartmentPatients);
-        Patient[] therapeuticDepartmentPatients = new Patient[] {jerryGordon,  miaCandy};
-        therapeuticDepartment.setPatients(therapeuticDepartmentPatients);
-        Patient[] surgeryDepartmentPatients = new Patient[] {lisaChristy, donGordon};
-        surgeryDepartment.setPatients(surgeryDepartmentPatients);
-        Patient[] xRayDepartmentPatients = new Patient[] {georgeHolland, milaHunt};
-        xRayDepartment.setPatients(xRayDepartmentPatients);
+        Patient[] emergencyDeptPatients = new Patient[] {andyBond, deanJordan};
+        emergencyDept.setPatients(emergencyDeptPatients);
+        Patient[] therapeuticDeptPatients = new Patient[] {jerryGordon,  miaCandy};
+        therapeuticDept.setPatients(therapeuticDeptPatients);
+        Patient[] surgeryDeptPatients = new Patient[] {lisaChristy, donGordon};
+        surgeryDept.setPatients(surgeryDeptPatients);
+        Patient[] xRayDeptPatients = new Patient[] {georgeHolland, milaHunt};
+        xRayDept.setPatients(xRayDeptPatients);
     }
 }
