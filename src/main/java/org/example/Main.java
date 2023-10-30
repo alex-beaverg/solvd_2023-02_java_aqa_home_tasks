@@ -113,10 +113,12 @@ public class Main {
         Patient andyBond = new Patient(emergencyDepartment);
         andyBond.setFirstName("Andy");
         andyBond.setLastName("Bond");
+        andyBond.setAge(55);
         andyBond.setAddress(new Address("Minsk", "Old str.", 89, 17));
         Patient deanJordan = new Patient(emergencyDepartment);
         deanJordan.setFirstName("Dean");
         deanJordan.setLastName("Jordan");
+        deanJordan.setAge(36);
         deanJordan.setAddress(new Address("Warsaw", "First str.", 2, 21));
         Patient jerryGordon = new Patient("Jerry", "Gordon", 33,
                 new Address("Brest", "West str.", 13, 99), therapeuticDepartment);
