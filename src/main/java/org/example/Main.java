@@ -19,9 +19,9 @@ public class Main {
         Floor firstFloor = new Floor(1);
         Floor secondFloor = new Floor(2);
         // Office rooms:
+        OfficeRoom emergencyRoom = new OfficeRoom(102, firstFloor);
         OfficeRoom therapeuticRoom = new OfficeRoom(103, firstFloor);
         OfficeRoom surgeryRoom = new OfficeRoom(202, secondFloor);
-        OfficeRoom emergencyRoom = new OfficeRoom(102, firstFloor);
         OfficeRoom xRayRoom = new OfficeRoom(203, secondFloor);
         // Office room lists:
         OfficeRoom[] firstFloorOfficeRooms = new OfficeRoom[] {emergencyRoom, therapeuticRoom};
@@ -29,12 +29,13 @@ public class Main {
         OfficeRoom[] secondFloorOfficeRooms = new OfficeRoom[] {surgeryRoom, xRayRoom};
         secondFloor.setOfficeRooms(secondFloorOfficeRooms);
         // Departments:
+        Department emergencyDepartment = new Department("Emergency department", emergencyRoom);
         Department therapeuticDepartment = new Department("Therapeutic department", therapeuticRoom);
         Department surgeryDepartment = new Department("Surgery department", surgeryRoom);
-        Department emergencyDepartment = new Department("Emergency department", emergencyRoom);
         Department xRayDepartment = new Department("X-Ray department", xRayRoom);
         // Department list:
-        Department[] departments = new Department[] {therapeuticDepartment, surgeryDepartment, emergencyDepartment, xRayDepartment};
+        Department[] departments = new Department[] {emergencyDepartment, therapeuticDepartment,
+                surgeryDepartment, xRayDepartment};
         hospital.setDepartments(departments);
         // Positions:
         Position departmentHead = new Position("Department head");
@@ -109,6 +110,14 @@ public class Main {
         Equipment[] xRayRoomEquipment = new Equipment[] {computer, scales, stethoscope, xRayMachine};
         xRayRoom.setListOfEquipment(xRayRoomEquipment);
         // Patients:
+        Patient andyBond = new Patient(emergencyDepartment);
+        andyBond.setFirstName("Andy");
+        andyBond.setLastName("Bond");
+        andyBond.setAddress(new Address("Minsk", "Old str.", 89, 17));
+        Patient deanJordan = new Patient(emergencyDepartment);
+        deanJordan.setFirstName("Dean");
+        deanJordan.setLastName("Jordan");
+        deanJordan.setAddress(new Address("Warsaw", "First str.", 2, 21));
         Patient jerryGordon = new Patient("Jerry", "Gordon",
                 new Address("Brest", "West str.", 13, 99), therapeuticDepartment);
         Patient miaCandy = new Patient("Mia", "Candy",
@@ -121,25 +130,17 @@ public class Main {
                 new Address("Warsaw", "Second str.", 77, 24), xRayDepartment);
         Patient milaHunt = new Patient("Mila", "Hunt",
                 new Address("Minsk", "Red str.", 8, 47), xRayDepartment);
-        Patient andyBond = new Patient(emergencyDepartment);
-        andyBond.setFirstName("Andy");
-        andyBond.setLastName("Bond");
-        andyBond.setAddress(new Address("Minsk", "Old str.", 89, 17));
-        Patient deanJordan = new Patient(emergencyDepartment);
-        deanJordan.setFirstName("Dean");
-        deanJordan.setLastName("Jordan");
-        deanJordan.setAddress(new Address("Warsaw", "First str.", 2, 21));
         // Patient lists:
         Patient[] hospitalPatients = new Patient[] {jerryGordon, miaCandy, lisaChristy, donGordon, georgeHolland,
                 milaHunt, andyBond, deanJordan};
         hospital.setPatients(hospitalPatients);
+        Patient[] emergencyDepartmentPatients = new Patient[] {andyBond, deanJordan};
+        emergencyDepartment.setPatients(emergencyDepartmentPatients);
         Patient[] therapeuticDepartmentPatients = new Patient[] {jerryGordon,  miaCandy};
         therapeuticDepartment.setPatients(therapeuticDepartmentPatients);
         Patient[] surgeryDepartmentPatients = new Patient[] {lisaChristy, donGordon};
         surgeryDepartment.setPatients(surgeryDepartmentPatients);
         Patient[] xRayDepartmentPatients = new Patient[] {georgeHolland, milaHunt};
         xRayDepartment.setPatients(xRayDepartmentPatients);
-        Patient[] emergencyDepartmentPatients = new Patient[] {andyBond, deanJordan};
-        emergencyDepartment.setPatients(emergencyDepartmentPatients);
     }
 }
