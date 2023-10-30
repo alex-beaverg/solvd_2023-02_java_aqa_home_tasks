@@ -95,10 +95,31 @@ public class Main {
         // Patients:
         Patient jerryGordon = new Patient("Jerry", "Gordon",
                 new Address("Brest", "West str.", 13), therapeuticDepartment);
+        Patient miaCandy = new Patient("Mia", "Candy",
+                new Address("Minsk", "Green str.", 19), therapeuticDepartment);
         Patient lisaChristy = new Patient("Lisa", "Christy",
                 new Address("Vilnius", "Main str.", 25), surgeryDepartment);
-        // Patient list:
-        Patient[] patients = new Patient[] {jerryGordon, lisaChristy};
-        hospital.setPatients(patients);
+        Patient donGordon = new Patient("Don", "Gordon",
+                new Address("Brest", "East str.", 33), surgeryDepartment);
+        Patient georgeHolland = new Patient("George", "Holland",
+                new Address("Warsaw", "Second str.", 77), xRayDepartment);
+        Patient milaHunt = new Patient("Mila", "Hunt",
+                new Address("Minsk", "Red str.", 8), xRayDepartment);
+        Patient andyBond = new Patient("Andy", "Bond",
+                new Address("Minsk", "Old str.", 89), emergencyDepartment);
+        Patient deanJordan = new Patient("Dean", "Jordan",
+                new Address("Warsaw", "First str.", 2), emergencyDepartment);
+        // Patient lists:
+        Patient[] hospitalPatients = new Patient[] {jerryGordon, miaCandy, lisaChristy, donGordon, georgeHolland,
+                milaHunt, andyBond, deanJordan};
+        hospital.setPatients(hospitalPatients);
+        Patient[] therapeuticDepartmentPatients = new Patient[] {jerryGordon,  miaCandy};
+        therapeuticDepartment.setPatients(therapeuticDepartmentPatients);
+        Patient[] surgeryDepartmentPatients = new Patient[] {lisaChristy, donGordon};
+        surgeryDepartment.setPatients(surgeryDepartmentPatients);
+        Patient[] xRayDepartmentPatients = new Patient[] {georgeHolland, milaHunt};
+        xRayDepartment.setPatients(xRayDepartmentPatients);
+        Patient[] emergencyDepartmentPatients = new Patient[] {andyBond, deanJordan};
+        emergencyDepartment.setPatients(emergencyDepartmentPatients);
     }
 }

@@ -4,6 +4,7 @@ public class Department {
     private String departmentTitle;
     private OfficeRoom officeRoom;
     private Employee[] employees;
+    private Patient[] patients;
 
     public Department(String departmentTitle, OfficeRoom officeRoom) {
         this.departmentTitle = departmentTitle;
@@ -32,5 +33,13 @@ public class Department {
 
     public void setEmployees(Employee[] employees) {
         this.employees = employees;
+    }
+
+    public Patient[] getPatients() {
+        return patients;
+    }
+
+    public void setPatients(Patient[] patients) {
+        this.patients = patients;
     }
 }
