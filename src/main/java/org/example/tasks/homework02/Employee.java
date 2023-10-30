@@ -3,15 +3,17 @@ package org.example.tasks.homework02;
 public class Employee {
     private String firstName;
     private String lastName;
+    private int age;
     private Address address;
     private Department department;
     private Position position;
     private Schedule schedule;
 
-    public Employee(String firstName, String lastName, Address address, Department department, Position position,
-                    Schedule schedule) {
+    public Employee(String firstName, String lastName, int age, Address address, Department department,
+                    Position position, Schedule schedule) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.age = age;
         this.address = address;
         this.department = department;
         this.position = position;
@@ -32,6 +34,14 @@ public class Employee {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public Address getAddress() {
