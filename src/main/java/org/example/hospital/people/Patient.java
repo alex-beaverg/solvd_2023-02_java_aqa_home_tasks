@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Patient extends Person {
     private Diagnosis diagnosis;
     private Department department;
-    private ArrayList<Service> services = new ArrayList<>();
+    private final ArrayList<Service> services = new ArrayList<>();
 
     public Patient() {
         super();
@@ -32,33 +32,23 @@ public class Patient extends Person {
     public void register() {
         Scanner scanner = new Scanner(System.in);
         Address address = new Address();
-        String strInput;
-        int intInput;
 
-        strInput = this.requestingInfoString(scanner, "Enter your first name:");
-        this.setFirstName(strInput);
-        strInput = this.requestingInfoString(scanner, "Enter your last name:");
-        this.setLastName(strInput);
-        intInput = this.requestingInfoInt(scanner, "Enter your age:");
-        this.setAge(intInput);
-        strInput = this.requestingInfoString(scanner, "Enter your city:");
-        address.city = strInput;
-        strInput = this.requestingInfoString(scanner, "Enter your street:");
-        address.street = strInput;
-        intInput = this.requestingInfoInt(scanner, "Enter your house number:");
-        address.houseNumber = intInput;
-        intInput = this.requestingInfoInt(scanner, "Enter your flat number:");
-        address.flatNumber = intInput;
+        this.setFirstName(this.requestingInfoString(scanner, "Enter your first name:"));
+        this.setLastName(this.requestingInfoString(scanner, "Enter your last name:"));
+        this.setAge(this.requestingInfoInt(scanner, "Enter your age:"));
+        address.city = this.requestingInfoString(scanner, "Enter your city:");
+        address.street = this.requestingInfoString(scanner, "Enter your street:");
+        address.houseNumber = this.requestingInfoInt(scanner, "Enter your house number:");
+        address.flatNumber = this.requestingInfoInt(scanner, "Enter your flat number:");
         this.setAddress(address);
         Db.hospital.addPatient(this);
-        intInput = this.requestingInfoWithChoice(scanner, "Enter your complaint (Cough - 1, No smells - 2, Broken bone - 3, None - 4):");
-        diagnosis = this.getDiagnose(intInput);
+        diagnosis = this.getDiagnose(this.requestingInfoWithChoice(scanner,
+                "Enter your complaint (Cough - 1, No smells - 2, Broken bone - 3, None - 4):"));
         department.addPatient(this);
 
-        Service service;
         do {
-            intInput = this.requestingInfoWithChoice(scanner, "Chose the service (Appointment - 1, Treatment - 2, Hospitalization - 3, Nothing - 4):");
-            service = getService(intInput);
+            Service service = getService(this.requestingInfoWithChoice(scanner,
+                    "Chose the service (Appointment - 1, Treatment - 2, Hospitalization - 3, Nothing - 4):"));
             services.add(service);
             department.getEmployee(Position.DEPT_HEAD).increaseCostOfServices(service.getPrice());
             department.getEmployee(Position.DOCTOR).increaseCostOfServices(service.getPrice());
