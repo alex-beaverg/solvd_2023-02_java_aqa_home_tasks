@@ -33,27 +33,27 @@ public class Patient extends Person {
         Scanner scanner = new Scanner(System.in);
         Address address = new Address();
 
-        this.setFirstName(this.requestingInfoString(scanner, "Enter your first name:"));
-        this.setLastName(this.requestingInfoString(scanner, "Enter your last name:"));
-        this.setAge(this.requestingInfoInt(scanner, "Enter your age:"));
-        address.city = this.requestingInfoString(scanner, "Enter your city:");
-        address.street = this.requestingInfoString(scanner, "Enter your street:");
-        address.houseNumber = this.requestingInfoInt(scanner, "Enter your house number:");
-        address.flatNumber = this.requestingInfoInt(scanner, "Enter your flat number:");
+        this.setFirstName(this.requestingInfoString(scanner, "\tEnter your first name: "));
+        this.setLastName(this.requestingInfoString(scanner, "\tEnter your last name: "));
+        this.setAge(this.requestingInfoInt(scanner, "\tEnter your age: "));
+        address.city = this.requestingInfoString(scanner, "\tEnter your city: ");
+        address.street = this.requestingInfoString(scanner, "\tEnter your street: ");
+        address.houseNumber = this.requestingInfoInt(scanner, "\tEnter your house number: ");
+        address.flatNumber = this.requestingInfoInt(scanner, "\tEnter your flat number: ");
         this.setAddress(address);
         Db.hospital.addPatient(this);
         diagnosis = this.getDiagnose(this.requestingInfoWithChoice(scanner,
-                "Enter your complaint (Cough - 1, No smells - 2, Broken bone - 3, None - 4):"));
+                "\tEnter your complaint (Cough - 1, No smells - 2, Broken bone - 3, None - 4): "));
         department.addPatient(this);
 
         do {
             Service service = getService(this.requestingInfoWithChoice(scanner,
-                    "Chose the service (Appointment - 1, Treatment - 2, Hospitalization - 3, Nothing - 4):"));
+                    "\tChoose the service (Appointment - 1, Treatment - 2, Hospitalization - 3, Nothing - 4): "));
             services.add(service);
             department.getEmployee(Position.DEPT_HEAD).increaseCostOfServices(service.getPrice());
             department.getEmployee(Position.DOCTOR).increaseCostOfServices(service.getPrice());
             department.getEmployee(Position.NURSE).increaseCostOfServices(service.getPrice());
-            String answer = this.requestingInfoWithYesOrNo(scanner, "\tDo you want another service? (y/n): ");
+            String answer = this.requestingInfoWithYesOrNo(scanner, "\tDo you want to choose another service? (y/n): ");
             if (answer.equals("n")) {
                 System.out.println("OK!");
                 break;
@@ -104,7 +104,7 @@ public class Patient extends Person {
     private String requestingInfoString(Scanner scanner, String text) {
         String input;
         do {
-            System.out.print("\t" + text + " ");
+            System.out.print(text);
             input = scanner.nextLine();
         } while (input.isEmpty());
         return input;
@@ -114,7 +114,7 @@ public class Patient extends Person {
         String input;
         int number = 0;
         do {
-            System.out.print("\t" + text + " ");
+            System.out.print(text);
             input = scanner.nextLine();
             try {
                 number = Integer.parseInt(input);
@@ -129,7 +129,7 @@ public class Patient extends Person {
         String input;
         int number = 0;
         do {
-            System.out.print("\t" + text + " ");
+            System.out.print(text);
             input = scanner.nextLine();
             try {
                 number = Integer.parseInt(input);
@@ -175,12 +175,15 @@ public class Patient extends Person {
 
     @Override
     public String toString() {
+
+        // TODO: need to make a separate method for this:
         StringBuilder unitingServices = new StringBuilder();
         double sumOfServices = 0;
         for (Service service: services) {
             unitingServices.append("(").append(service.getTitle()).append(") ");
             sumOfServices += service.getPrice();
         }
+
         try {
             return "\nPatient: (" + this.getRole() + "): " +
                     super.toString() +
