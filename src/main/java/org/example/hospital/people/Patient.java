@@ -20,15 +20,11 @@ public class Patient extends Person {
     public void goToHospital() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\nWelcome to '" + Db.hospital.getHospitalTitle() + "'");
-        String input;
-        do {
-            System.out.print("Would you like to register as a patient? (y/n): ");
-            input = scanner.nextLine();
-        } while (!input.equals("n") && !input.equals("y"));
-        if (input.equals("y")) {
+        String answer = this.requestingInfoWithYesOrNo(scanner, "Would you like to register as a patient? (y/n): ");
+        if (answer.equals("y")) {
             this.register();
         } else {
-            System.out.println("Good bye!");
+            System.out.println("OK!");
         }
         scanner.close();
     }
@@ -36,57 +32,43 @@ public class Patient extends Person {
     public void register() {
         Scanner scanner = new Scanner(System.in);
         Address address = new Address();
-
         String strInput;
         int intInput;
 
-        strInput = this.inputString(scanner, "Enter your first name:");
+        strInput = this.requestingInfoString(scanner, "Enter your first name:");
         this.setFirstName(strInput);
-
-        strInput = this.inputString(scanner, "Enter your last name:");
+        strInput = this.requestingInfoString(scanner, "Enter your last name:");
         this.setLastName(strInput);
-
-        intInput = this.inputInt(scanner, "Enter your age:");
+        intInput = this.requestingInfoInt(scanner, "Enter your age:");
         this.setAge(intInput);
-
-        strInput = this.inputString(scanner, "Enter your city:");
+        strInput = this.requestingInfoString(scanner, "Enter your city:");
         address.city = strInput;
-
-        strInput = this.inputString(scanner, "Enter your street:");
+        strInput = this.requestingInfoString(scanner, "Enter your street:");
         address.street = strInput;
-
-        intInput = this.inputInt(scanner, "Enter your house number:");
+        intInput = this.requestingInfoInt(scanner, "Enter your house number:");
         address.houseNumber = intInput;
-
-        intInput = this.inputInt(scanner, "Enter your flat number:");
+        intInput = this.requestingInfoInt(scanner, "Enter your flat number:");
         address.flatNumber = intInput;
-
         this.setAddress(address);
         Db.hospital.addPatient(this);
-
-        intInput = this.chooseInputInt(scanner, "Enter your complaint (Cough - 1, No smells - 2, Broken bone - 3, None - 4):");
+        intInput = this.requestingInfoWithChoice(scanner, "Enter your complaint (Cough - 1, No smells - 2, Broken bone - 3, None - 4):");
         diagnosis = this.getDiagnose(intInput);
+        department.addPatient(this);
 
-        Scanner scanner2 = new Scanner(System.in);
-        String input;
         Service service;
         do {
-            intInput = this.chooseInputInt(scanner, "Chose the service (Appointment - 1, Treatment - 2, Hospitalization - 3, Nothing - 4):");
+            intInput = this.requestingInfoWithChoice(scanner, "Chose the service (Appointment - 1, Treatment - 2, Hospitalization - 3, Nothing - 4):");
             service = getService(intInput);
             services.add(service);
             department.getEmployee(Position.DEPT_HEAD).increaseCostOfServices(service.getPrice());
             department.getEmployee(Position.DOCTOR).increaseCostOfServices(service.getPrice());
             department.getEmployee(Position.NURSE).increaseCostOfServices(service.getPrice());
-            do {
-                System.out.print("\tDo you want another service? (y/n): ");
-                input = scanner.nextLine();
-            } while (!input.equals("n") && !input.equals("y"));
-            if (input.equals("n")) {
-                System.out.println("OK! That's all!");
+            String answer = this.requestingInfoWithYesOrNo(scanner, "\tDo you want another service? (y/n): ");
+            if (answer.equals("n")) {
+                System.out.println("OK!");
                 break;
             }
         } while(true);
-        scanner2.close();
 
         scanner.close();
     }
@@ -94,15 +76,12 @@ public class Patient extends Person {
     public Diagnosis getDiagnose(int number) {
         switch (number) {
             case (1):
-                Db.therapeuticDept.addPatient(this);
                 department = Db.therapeuticDept;
                 return Diagnosis.FLU;
             case (2):
-                Db.therapeuticDept.addPatient(this);
                 department = Db.therapeuticDept;
                 return Diagnosis.COVID;
             case (3):
-                Db.surgeryDept.addPatient(this);
                 department = Db.surgeryDept;
                 return Diagnosis.BROKEN_BONE;
             default:
@@ -123,7 +102,16 @@ public class Patient extends Person {
         }
     }
 
-    private String inputString(Scanner scanner, String text) {
+    private String requestingInfoWithYesOrNo(Scanner scanner, String text) {
+        String input;
+        do {
+            System.out.print(text);
+            input = scanner.nextLine();
+        } while (!input.equals("n") && !input.equals("y"));
+        return input;
+    }
+
+    private String requestingInfoString(Scanner scanner, String text) {
         String input;
         do {
             System.out.print("\t" + text + " ");
@@ -132,7 +120,7 @@ public class Patient extends Person {
         return input;
     }
 
-    private int inputInt(Scanner scanner, String text) {
+    private int requestingInfoInt(Scanner scanner, String text) {
         String input;
         int number = 0;
         do {
@@ -147,7 +135,7 @@ public class Patient extends Person {
         return number;
     }
 
-    private int chooseInputInt(Scanner scanner, String text) {
+    private int requestingInfoWithChoice(Scanner scanner, String text) {
         String input;
         int number = 0;
         do {
@@ -160,6 +148,10 @@ public class Patient extends Person {
             }
         } while (input.isEmpty() || number < 1 || number > 4);
         return number;
+    }
+
+    public Department getDepartment() {
+        return department;
     }
 
     @Override

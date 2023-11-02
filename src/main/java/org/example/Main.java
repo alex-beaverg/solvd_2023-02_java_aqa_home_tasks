@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.hospital.people.Patient;
+import org.example.hospital.people.Position;
 import org.example.hospital.pseudo_database.Db;
 
 /**
@@ -19,6 +20,6 @@ public class Main {
         // Print patient info:
         System.out.println(patient);
         // Print doctor info after registration of a new patient:
-        System.out.println(Db.emmaGreet);
+        System.out.println(patient.getDepartment().getEmployee(Position.DOCTOR));
     }
 }
