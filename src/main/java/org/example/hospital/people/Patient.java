@@ -180,7 +180,7 @@ public class Patient extends Person {
         StringBuilder unitingServices = new StringBuilder();
         double sumOfServices = 0;
         for (Service service: services) {
-            unitingServices.append("(").append(service.getTitle()).append(") ");
+            unitingServices.append("[").append(service.getTitle()).append("] ");
             sumOfServices += service.getPrice();
         }
 

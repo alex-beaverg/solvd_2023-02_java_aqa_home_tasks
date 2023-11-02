@@ -12,7 +12,7 @@ public class Main {
         // Creating pseudo database:
         Db.createDb();
         // Print doctor info before registration of a new patient:
-        System.out.println(Db.therapeuticDept.getEmployee(Position.DOCTOR));
+        System.out.println(Db.emmaGreet);
         // Creating unknown patient:
         Patient patient = new Patient();
         // Unknown patient goes to Hospital, register and so on:
@@ -20,6 +20,6 @@ public class Main {
         // Print patient info:
         System.out.println(patient);
         // Print doctor info after registration of a new patient:
-        System.out.println(patient.getDepartment().getEmployee(Position.DOCTOR));
+        System.out.println(Db.emmaGreet);
     }
 }
