@@ -4,9 +4,9 @@ public enum Diagnosis {
     FLU("Flu"),
     COVID("Covid-19"),
     BROKEN_BONE("Broken bone"),
-    HEALTHY("Healthy");
+    UNKNOWN("Unknown diagnosis");
 
-    private String title;
+    private final String title;
 
     Diagnosis(String title) {
         this.title = title;

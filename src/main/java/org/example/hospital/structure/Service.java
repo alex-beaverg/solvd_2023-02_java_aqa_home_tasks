@@ -4,10 +4,10 @@ public enum Service {
     APPOINTMENT("Make an appointment", 5),
     TREATMENT("Prescribe treatment", 25),
     HOSPITALIZATION("To hospitalize", 100),
-    NOTHING("Do nothing", 0);
+    EXAMINATION("Do medical examination", 50);
 
-    private String title;
-    private double price;
+    private final String title;
+    private final double price;
 
     Service(String title, double price) {
         this.title = title;

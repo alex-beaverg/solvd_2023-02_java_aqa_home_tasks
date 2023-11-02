@@ -43,12 +43,11 @@ public class Patient extends Person {
         this.setAddress(address);
         Db.hospital.addPatient(this);
         diagnosis = this.getDiagnose(this.requestingInfoWithChoice(scanner,
-                "\tEnter your complaint (Cough - 1, No smells - 2, Broken bone - 3, None - 4): "));
+                "\tEnter your complaint (Cough - 1, No smells - 2, Broken bone - 3, Unknown - 4): "));
         department.addPatient(this);
-
         do {
             Service service = getService(this.requestingInfoWithChoice(scanner,
-                    "\tChoose the service (Appointment - 1, Treatment - 2, Hospitalization - 3, Nothing - 4): "));
+                    "\tChoose the service (Appointment - 1, Treatment - 2, Hospitalization - 3, Examination - 4): "));
             services.add(service);
             department.getEmployee(Position.DEPT_HEAD).increaseCostOfServices(service.getPrice());
             department.getEmployee(Position.DOCTOR).increaseCostOfServices(service.getPrice());
@@ -58,8 +57,7 @@ public class Patient extends Person {
                 System.out.println("OK!");
                 break;
             }
-        } while(true);
-
+        } while (true);
         scanner.close();
     }
 
@@ -75,7 +73,8 @@ public class Patient extends Person {
                 department = Db.surgeryDept;
                 return Diagnosis.BROKEN_BONE;
             default:
-                return Diagnosis.HEALTHY;
+                department = Db.therapeuticDept;
+                return Diagnosis.UNKNOWN;
         }
     }
 
@@ -88,7 +87,7 @@ public class Patient extends Person {
             case (3):
                 return Service.HOSPITALIZATION;
             default:
-                return Service.NOTHING;
+                return Service.EXAMINATION;
         }
     }
 
@@ -140,10 +139,6 @@ public class Patient extends Person {
         return number;
     }
 
-    public Department getDepartment() {
-        return department;
-    }
-
     @Override
     public String getRole() {
         return "Receiving treatment in hospital";
@@ -175,15 +170,6 @@ public class Patient extends Person {
 
     @Override
     public String toString() {
-
-        // TODO: need to make a separate method for this:
-        StringBuilder unitingServices = new StringBuilder();
-        double sumOfServices = 0;
-        for (Service service: services) {
-            unitingServices.append("[").append(service.getTitle()).append("] ");
-            sumOfServices += service.getPrice();
-        }
-
         try {
             return "\nPatient: (" + this.getRole() + "): " +
                     super.toString() +
@@ -192,10 +178,26 @@ public class Patient extends Person {
                     "\n\tOffice: " + department.getOfficeRoom() +
                     "\n\tTherapist: " + department.getEmployee(Position.DOCTOR).getFirstName() + " " + department.getEmployee(Position.DOCTOR).getLastName() +
                     "\n\tNurse: " + department.getEmployee(Position.NURSE).getFirstName() + " " + department.getEmployee(Position.NURSE).getLastName() +
-                    "\n\tServices: " + unitingServices +
-                    "\n\tPrice: " + sumOfServices + " BYN";
+                    "\n\tServices: " + this.combineServices() +
+                    "\n\tPrice: " + this.calculateServicesPrice() + " BYN";
         } catch (NullPointerException e) {
             return "\nThe patient was not registered";
         }
+    }
+
+    private StringBuilder combineServices() {
+        StringBuilder combiningServices = new StringBuilder();
+        for (Service service: services) {
+            combiningServices.append("[").append(service.getTitle()).append("] ");
+        }
+        return combiningServices;
+    }
+
+    private double calculateServicesPrice() {
+        double servicesPrice = 0;
+        for (Service service: services) {
+            servicesPrice += service.getPrice();
+        }
+        return servicesPrice;
     }
 }
