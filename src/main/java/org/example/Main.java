@@ -1,7 +1,6 @@
 package org.example;
 
 import org.example.hospital.people.Patient;
-import org.example.hospital.people.Position;
 import org.example.hospital.pseudo_database.Db;
 
 /**
