@@ -3,7 +3,7 @@ package org.example.hospital.people;
 public enum Diagnosis {
     FLU("Flu"),
     COVID("Covid-19"),
-    BROKEN_BONE("Broken bone"),
+    BONE_FRACTURE("Bone fracture"),
     UNKNOWN("Unknown diagnosis");
 
     private final String title;

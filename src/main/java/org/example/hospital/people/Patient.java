@@ -71,7 +71,7 @@ public class Patient extends Person {
                 return Diagnosis.COVID;
             case (3):
                 department = Db.surgeryDept;
-                return Diagnosis.BROKEN_BONE;
+                return Diagnosis.BONE_FRACTURE;
             default:
                 department = Db.therapeuticDept;
                 return Diagnosis.UNKNOWN;
@@ -92,51 +92,51 @@ public class Patient extends Person {
     }
 
     private String requestingInfoWithYesOrNo(Scanner scanner, String text) {
-        String input;
+        String answer;
         do {
             System.out.print(text);
-            input = scanner.nextLine();
-        } while (!input.equals("n") && !input.equals("y"));
-        return input;
+            answer = scanner.nextLine();
+        } while (!answer.equals("y") && !answer.equals("n"));
+        return answer;
     }
 
     private String requestingInfoString(Scanner scanner, String text) {
-        String input;
+        String answer;
         do {
             System.out.print(text);
-            input = scanner.nextLine();
-        } while (input.isEmpty());
-        return input;
+            answer = scanner.nextLine();
+        } while (answer.isEmpty());
+        return answer;
     }
 
     private int requestingInfoInt(Scanner scanner, String text) {
-        String input;
-        int number = 0;
+        String answer;
+        int numberFromAnswer = 0;
         do {
             System.out.print(text);
-            input = scanner.nextLine();
+            answer = scanner.nextLine();
             try {
-                number = Integer.parseInt(input);
+                numberFromAnswer = Integer.parseInt(answer);
             } catch (NumberFormatException e) {
-                input = "";
+                answer = "";
             }
-        } while (input.isEmpty() || number < 0);
-        return number;
+        } while (answer.isEmpty() || numberFromAnswer < 1);
+        return numberFromAnswer;
     }
 
     private int requestingInfoWithChoice(Scanner scanner, String text) {
-        String input;
-        int number = 0;
+        String answer;
+        int numberFromAnswer = 0;
         do {
             System.out.print(text);
-            input = scanner.nextLine();
+            answer = scanner.nextLine();
             try {
-                number = Integer.parseInt(input);
+                numberFromAnswer = Integer.parseInt(answer);
             } catch (NumberFormatException e) {
-                input = "";
+                answer = "";
             }
-        } while (input.isEmpty() || number < 1 || number > 4);
-        return number;
+        } while (answer.isEmpty() || numberFromAnswer < 1 || numberFromAnswer > 4);
+        return numberFromAnswer;
     }
 
     @Override
