@@ -20,9 +20,9 @@ public class Patient extends Person {
     public void goToHospital() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\nWelcome to '" + Db.hospital.getHospitalTitle() + "'");
-        String answer = this.requestingInfoWithYesOrNo(scanner, "Would you like to register as a patient? (y/n): ");
+        String answer = requestingInfoWithYesOrNo(scanner, "Would you like to register as a patient? (y/n): ");
         if (answer.equals("y")) {
-            this.register();
+            register();
         } else {
             System.out.println("OK!");
         }
@@ -33,26 +33,26 @@ public class Patient extends Person {
         Scanner scanner = new Scanner(System.in);
         Address address = new Address();
 
-        this.setFirstName(this.requestingInfoString(scanner, "\tEnter your first name: "));
-        this.setLastName(this.requestingInfoString(scanner, "\tEnter your last name: "));
-        this.setAge(this.requestingInfoInt(scanner, "\tEnter your age: "));
-        address.city = this.requestingInfoString(scanner, "\tEnter your city: ");
-        address.street = this.requestingInfoString(scanner, "\tEnter your street: ");
-        address.houseNumber = this.requestingInfoInt(scanner, "\tEnter your house number: ");
-        address.flatNumber = this.requestingInfoInt(scanner, "\tEnter your flat number: ");
-        this.setAddress(address);
+        setFirstName(requestingInfoString(scanner, "\tEnter your first name: "));
+        setLastName(requestingInfoString(scanner, "\tEnter your last name: "));
+        setAge(requestingInfoInt(scanner, "\tEnter your age: "));
+        address.city = requestingInfoString(scanner, "\tEnter your city: ");
+        address.street = requestingInfoString(scanner, "\tEnter your street: ");
+        address.houseNumber = requestingInfoInt(scanner, "\tEnter your house number: ");
+        address.flatNumber = requestingInfoInt(scanner, "\tEnter your flat number: ");
+        setAddress(address);
         Db.hospital.addPatient(this);
-        diagnosis = this.getDiagnose(this.requestingInfoWithChoice(scanner,
+        diagnosis = getDiagnose(requestingInfoWithChoice(scanner,
                 "\tEnter your complaint (Cough - 1, No smells - 2, Broken bone - 3, Unknown - 4): "));
         department.addPatient(this);
         do {
-            Service service = getService(this.requestingInfoWithChoice(scanner,
+            Service service = getService(requestingInfoWithChoice(scanner,
                     "\tChoose the service (Appointment - 1, Treatment - 2, Hospitalization - 3, Examination - 4): "));
             services.add(service);
             department.getEmployee(Position.DEPT_HEAD).increaseCostOfServices(service.getPrice());
             department.getEmployee(Position.DOCTOR).increaseCostOfServices(service.getPrice());
             department.getEmployee(Position.NURSE).increaseCostOfServices(service.getPrice());
-            String answer = this.requestingInfoWithYesOrNo(scanner, "\tDo you want to choose another service? (y/n): ");
+            String answer = requestingInfoWithYesOrNo(scanner, "\tDo you want to choose another service? (y/n): ");
             if (answer.equals("n")) {
                 System.out.println("OK!");
                 break;
@@ -173,15 +173,15 @@ public class Patient extends Person {
     @Override
     public String toString() {
         try {
-            return "\nPatient: (" + this.getRole() + "): " +
+            return "\nPatient: (" + getRole() + "): " +
                     super.toString() +
                     "\n\tDiagnosis: " + diagnosis +
                     "\n\tDepartment: " + department.getDepartmentTitle() +
                     "\n\tOffice: " + department.getOfficeRoom() +
                     "\n\tTherapist: " + department.getEmployee(Position.DOCTOR).getFirstName() + " " + department.getEmployee(Position.DOCTOR).getLastName() +
                     "\n\tNurse: " + department.getEmployee(Position.NURSE).getFirstName() + " " + department.getEmployee(Position.NURSE).getLastName() +
-                    "\n\tServices: " + this.combineServices() +
-                    "\n\tPrice: " + this.calculateServicesPrice() + " BYN";
+                    "\n\tServices: " + combineServices() +
+                    "\n\tPrice: " + calculateServicesPrice() + " BYN";
         } catch (NullPointerException e) {
             return "\nThe patient was not registered";
         }

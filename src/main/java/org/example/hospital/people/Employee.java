@@ -29,7 +29,7 @@ public class Employee extends Person {
 
     public void increaseCostOfServices(double costOfService) {
         costOfServices += costOfService;
-        salary = Accounting.calculateSalary(this.position, costOfServices);
+        salary = Accounting.calculateSalary(position, costOfServices);
     }
 
     public Position getPosition() {
@@ -73,7 +73,7 @@ public class Employee extends Person {
 
     @Override
     public String toString() {
-        return "\nEmployee (" + this.getRole() + "): " +
+        return "\nEmployee (" + getRole() + "): " +
                 super.toString() +
                 "\n\tDepartment: " + department.getDepartmentTitle() +
                 "\n\tPosition: " + position +
