@@ -17,6 +17,7 @@ public class Patient extends Person {
         super();
     }
 
+    // TODO: need to transfer patient registration logic to Hospital class!!!
     public void goToHospital() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\nWelcome to '" + Db.hospital.getHospitalTitle() + "'");
@@ -29,6 +30,7 @@ public class Patient extends Person {
         scanner.close();
     }
 
+    // TODO: to transfer to Hospital class
     public void register() {
         Scanner scanner = new Scanner(System.in);
         Address address = new Address();
@@ -61,6 +63,7 @@ public class Patient extends Person {
         scanner.close();
     }
 
+    // TODO: to transfer to Hospital class
     private Diagnosis getDiagnose(int number) {
         switch (number) {
             case (1):
@@ -78,6 +81,7 @@ public class Patient extends Person {
         }
     }
 
+    // TODO: to transfer to Hospital class
     private Service getService(int number) {
         switch (number) {
             case (1):
@@ -91,6 +95,7 @@ public class Patient extends Person {
         }
     }
 
+    // TODO: to transfer to Hospital class
     private String requestingInfoWithYesOrNo(Scanner scanner, String text) {
         String answer;
         do {
@@ -100,6 +105,7 @@ public class Patient extends Person {
         return answer;
     }
 
+    // TODO: to transfer to Hospital class
     private String requestingInfoString(Scanner scanner, String text) {
         String answer;
         do {
@@ -109,6 +115,7 @@ public class Patient extends Person {
         return answer;
     }
 
+    // TODO: to transfer to Hospital class
     private int requestingInfoInt(Scanner scanner, String text) {
         String answer;
         int numberFromAnswer = 0;
@@ -124,6 +131,7 @@ public class Patient extends Person {
         return numberFromAnswer;
     }
 
+    // TODO: to transfer to Hospital class
     private int requestingInfoWithChoice(Scanner scanner, String text) {
         String answer;
         int numberFromAnswer = 0;
