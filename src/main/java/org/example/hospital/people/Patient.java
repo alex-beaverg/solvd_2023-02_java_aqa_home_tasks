@@ -61,7 +61,7 @@ public class Patient extends Person {
         scanner.close();
     }
 
-    public Diagnosis getDiagnose(int number) {
+    private Diagnosis getDiagnose(int number) {
         switch (number) {
             case (1):
                 department = Db.therapeuticDept;
@@ -78,7 +78,7 @@ public class Patient extends Person {
         }
     }
 
-    public Service getService(int number) {
+    private Service getService(int number) {
         switch (number) {
             case (1):
                 return Service.APPOINTMENT;
