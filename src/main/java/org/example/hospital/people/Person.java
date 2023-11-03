@@ -44,10 +44,6 @@ public abstract class Person {
         return lastName;
     }
 
-    public Address getAddress() {
-        return address;
-    }
-
     @Override
     public String toString() {
         return "\n\tFirst name: " + firstName +

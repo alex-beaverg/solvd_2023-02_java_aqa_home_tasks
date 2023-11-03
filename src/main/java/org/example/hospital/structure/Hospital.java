@@ -6,10 +6,10 @@ import org.example.hospital.people.Patient;
 import java.util.ArrayList;
 
 public class Hospital {
-    private String hospitalTitle;
+    private final String hospitalTitle;
     private Department[] departments;
     private Employee[] employees;
-    private ArrayList<Patient> patients = new ArrayList<>();
+    private final ArrayList<Patient> patients = new ArrayList<>();
 
     public Hospital(String hospitalTitle) {
         this.hospitalTitle = hospitalTitle;
@@ -29,5 +29,10 @@ public class Hospital {
 
     public void setEmployees(Employee[] employees) {
         this.employees = employees;
+    }
+
+    @Override
+    public String toString() {
+        return "Hospital '" + hospitalTitle + "'";
     }
 }

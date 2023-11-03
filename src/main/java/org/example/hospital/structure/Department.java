@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Department {
-    private String departmentTitle;
-    private int officeRoom;
+    private final String departmentTitle;
+    private final int officeRoom;
     private Employee[] employees;
-    private ArrayList<Patient> patients = new ArrayList<>();
+    private final ArrayList<Patient> patients = new ArrayList<>();
 
     public Department(String departmentTitle,
                       int officeRoom) {
@@ -48,6 +48,7 @@ public class Department {
     public int hashCode() {
         int result = departmentTitle == null ? 0 : departmentTitle.hashCode();
         result = 31 * result + officeRoom;
+        result = 31 * result + patients.hashCode();
         return result;
     }
 
@@ -57,6 +58,7 @@ public class Department {
         if (obj == null || getClass() != obj.getClass()) return false;
         Department that = (Department) obj;
         if (!Objects.equals(departmentTitle, that.departmentTitle)) return false;
+        if (!Objects.equals(patients, that.patients)) return false;
         return officeRoom == that.officeRoom;
     }
 }

@@ -1,9 +1,5 @@
 package org.example.hospital.people;
 
-import org.example.hospital.structure.Department;
-
-import java.util.Objects;
-
 public enum Position {
     DEPT_HEAD ("Department Head", 3),
     DOCTOR ("Doctor", 2),

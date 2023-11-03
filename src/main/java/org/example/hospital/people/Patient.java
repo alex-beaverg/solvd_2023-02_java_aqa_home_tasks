@@ -152,6 +152,7 @@ public class Patient extends Person {
         result = 31 * result + (address == null ? 0 : address.hashCode());
         result = 31 * result + (department == null ? 0 : department.hashCode());
         result = 31 * result + (diagnosis == null ? 0 : diagnosis.hashCode());
+        result = 31 * result + services.hashCode();
         return result;
     }
 
@@ -165,6 +166,7 @@ public class Patient extends Person {
         if (!Objects.equals(address, that.address)) return false;
         if (!Objects.equals(department, that.department)) return false;
         if (!Objects.equals(diagnosis, that.diagnosis)) return false;
+        if (!Objects.equals(services, that.services)) return false;
         return age == that.age;
     }
 

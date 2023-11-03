@@ -66,8 +66,8 @@ public class Employee extends Person {
         if (!Objects.equals(department, that.department)) return false;
         if (!Objects.equals(position, that.position)) return false;
         if (!Objects.equals(schedule, that.schedule)) return false;
-        if (salary != that.salary) return false;
-        if (costOfServices != that.costOfServices) return false;
+        if ((int) salary != (int) that.salary) return false;
+        if ((int) costOfServices != (int) that.costOfServices) return false;
         return age == that.age;
     }
 
