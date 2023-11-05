@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
-public class Department implements ICombineObjectTitles, IAddPatients, IGetEmployees {
+public class Department implements IAddPatients, IGetEmployees {
     private final String title;
     private final int officeNumber;
     private Employee[] employees;
@@ -58,8 +58,7 @@ public class Department implements ICombineObjectTitles, IAddPatients, IGetEmplo
         return tempList.get(random.nextInt(tempList.size()));
     }
 
-    @Override
-    public StringBuilder combineObjectTitles(Object[] objects) {
+    private StringBuilder combineObjectTitles(Object[] objects) {
         StringBuilder combiningObjectTitles = new StringBuilder();
         if (objects instanceof Employee[] empls) {
             for (Employee employee: empls) {

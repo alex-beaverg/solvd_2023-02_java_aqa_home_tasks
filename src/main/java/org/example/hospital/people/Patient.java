@@ -8,7 +8,7 @@ import org.example.hospital.structure.VipService;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Patient extends Person implements ICombineServices, IAddServices {
+public class Patient extends Person implements IAddServices {
     private Diagnosis diagnosis;
     private Department department;
     private Employee therapist;
@@ -40,6 +40,14 @@ public class Patient extends Person implements ICombineServices, IAddServices {
 
     public ArrayList<VipService> getVipServices() {
         return vipServices;
+    }
+
+    public void setServicesPrice() {
+        servicesPrice = Accounting.calculateServicesPrice(this);
+    }
+
+    public void setVipServicesPrice() {
+        vipServicesPrice = Accounting.calculateVipServicesPrice(this);
     }
 
     @Override
@@ -84,8 +92,7 @@ public class Patient extends Person implements ICombineServices, IAddServices {
         return firstName + " " + lastName + " (" + diagnosis.getTitle() + ", " + department.getTitle() + ")";
     }
 
-    @Override
-    public StringBuilder combineServices() {
+    private StringBuilder combineServices() {
         StringBuilder combiningServices = new StringBuilder();
         for (Service service: services) {
             combiningServices.append("[").append(service.getTitle()).append("] ");
@@ -93,8 +100,7 @@ public class Patient extends Person implements ICombineServices, IAddServices {
         return combiningServices;
     }
 
-    @Override
-    public StringBuilder combineVipServices() {
+    private StringBuilder combineVipServices() {
         StringBuilder combiningVipServices = new StringBuilder();
         for (VipService vipService: vipServices) {
             combiningVipServices.append("[").append(vipService.getTitle()).append("] ");
@@ -150,11 +156,11 @@ public class Patient extends Person implements ICombineServices, IAddServices {
                     "\n\tTherapist: " + therapist.getFirstName() + " " + therapist.getLastName() + " (" + therapist.getPosition().getTitle() + ")" +
                     "\n\tNurse: " + nurse.getFirstName() + " " + nurse.getLastName() +
                     "\n\tServices: " + combineServices() +
-                    "\n\tPrice: " + servicesPrice + " BYN" +
+                    "\n\tPrice: " + Math.ceil(servicesPrice * 100) / 100 + " BYN" +
                     "\n\tVIP services: " + combineVipServices() +
-                    "\n\tVIP price: " + vipServicesPrice + " BYN" +
+                    "\n\tVIP price: " + Math.ceil(vipServicesPrice * 100) / 100 + " BYN" +
                     "\n\t------" +
-                    "\n\tTotal price: " + (servicesPrice + vipServicesPrice) + " BYN";
+                    "\n\tTotal price: " + Math.ceil((servicesPrice + vipServicesPrice) * 100) / 100 + " BYN";
         } catch (NullPointerException e) {
             return "\nThe patient was not registered";
         }

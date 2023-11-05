@@ -5,7 +5,7 @@ import org.example.hospital.structure.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Employee extends Person implements ICombineServices, IAddPatients, IAddServices {
+public class Employee extends Person implements IAddPatients, IAddServices, IDelete {
     private final Department department;
     private final Position position;
     private final Schedule schedule;
@@ -55,6 +55,7 @@ public class Employee extends Person implements ICombineServices, IAddPatients, 
         salary = Accounting.calculateEmployeeSalary(this);
     }
 
+    @Override
     public void deleteService(Service service) {
         this.services.remove(service);
         vipServicesPrice = Accounting.calculateVipServicesPrice(this);
@@ -68,6 +69,7 @@ public class Employee extends Person implements ICombineServices, IAddPatients, 
         salary = Accounting.calculateEmployeeSalary(this);
     }
 
+    @Override
     public void deleteVipService(VipService vipService) {
         this.vipServices.remove(vipService);
         vipServicesPrice = Accounting.calculateVipServicesPrice(this);
@@ -79,6 +81,7 @@ public class Employee extends Person implements ICombineServices, IAddPatients, 
         this.patients.add(patient);
     }
 
+    @Override
     public void deletePatient(Patient patient) {
         this.patients.remove(patient);
     }
@@ -100,8 +103,7 @@ public class Employee extends Person implements ICombineServices, IAddPatients, 
         return combiningPatients;
     }
 
-    @Override
-    public StringBuilder combineServices() {
+    private StringBuilder combineServices() {
         StringBuilder combiningServices = new StringBuilder();
         for (Service service: services) {
             combiningServices.append("[").append(service.getTitle()).append("] ");
@@ -109,8 +111,7 @@ public class Employee extends Person implements ICombineServices, IAddPatients, 
         return combiningServices;
     }
 
-    @Override
-    public StringBuilder combineVipServices() {
+    private StringBuilder combineVipServices() {
         StringBuilder combiningVipServices = new StringBuilder();
         for (VipService vipService: vipServices) {
             combiningVipServices.append("[").append(vipService.getTitle()).append("] ");
@@ -165,6 +166,6 @@ public class Employee extends Person implements ICombineServices, IAddPatients, 
                 "\n\tPatients: " + combinePatients() +
                 "\n\tServices: " + combineServices() +
                 "\n\tVIP services: " + combineVipServices() +
-                "\n\tSalary: " + Math.ceil(salary) + " BYN";
+                "\n\tSalary: " + Math.ceil(salary * 100) / 100 + " BYN";
     }
 }

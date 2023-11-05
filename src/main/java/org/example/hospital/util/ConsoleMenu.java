@@ -6,7 +6,6 @@ import org.example.hospital.structure.Department;
 import org.example.hospital.structure.Service;
 import org.example.hospital.structure.VipService;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ConsoleMenu {
@@ -90,6 +89,7 @@ public class ConsoleMenu {
             }
             case (3) -> {
                 patient = showPatients();
+                System.out.println("Your patient (" + patient.getFirstName() + " " + patient.getLastName() + ") was chosen!");
                 runPatientsSubmenu();
             }
             case (4) -> runMainMenu();
@@ -107,7 +107,7 @@ public class ConsoleMenu {
                         [1] - Change the therapist
                         [2] - Go to main menu
                         [3] - Exit
-                        """, 2);
+                        """, 3);
         if (answerInt == 1) {
             changeTheTherapist();
             runPatientsSubmenu();
@@ -122,7 +122,7 @@ public class ConsoleMenu {
     private void changeTheTherapist() {
         int index = 1;
         System.out.println("Choose the doctor:");
-        for (Employee doctor : objects.hospital.getEmployeesBySpecialistClass(2)) {
+        for (Employee doctor : patient.getDepartment().getEmployeesBySpecialistClass(2)) {
             System.out.println("[" + index + "] - " + doctor.getPersonToPrintInList());
             index++;
         }
@@ -134,8 +134,10 @@ public class ConsoleMenu {
             patient.getTherapist().deleteVipService(vipService);
         }
         patient.getTherapist().deletePatient(patient);
-        patient.setTherapist(objects.hospital.getEmployeesBySpecialistClass(2).get(answerInt - 1));
+        patient.setTherapist(patient.getDepartment().getEmployeesBySpecialistClass(2).get(answerInt - 1));
         patient.getTherapist().addPatient(patient);
+        patient.setServicesPrice();
+        patient.setVipServicesPrice();
         addServicesToTherapist();
         addVipServicesToTherapist();
         System.out.println("The therapist was changed");
@@ -159,7 +161,7 @@ public class ConsoleMenu {
             System.out.println("[" + index + "] - " + existPatient.getPersonToPrintInList());
             index++;
         }
-        int answerInt = requestingInfoWithChoice("Enter number of patient to show more information: ", index - 1);
+        int answerInt = requestingInfoWithChoice("Enter number of patient to choose him: ", index - 1);
         System.out.println(objects.hospital.getPatients().get(answerInt - 1));
         return objects.hospital.getPatients().get(answerInt - 1);
     }

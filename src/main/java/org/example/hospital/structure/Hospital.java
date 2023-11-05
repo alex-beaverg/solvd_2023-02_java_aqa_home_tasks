@@ -5,7 +5,7 @@ import org.example.hospital.people.Patient;
 
 import java.util.ArrayList;
 
-public class Hospital implements ICombineObjectTitles, IAddPatients, IGetEmployees {
+public class Hospital implements IAddPatients, IGetEmployees {
     private final String title;
     private Department[] departments;
     private Employee[] employees;
@@ -47,8 +47,7 @@ public class Hospital implements ICombineObjectTitles, IAddPatients, IGetEmploye
         return tempList;
     }
 
-    @Override
-    public StringBuilder combineObjectTitles(Object[] objects) {
+    private StringBuilder combineObjectTitles(Object[] objects) {
         StringBuilder combiningObjectTitles = new StringBuilder();
         if (objects instanceof Department[] departs) {
             for (Department department: departs) {
