@@ -104,10 +104,14 @@ public class ConsoleMenu {
         int answerInt = requestingInfoWithChoice(
                 """
                         Choose an action:
-                        [1] - Go to main menu
-                        [2] - Exit
+                        [1] - Change the therapist
+                        [2] - Go to main menu
+                        [3] - Exit
                         """, 2);
         if (answerInt == 1) {
+            changeTheTherapist();
+            runPatientsSubmenu();
+        } else if (answerInt == 2) {
             runMainMenu();
         } else {
             scanner.close();
@@ -115,17 +119,37 @@ public class ConsoleMenu {
         }
     }
 
-    private void showDoctors() {
+    private void changeTheTherapist() {
         int index = 1;
-        System.out.println("All doctors in the hospital:");
-        ArrayList<Employee> tempList = new ArrayList<>();
+        System.out.println("Choose the doctor:");
         for (Employee doctor : objects.hospital.getEmployeesBySpecialistClass(2)) {
             System.out.println("[" + index + "] - " + doctor.getPersonToPrintInList());
             index++;
-            tempList.add(doctor);
+        }
+        int answerInt = requestingInfoWithChoice("Enter number of doctor to choose him: ", index - 1);
+        for (Service service : patient.getServices()) {
+            patient.getTherapist().deleteService(service);
+        }
+        for (VipService vipService : patient.getVipServices()) {
+            patient.getTherapist().deleteVipService(vipService);
+        }
+        patient.getTherapist().deletePatient(patient);
+        patient.setTherapist(objects.hospital.getEmployeesBySpecialistClass(2).get(answerInt - 1));
+        patient.getTherapist().addPatient(patient);
+        addServicesToTherapist();
+        addVipServicesToTherapist();
+        System.out.println("The therapist was changed");
+    }
+
+    private void showDoctors() {
+        int index = 1;
+        System.out.println("All doctors in the hospital:");
+        for (Employee doctor : objects.hospital.getEmployeesBySpecialistClass(2)) {
+            System.out.println("[" + index + "] - " + doctor.getPersonToPrintInList());
+            index++;
         }
         int answerInt = requestingInfoWithChoice("Enter number of doctor to show more information: ", index - 1);
-        System.out.println(tempList.get(answerInt - 1));
+        System.out.println(objects.hospital.getEmployeesBySpecialistClass(2).get(answerInt - 1));
     }
 
     private Patient showPatients() {
@@ -172,17 +196,12 @@ public class ConsoleMenu {
     private void chooseTherapist() {
         int index = 1;
         System.out.println("All therapists in your department:");
-        ArrayList<Employee> tempList = new ArrayList<>();
-        for (Employee employee : patient.getDepartment().getEmployees()) {
-            if (employee.getPosition().getSpecialistClass() == 2) {
-                System.out.println("[" + index + "] - " + employee.getFirstName() + " " +
-                        employee.getLastName() + " - " + employee.getPosition().getTitle());
-                tempList.add(employee);
-                index++;
-            }
+        for (Employee employee : patient.getDepartment().getEmployeesBySpecialistClass(2)) {
+            System.out.println("[" + index + "] - " + employee.getPersonToPrintInList());
+            index++;
         }
         int answerInt = requestingInfoWithChoice("Enter number of therapist to choose him: ", index - 1);
-        patient.setTherapist(tempList.get(answerInt - 1));
+        patient.setTherapist(objects.hospital.getEmployeesBySpecialistClass(2).get(answerInt - 1));
         System.out.println("Your therapist (" + patient.getTherapist().getFirstName() + " " + patient.getTherapist().getLastName() + ") was chosen!");
     }
 

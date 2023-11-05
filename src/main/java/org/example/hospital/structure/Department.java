@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
-public class Department implements ICombineObjectTitles, IAddPatients {
+public class Department implements ICombineObjectTitles, IAddPatients, IGetEmployees {
     private final String title;
     private final int officeNumber;
     private Employee[] employees;
@@ -32,12 +32,19 @@ public class Department implements ICombineObjectTitles, IAddPatients {
         return officeNumber;
     }
 
-    public Employee[] getEmployees() {
-        return employees;
-    }
-
     public void setEmployees(Employee[] employees) {
         this.employees = employees;
+    }
+
+    @Override
+    public ArrayList<Employee> getEmployeesBySpecialistClass(int specialistClass) {
+        ArrayList<Employee> tempList = new ArrayList<>();
+        for (Employee employee: employees) {
+            if (employee.getPosition().getSpecialistClass() == specialistClass) {
+                tempList.add(employee);
+            }
+        }
+        return tempList;
     }
 
     public Employee getRandomEmployeeBySpecialistClass(int specialistClass) {

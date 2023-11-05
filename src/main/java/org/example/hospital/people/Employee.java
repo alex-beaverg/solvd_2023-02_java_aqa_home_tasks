@@ -32,10 +32,6 @@ public class Employee extends Person implements ICombineServices, IAddPatients, 
         salary = Accounting.calculateEmployeeSalary(this);
     }
 
-    public Department getDepartment() {
-        return department;
-    }
-
     public double getServicesPrice() {
         return servicesPrice;
     }
@@ -59,6 +55,12 @@ public class Employee extends Person implements ICombineServices, IAddPatients, 
         salary = Accounting.calculateEmployeeSalary(this);
     }
 
+    public void deleteService(Service service) {
+        this.services.remove(service);
+        vipServicesPrice = Accounting.calculateVipServicesPrice(this);
+        salary = Accounting.calculateEmployeeSalary(this);
+    }
+
     @Override
     public void addVipService(VipService vipService) {
         this.vipServices.add(vipService);
@@ -66,9 +68,19 @@ public class Employee extends Person implements ICombineServices, IAddPatients, 
         salary = Accounting.calculateEmployeeSalary(this);
     }
 
+    public void deleteVipService(VipService vipService) {
+        this.vipServices.remove(vipService);
+        vipServicesPrice = Accounting.calculateVipServicesPrice(this);
+        salary = Accounting.calculateEmployeeSalary(this);
+    }
+
     @Override
     public void addPatient(Patient patient) {
         this.patients.add(patient);
+    }
+
+    public void deletePatient(Patient patient) {
+        this.patients.remove(patient);
     }
 
     public Position getPosition() {
