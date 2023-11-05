@@ -1,0 +1,126 @@
+package org.example.hospital.data;
+
+import org.example.hospital.people.*;
+import org.example.hospital.structure.*;
+import org.example.hospital.util.Creator;
+
+public class HardCodeObjects {
+    public Hospital hospital = Creator.setHospital("City Hospital");
+
+    public Department therapeuticDept = Creator.setDepartment("Therapeutic department", 103);
+    public Department surgeryDept = Creator.setDepartment("Surgery department", 202);
+
+    public Employee johnSmith = Creator.setEmployee("John", "Smith", 55,
+            "Minsk", "Old str.", 5, 100,
+            therapeuticDept, Position.DEPT_HEAD, Schedule.BEFORE_NOON_EVEN_DAYS);
+    public Employee alexWhite = Creator.setEmployee("Alex", "White", 51,
+            "Minsk", "New str.", 10, 215,
+            surgeryDept, Position.DEPT_HEAD, Schedule.BEFORE_NOON_ODD_DAYS);
+    public Employee emmaGreet = Creator.setEmployee("Emma", "Greet", 29,
+            "Minsk", "Yellow str.", 1, 1,
+            therapeuticDept, Position.DOCTOR_1_CATEGORY, Schedule.AFTERNOON_EVEN_DAYS);
+    public Employee jakeTube = Creator.setEmployee("Jake", "Tube", 35,
+            "Minsk", "Red str.", 4, 100,
+            therapeuticDept, Position.DOCTOR_2_CATEGORY, Schedule.AFTERNOON_ODD_DAYS);
+    public Employee samFreeze = Creator.setEmployee("Sam", "Freeze", 35,
+            "Minsk", "Gold str.", 43, 60,
+            therapeuticDept, Position.DOCTOR_3_CATEGORY, Schedule.BEFORE_NOON_ODD_DAYS);
+    public Employee bobTorn = Creator.setEmployee("Bob", "Torn", 31,
+            "Minsk", "Green str.", 31, 75,
+            surgeryDept, Position.DOCTOR_1_CATEGORY, Schedule.AFTERNOON_ODD_DAYS);
+    public Employee lesDrop = Creator.setEmployee("Les", "Drop", 38,
+            "Minsk", "Old str.", 61, 23,
+            surgeryDept, Position.DOCTOR_2_CATEGORY, Schedule.AFTERNOON_EVEN_DAYS);
+    public Employee chrisStone = Creator.setEmployee("Chris", "Stone", 33,
+            "Minsk", "Old str.", 12, 35,
+            surgeryDept, Position.DOCTOR_3_CATEGORY, Schedule.BEFORE_NOON_ODD_DAYS);
+    public Employee helgaMoon = Creator.setEmployee("Helga", "Moon", 25,
+            "Minsk", "Green str.", 32, 56,
+            therapeuticDept, Position.NURSE, Schedule.BEFORE_NOON_ODD_DAYS);
+    public Employee steeveHawk = Creator.setEmployee("Steeve", "Hawk", 24,
+            "Minsk", "Red str.", 2, 7,
+            surgeryDept, Position.NURSE, Schedule.BEFORE_NOON_EVEN_DAYS);
+
+    public Patient ericAdams = Creator.setPatient("Eric", "Adams", 30, "Minsk",
+            "Main str.", 22, 11, Diagnosis.COVID, therapeuticDept);
+    public Patient lisaBourne = Creator.setPatient("Lisa", "Bourne", 28, "Minsk",
+            "Green str.", 45, 9, Diagnosis.BONE_FRACTURE, surgeryDept);
+    public Patient roseDart = Creator.setPatient("Rose", "Dart", 23, "Brest",
+            "Old str.", 4, 66, Diagnosis.FLU, therapeuticDept);
+    public Patient maxCorn = Creator.setPatient("Max", "Corn", 33, "Minsk",
+            "Red str.", 5, 97, Diagnosis.UNKNOWN, therapeuticDept);
+
+    public void fillArrays() {
+        hospital.setDepartments(new Department[]{therapeuticDept, surgeryDept});
+        hospital.setEmployees(new Employee[]{johnSmith, emmaGreet, helgaMoon, alexWhite, bobTorn, steeveHawk, jakeTube,
+                samFreeze, lesDrop, chrisStone});
+        therapeuticDept.setEmployees(new Employee[]{johnSmith, emmaGreet, helgaMoon, jakeTube, samFreeze});
+        surgeryDept.setEmployees(new Employee[]{alexWhite, bobTorn, steeveHawk, lesDrop, chrisStone});
+
+        hospital.addPatient(ericAdams);
+        therapeuticDept.addPatient(ericAdams);
+        ericAdams.setDiagnosis(Diagnosis.FLU);
+        ericAdams.setTherapist(therapeuticDept.getRandomEmployeeBySpecialistClass(2));
+        ericAdams.setNurse(therapeuticDept.getRandomEmployeeBySpecialistClass(1));
+        ericAdams.addService(Service.APPOINTMENT);
+        ericAdams.addService(Service.TREATMENT);
+        ericAdams.addVipService(VipService.WALK_IN_SERVICE);
+        ericAdams.getTherapist().addService(Service.APPOINTMENT);
+        ericAdams.getTherapist().addService(Service.TREATMENT);
+        ericAdams.getTherapist().addVipService(VipService.WALK_IN_SERVICE);
+        ericAdams.getTherapist().addPatient(ericAdams);
+
+        hospital.addPatient(lisaBourne);
+        surgeryDept.addPatient(lisaBourne);
+        lisaBourne.setDiagnosis(Diagnosis.COVID);
+        lisaBourne.setTherapist(surgeryDept.getRandomEmployeeBySpecialistClass(2));
+        lisaBourne.setNurse(surgeryDept.getRandomEmployeeBySpecialistClass(1));
+        lisaBourne.addService(Service.APPOINTMENT);
+        lisaBourne.addService(Service.HOSPITALIZATION);
+        lisaBourne.addVipService(VipService.SEPARATE_ROOM);
+        lisaBourne.addVipService(VipService.SPECIAL_FOOD);
+        lisaBourne.getTherapist().addService(Service.APPOINTMENT);
+        lisaBourne.getTherapist().addService(Service.HOSPITALIZATION);
+        lisaBourne.getTherapist().addVipService(VipService.SEPARATE_ROOM);
+        lisaBourne.getTherapist().addVipService(VipService.SPECIAL_FOOD);
+        lisaBourne.getTherapist().addPatient(lisaBourne);
+
+        hospital.addPatient(roseDart);
+        therapeuticDept.addPatient(roseDart);
+        roseDart.setDiagnosis(Diagnosis.BONE_FRACTURE);
+        roseDart.setTherapist(therapeuticDept.getRandomEmployeeBySpecialistClass(2));
+        roseDart.setNurse(therapeuticDept.getRandomEmployeeBySpecialistClass(1));
+        roseDart.addService(Service.APPOINTMENT);
+        roseDart.addService(Service.HOSPITALIZATION);
+        roseDart.addService(Service.TREATMENT);
+        roseDart.addService(Service.EXAMINATION);
+        roseDart.addVipService(VipService.SEPARATE_ROOM);
+        roseDart.addVipService(VipService.SPECIAL_FOOD);
+        roseDart.addVipService(VipService.WALK_IN_SERVICE);
+        roseDart.addVipService(VipService.ENTERTAINMENT);
+        roseDart.getTherapist().addService(Service.APPOINTMENT);
+        roseDart.getTherapist().addService(Service.HOSPITALIZATION);
+        roseDart.getTherapist().addService(Service.TREATMENT);
+        roseDart.getTherapist().addService(Service.EXAMINATION);
+        roseDart.getTherapist().addVipService(VipService.SEPARATE_ROOM);
+        roseDart.getTherapist().addVipService(VipService.SPECIAL_FOOD);
+        roseDart.getTherapist().addVipService(VipService.WALK_IN_SERVICE);
+        roseDart.getTherapist().addVipService(VipService.ENTERTAINMENT);
+        roseDart.getTherapist().addPatient(roseDart);
+
+        hospital.addPatient(maxCorn);
+        therapeuticDept.addPatient(maxCorn);
+        maxCorn.setDiagnosis(Diagnosis.UNKNOWN);
+        maxCorn.setTherapist(therapeuticDept.getRandomEmployeeBySpecialistClass(2));
+        maxCorn.setNurse(therapeuticDept.getRandomEmployeeBySpecialistClass(1));
+        maxCorn.addService(Service.APPOINTMENT);
+        maxCorn.addService(Service.HOSPITALIZATION);
+        maxCorn.addVipService(VipService.SPECIAL_FOOD);
+        maxCorn.addVipService(VipService.WALK_IN_SERVICE);
+        maxCorn.getTherapist().addService(Service.APPOINTMENT);
+        maxCorn.getTherapist().addService(Service.HOSPITALIZATION);
+        maxCorn.getTherapist().addVipService(VipService.SPECIAL_FOOD);
+        maxCorn.getTherapist().addVipService(VipService.WALK_IN_SERVICE);
+        maxCorn.getTherapist().addPatient(maxCorn);
+    }
+}

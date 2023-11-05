@@ -80,6 +80,11 @@ public class Patient extends Person implements ICombineServices, IAddServices {
     }
 
     @Override
+    public String getPersonToPrintInList() {
+        return firstName + " " + lastName + " (" + diagnosis.getTitle() + ", " + department.getTitle() + ")";
+    }
+
+    @Override
     public StringBuilder combineServices() {
         StringBuilder combiningServices = new StringBuilder();
         for (Service service: services) {
@@ -139,9 +144,9 @@ public class Patient extends Person implements ICombineServices, IAddServices {
         try {
             return "Patient: (" + getRole() + "): " +
                     super.toString() +
-                    "\n\tDiagnosis: " + diagnosis +
+                    "\n\tDiagnosis: " + diagnosis.getTitle() +
                     "\n\tDepartment: " + department.getTitle() +
-                    "\n\tOffice: " + department.getOfficeRoom() +
+                    "\n\tOffice: " + department.getOfficeNumber() +
                     "\n\tTherapist: " + therapist.getFirstName() + " " + therapist.getLastName() + " (" + therapist.getPosition().getTitle() + ")" +
                     "\n\tNurse: " + nurse.getFirstName() + " " + nurse.getLastName() +
                     "\n\tServices: " + combineServices() +

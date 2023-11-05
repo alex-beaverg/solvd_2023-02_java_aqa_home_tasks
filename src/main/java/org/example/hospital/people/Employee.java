@@ -75,6 +75,11 @@ public class Employee extends Person implements ICombineServices, IAddPatients, 
         return position;
     }
 
+    @Override
+    public String getPersonToPrintInList() {
+        return firstName + " " + lastName + " (" + position.getTitle() + ", " + department.getTitle() + ")";
+    }
+
     private StringBuilder combinePatients() {
         StringBuilder combiningPatients = new StringBuilder();
         for (Patient patient: patients) {

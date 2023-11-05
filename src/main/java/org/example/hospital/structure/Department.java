@@ -9,14 +9,14 @@ import java.util.Random;
 
 public class Department implements ICombineObjectTitles, IAddPatients {
     private final String title;
-    private final int officeRoom;
+    private final int officeNumber;
     private Employee[] employees;
     private final ArrayList<Patient> patients = new ArrayList<>();
 
     public Department(String title,
-                      int officeRoom) {
+                      int officeNumber) {
         this.title = title;
-        this.officeRoom = officeRoom;
+        this.officeNumber = officeNumber;
     }
 
     @Override
@@ -28,8 +28,8 @@ public class Department implements ICombineObjectTitles, IAddPatients {
         return title;
     }
 
-    public int getOfficeRoom() {
-        return officeRoom;
+    public int getOfficeNumber() {
+        return officeNumber;
     }
 
     public Employee[] getEmployees() {
@@ -40,7 +40,7 @@ public class Department implements ICombineObjectTitles, IAddPatients {
         this.employees = employees;
     }
 
-    public Employee getEmployeeBySpecialistClass(int specialistClass) {
+    public Employee getRandomEmployeeBySpecialistClass(int specialistClass) {
         ArrayList<Employee> tempList = new ArrayList<>();
         for (Employee employee: employees) {
             if (employee.getPosition().getSpecialistClass() == specialistClass) {
@@ -65,7 +65,7 @@ public class Department implements ICombineObjectTitles, IAddPatients {
     @Override
     public int hashCode() {
         int result = title == null ? 0 : title.hashCode();
-        result = 31 * result + officeRoom;
+        result = 31 * result + officeNumber;
         result = 31 * result + patients.hashCode();
         return result;
     }
@@ -77,7 +77,7 @@ public class Department implements ICombineObjectTitles, IAddPatients {
         Department that = (Department) obj;
         if (!Objects.equals(title, that.title)) return false;
         if (!Objects.equals(patients, that.patients)) return false;
-        return officeRoom == that.officeRoom;
+        return officeNumber == that.officeNumber;
     }
 
     @Override

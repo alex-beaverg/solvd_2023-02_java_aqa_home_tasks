@@ -20,6 +20,8 @@ public abstract class Person {
 
     public abstract String getRole();
 
+    public abstract String getPersonToPrintInList();
+
     public final void setFirstName(String firstName) {
         this.firstName = firstName;
     }

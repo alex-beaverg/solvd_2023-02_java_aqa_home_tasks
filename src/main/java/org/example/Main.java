@@ -1,6 +1,6 @@
 package org.example;
 
-import org.example.hospital.helpers.ConsoleMenu;
+import org.example.hospital.util.ConsoleMenu;
 
 /**
  * Ideal main method!!!

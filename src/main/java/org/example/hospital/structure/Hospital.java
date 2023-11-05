@@ -5,7 +5,7 @@ import org.example.hospital.people.Patient;
 
 import java.util.ArrayList;
 
-public class Hospital implements ICombineObjectTitles, IAddPatients {
+public class Hospital implements ICombineObjectTitles, IAddPatients, IGetEmployees {
     private final String title;
     private Department[] departments;
     private Employee[] employees;
@@ -32,12 +32,19 @@ public class Hospital implements ICombineObjectTitles, IAddPatients {
         this.employees = employees;
     }
 
-    public Employee[] getEmployees() {
-        return employees;
-    }
-
     public ArrayList<Patient> getPatients() {
         return patients;
+    }
+
+    @Override
+    public ArrayList<Employee> getEmployeesBySpecialistClass(int specialistClass) {
+        ArrayList<Employee> tempList = new ArrayList<>();
+        for (Employee employee: employees) {
+            if (employee.getPosition().getSpecialistClass() == specialistClass) {
+                tempList.add(employee);
+            }
+        }
+        return tempList;
     }
 
     @Override

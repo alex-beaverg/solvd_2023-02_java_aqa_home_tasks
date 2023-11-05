@@ -1,6 +1,6 @@
-package org.example.hospital.helpers;
+package org.example.hospital.util;
 
-import org.example.hospital.data.Creator;
+import org.example.hospital.data.HardCodeObjects;
 import org.example.hospital.people.*;
 import org.example.hospital.structure.Department;
 import org.example.hospital.structure.Service;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ConsoleMenu {
-    private final Creator objects = new Creator();
+    private final HardCodeObjects objects = new HardCodeObjects();
     private Patient patient;
     Scanner scanner = new Scanner(System.in);
 
@@ -31,7 +31,9 @@ public class ConsoleMenu {
                         """, 4);
         switch (answerInt) {
             case (1) -> {
-                showDepartments();
+                for (Department department : objects.hospital.getDepartments()) {
+                    System.out.println(department);
+                }
                 runMainMenu();
             }
             case (2) -> runDoctorsMenu();
@@ -40,12 +42,6 @@ public class ConsoleMenu {
                 scanner.close();
                 System.out.println("Good bye!");
             }
-        }
-    }
-
-    private void showDepartments() {
-        for (Department department : objects.hospital.getDepartments()) {
-            System.out.println(department);
         }
     }
 
@@ -123,13 +119,10 @@ public class ConsoleMenu {
         int index = 1;
         System.out.println("All doctors in the hospital:");
         ArrayList<Employee> tempList = new ArrayList<>();
-        for (Employee doctor : objects.hospital.getEmployees()) {
-            if (doctor.getPosition().getSpecialistClass() == 2) {
-                System.out.println("[" + index + "] - " + doctor.getFirstName() + " " + doctor.getLastName() + " (" +
-                        doctor.getPosition().getTitle() + ", " + doctor.getDepartment().getTitle() + ")");
-                index++;
-                tempList.add(doctor);
-            }
+        for (Employee doctor : objects.hospital.getEmployeesBySpecialistClass(2)) {
+            System.out.println("[" + index + "] - " + doctor.getPersonToPrintInList());
+            index++;
+            tempList.add(doctor);
         }
         int answerInt = requestingInfoWithChoice("Enter number of doctor to show more information: ", index - 1);
         System.out.println(tempList.get(answerInt - 1));
@@ -139,7 +132,7 @@ public class ConsoleMenu {
         int index = 1;
         System.out.println("All patients in the hospital:");
         for (Patient existPatient : objects.hospital.getPatients()) {
-            System.out.println("[" + index + "] - " + existPatient.getFirstName() + " " + existPatient.getLastName());
+            System.out.println("[" + index + "] - " + existPatient.getPersonToPrintInList());
             index++;
         }
         int answerInt = requestingInfoWithChoice("Enter number of patient to show more information: ", index - 1);
@@ -239,8 +232,8 @@ public class ConsoleMenu {
     }
 
     private Patient registerNewPatient() {
-        Patient newPatient = new Patient();
-        Address address = new Address();
+        Patient newPatient = Creator.setPatient();
+        Address address = Creator.setAddress();
         newPatient.setFirstName(requestingInfoString("Enter your first name: "));
         newPatient.setLastName(requestingInfoString("Enter your last name: "));
         newPatient.setAge(requestingInfoInt("Enter your age: "));
@@ -314,29 +307,29 @@ public class ConsoleMenu {
         switch (number) {
             case (1) -> {
                 patient.setDepartment(objects.therapeuticDept);
-                patient.setTherapist(objects.therapeuticDept.getEmployeeBySpecialistClass(2));
-                patient.setNurse(objects.therapeuticDept.getEmployeeBySpecialistClass(1));
+                patient.setTherapist(objects.therapeuticDept.getRandomEmployeeBySpecialistClass(2));
+                patient.setNurse(objects.therapeuticDept.getRandomEmployeeBySpecialistClass(1));
                 objects.therapeuticDept.addPatient(patient);
                 return Diagnosis.FLU;
             }
             case (2) -> {
                 patient.setDepartment(objects.therapeuticDept);
-                patient.setTherapist(objects.therapeuticDept.getEmployeeBySpecialistClass(2));
-                patient.setNurse(objects.therapeuticDept.getEmployeeBySpecialistClass(1));
+                patient.setTherapist(objects.therapeuticDept.getRandomEmployeeBySpecialistClass(2));
+                patient.setNurse(objects.therapeuticDept.getRandomEmployeeBySpecialistClass(1));
                 objects.therapeuticDept.addPatient(patient);
                 return Diagnosis.COVID;
             }
             case (3) -> {
                 patient.setDepartment(objects.surgeryDept);
-                patient.setTherapist(objects.surgeryDept.getEmployeeBySpecialistClass(2));
-                patient.setNurse(objects.surgeryDept.getEmployeeBySpecialistClass(1));
+                patient.setTherapist(objects.surgeryDept.getRandomEmployeeBySpecialistClass(2));
+                patient.setNurse(objects.surgeryDept.getRandomEmployeeBySpecialistClass(1));
                 objects.surgeryDept.addPatient(patient);
                 return Diagnosis.BONE_FRACTURE;
             }
             default -> {
                 patient.setDepartment(objects.therapeuticDept);
-                patient.setTherapist(objects.therapeuticDept.getEmployeeBySpecialistClass(2));
-                patient.setNurse(objects.therapeuticDept.getEmployeeBySpecialistClass(1));
+                patient.setTherapist(objects.therapeuticDept.getRandomEmployeeBySpecialistClass(2));
+                patient.setNurse(objects.therapeuticDept.getRandomEmployeeBySpecialistClass(1));
                 objects.therapeuticDept.addPatient(patient);
                 return Diagnosis.UNKNOWN;
             }
