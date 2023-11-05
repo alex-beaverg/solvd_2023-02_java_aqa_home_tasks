@@ -1,16 +1,20 @@
 package org.example.hospital.people;
 
-import org.example.hospital.structure.Accounting;
-import org.example.hospital.structure.Department;
+import org.example.hospital.structure.*;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
-public class Employee extends Person {
-    private Department department;
-    private Position position;
-    private Schedule schedule;
+public class Employee extends Person implements ICombineServices, IAddPatients, IAddServices {
+    private final Department department;
+    private final Position position;
+    private final Schedule schedule;
     private double salary;
-    private double costOfServices;
+    private final ArrayList<Service> services = new ArrayList<>();
+    private final ArrayList<VipService> vipServices = new ArrayList<>();
+    private double servicesPrice;
+    private double vipServicesPrice;
+    private final ArrayList<Patient> patients = new ArrayList<>();
 
     public Employee(String firstName,
                     String lastName,
@@ -23,17 +27,78 @@ public class Employee extends Person {
         this.department = department;
         this.position = position;
         this.schedule = schedule;
-        costOfServices = 0;
-        salary = Accounting.calculateSalary(this.position, costOfServices);
+        servicesPrice = 0;
+        vipServicesPrice = 0;
+        salary = Accounting.calculateEmployeeSalary(this);
     }
 
-    public void increaseCostOfServices(double costOfService) {
-        costOfServices += costOfService;
-        salary = Accounting.calculateSalary(position, costOfServices);
+    public Department getDepartment() {
+        return department;
+    }
+
+    public double getServicesPrice() {
+        return servicesPrice;
+    }
+
+    public double getVipServicesPrice() {
+        return vipServicesPrice;
+    }
+
+    public ArrayList<Service> getServices() {
+        return services;
+    }
+
+    public ArrayList<VipService> getVipServices() {
+        return vipServices;
+    }
+
+    @Override
+    public void addService(Service service) {
+        this.services.add(service);
+        servicesPrice = Accounting.calculateServicesPrice(this);
+        salary = Accounting.calculateEmployeeSalary(this);
+    }
+
+    @Override
+    public void addVipService(VipService vipService) {
+        this.vipServices.add(vipService);
+        vipServicesPrice = Accounting.calculateVipServicesPrice(this);
+        salary = Accounting.calculateEmployeeSalary(this);
+    }
+
+    @Override
+    public void addPatient(Patient patient) {
+        this.patients.add(patient);
     }
 
     public Position getPosition() {
         return position;
+    }
+
+    private StringBuilder combinePatients() {
+        StringBuilder combiningPatients = new StringBuilder();
+        for (Patient patient: patients) {
+            combiningPatients.append("[").append(patient.getFirstName()).append(" ").append(patient.getLastName()).append("] ");
+        }
+        return combiningPatients;
+    }
+
+    @Override
+    public StringBuilder combineServices() {
+        StringBuilder combiningServices = new StringBuilder();
+        for (Service service: services) {
+            combiningServices.append("[").append(service.getTitle()).append("] ");
+        }
+        return combiningServices;
+    }
+
+    @Override
+    public StringBuilder combineVipServices() {
+        StringBuilder combiningVipServices = new StringBuilder();
+        for (VipService vipService: vipServices) {
+            combiningVipServices.append("[").append(vipService.getTitle()).append("] ");
+        }
+        return combiningVipServices;
     }
 
     @Override
@@ -51,7 +116,8 @@ public class Employee extends Person {
         result = 31 * result + (position == null ? 0 : position.hashCode());
         result = 31 * result + (schedule == null ? 0 : schedule.hashCode());
         result = 31 * result + (int) salary;
-        result = 31 * result + (int) costOfServices;
+        result = 31 * result + (int) servicesPrice;
+        result = 31 * result + (int) vipServicesPrice;
         return result;
     }
 
@@ -67,7 +133,8 @@ public class Employee extends Person {
         if (!Objects.equals(position, that.position)) return false;
         if (!Objects.equals(schedule, that.schedule)) return false;
         if ((int) salary != (int) that.salary) return false;
-        if ((int) costOfServices != (int) that.costOfServices) return false;
+        if ((int) servicesPrice != (int) that.servicesPrice) return false;
+        if ((int) vipServicesPrice != (int) that.vipServicesPrice) return false;
         return age == that.age;
     }
 
@@ -75,9 +142,12 @@ public class Employee extends Person {
     public String toString() {
         return "\nEmployee (" + getRole() + "): " +
                 super.toString() +
-                "\n\tDepartment: " + department.getDepartmentTitle() +
+                "\n\tDepartment: " + department.getTitle() +
                 "\n\tPosition: " + position +
                 "\n\tSchedule: " + schedule +
+                "\n\tPatients: " + combinePatients() +
+                "\n\tServices: " + combineServices() +
+                "\n\tVIP services: " + combineVipServices() +
                 "\n\tSalary: " + Math.ceil(salary) + " BYN";
     }
 }

@@ -1,15 +1,15 @@
 package org.example.hospital.structure;
 
-public enum Service implements IService {
-    APPOINTMENT("Make an appointment", 5),
-    TREATMENT("Prescribe treatment", 25),
-    HOSPITALIZATION("Hospitalization", 100),
-    EXAMINATION("Medical examination", 50);
+public enum VipService implements IService {
+    SEPARATE_ROOM("Provision of a separate room", 250),
+    SPECIAL_FOOD("Provision of a special food", 175),
+    WALK_IN_SERVICE("Walk-in service", 200),
+    ENTERTAINMENT("Providing entertainment", 150);
 
     private final String title;
     private final double price;
 
-    Service(String title, double price) {
+    VipService(String title, double price) {
         this.title = title;
         this.price = price;
     }

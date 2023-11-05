@@ -2,14 +2,15 @@ package org.example.hospital.people;
 
 import java.util.Objects;
 
-public class Address {
-    protected String city;
-    protected String street;
-    protected int houseNumber;
-    protected int flatNumber;
+public final class Address {
+    private String city;
+    private String street;
+    private int houseNumber;
+    private int flatNumber;
 
     public Address() { }
 
+    // Overloading:
     public Address(String city,
                    String street,
                    int houseNumber,
@@ -17,6 +18,22 @@ public class Address {
         this.city = city;
         this.street = street;
         this.houseNumber = houseNumber;
+        this.flatNumber = flatNumber;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setHouseNumber(int houseNumber) {
+        this.houseNumber = houseNumber;
+    }
+
+    public void setFlatNumber(int flatNumber) {
         this.flatNumber = flatNumber;
     }
 

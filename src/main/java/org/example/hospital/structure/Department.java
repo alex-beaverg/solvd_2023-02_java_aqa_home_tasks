@@ -2,51 +2,69 @@ package org.example.hospital.structure;
 
 import org.example.hospital.people.Employee;
 import org.example.hospital.people.Patient;
-import org.example.hospital.people.Position;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Random;
 
-public class Department {
-    private final String departmentTitle;
+public class Department implements ICombineObjectTitles, IAddPatients {
+    private final String title;
     private final int officeRoom;
     private Employee[] employees;
     private final ArrayList<Patient> patients = new ArrayList<>();
 
-    public Department(String departmentTitle,
+    public Department(String title,
                       int officeRoom) {
-        this.departmentTitle = departmentTitle;
+        this.title = title;
         this.officeRoom = officeRoom;
     }
 
+    @Override
     public void addPatient(Patient patient) {
         patients.add(patient);
     }
 
-    public String getDepartmentTitle() {
-        return departmentTitle;
+    public String getTitle() {
+        return title;
     }
 
     public int getOfficeRoom() {
         return officeRoom;
     }
 
+    public Employee[] getEmployees() {
+        return employees;
+    }
+
     public void setEmployees(Employee[] employees) {
         this.employees = employees;
     }
 
-    public Employee getEmployee(Position position) {
+    public Employee getEmployeeBySpecialistClass(int specialistClass) {
+        ArrayList<Employee> tempList = new ArrayList<>();
         for (Employee employee: employees) {
-            if (employee.getPosition() == position) {
-                return employee;
+            if (employee.getPosition().getSpecialistClass() == specialistClass) {
+                tempList.add(employee);
             }
         }
-        return null;
+        Random random = new Random();
+        return tempList.get(random.nextInt(tempList.size()));
+    }
+
+    @Override
+    public StringBuilder combineObjectTitles(Object[] objects) {
+        StringBuilder combiningObjectTitles = new StringBuilder();
+        if (objects instanceof Employee[] empls) {
+            for (Employee employee: empls) {
+                combiningObjectTitles.append("[").append(employee.getFirstName()).append(" ").append(employee.getLastName()).append("] ");
+            }
+        }
+        return combiningObjectTitles;
     }
 
     @Override
     public int hashCode() {
-        int result = departmentTitle == null ? 0 : departmentTitle.hashCode();
+        int result = title == null ? 0 : title.hashCode();
         result = 31 * result + officeRoom;
         result = 31 * result + patients.hashCode();
         return result;
@@ -57,8 +75,14 @@ public class Department {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         Department that = (Department) obj;
-        if (!Objects.equals(departmentTitle, that.departmentTitle)) return false;
+        if (!Objects.equals(title, that.title)) return false;
         if (!Objects.equals(patients, that.patients)) return false;
         return officeRoom == that.officeRoom;
+    }
+
+    @Override
+    public String toString() {
+        return "Department '" + title + "':" +
+                "\n\tEmployees: " + combineObjectTitles(employees);
     }
 }

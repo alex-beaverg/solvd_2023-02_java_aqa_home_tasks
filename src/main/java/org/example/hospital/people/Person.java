@@ -20,27 +20,27 @@ public abstract class Person {
 
     public abstract String getRole();
 
-    public void setFirstName(String firstName) {
+    public final void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public void setLastName(String lastName) {
+    public final void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    public void setAge(int age) {
+    public final void setAge(int age) {
         this.age = age;
     }
 
-    public void setAddress(Address address) {
+    public final void setAddress(Address address) {
         this.address = address;
     }
 
-    public String getFirstName() {
+    public final String getFirstName() {
         return firstName;
     }
 
-    public String getLastName() {
+    public final String getLastName() {
         return lastName;
     }
 
