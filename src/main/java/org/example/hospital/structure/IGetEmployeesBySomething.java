@@ -4,6 +4,6 @@ import org.example.hospital.people.Employee;
 
 import java.util.ArrayList;
 
-public interface IGetEmployees {
+public interface IGetEmployeesBySomething {
     ArrayList<Employee> getEmployeesBySpecialistClass(int specialistClass);
 }

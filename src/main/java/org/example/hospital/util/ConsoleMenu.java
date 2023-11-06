@@ -24,8 +24,8 @@ public class ConsoleMenu {
                 """
                         Choose an action:
                         [1] - Show departments
-                        [2] - Doctors menu action
-                        [3] - Patients menu action
+                        [2] - Doctors menu actions
+                        [3] - Patients menu actions
                         [4] - Exit
                         """, 4);
         switch (answer) {
@@ -67,9 +67,9 @@ public class ConsoleMenu {
         int answer = requestingInfoWithChoice(
                 """
                         Choose an action:
-                        [1] - Find the patient in registry
+                        [1] - Find and choose the patient in registry
                         [2] - Register new patient
-                        [3] - Show all patients
+                        [3] - Show all patients and choose one of them
                         [4] - Go to main menu
                         [5] - Exit
                         """, 5);
@@ -88,7 +88,7 @@ public class ConsoleMenu {
                 runPatientsSubmenu();
             }
             case (3) -> {
-                patient = showPatients();
+                patient = choosePatient();
                 System.out.println("Your patient (" + patient.getFirstName() + " " + patient.getLastName() + ") was chosen!");
                 runPatientsSubmenu();
             }
@@ -146,7 +146,7 @@ public class ConsoleMenu {
         System.out.println(objects.hospital.getEmployeesBySpecialistClass(2).get(answer - 1));
     }
 
-    private Patient showPatients() {
+    private Patient choosePatient() {
         int index = 1;
         System.out.println("All patients in the hospital:");
         for (Patient existPatient : objects.hospital.getPatients()) {
@@ -159,9 +159,8 @@ public class ConsoleMenu {
     }
 
     private void vipServiceMenu() {
-        VipService vipService;
         do {
-            vipService = getVipService(requestingInfoWithChoice(
+            VipService vipService = getVipService(requestingInfoWithChoice(
                     """
                             Choose VIP service:
                             [1] - Provision of a separate room
@@ -176,15 +175,6 @@ public class ConsoleMenu {
                 break;
             }
         } while (true);
-    }
-
-    private VipService getVipService(int number) {
-        return switch (number) {
-            case (1) -> VipService.SEPARATE_ROOM;
-            case (2) -> VipService.SPECIAL_FOOD;
-            case (3) -> VipService.WALK_IN_SERVICE;
-            default -> VipService.ENTERTAINMENT;
-        };
     }
 
     private void chooseDoctor() {
@@ -203,7 +193,7 @@ public class ConsoleMenu {
         String fullName = requestingInfoString("Enter patient full name for searching: ");
         for (Patient existPatient : objects.hospital.getPatients()) {
             if ((existPatient.getFirstName() + " " + existPatient.getLastName()).equals(fullName)) {
-                System.out.println("Patient " + fullName + " was found:");
+                System.out.println("Patient " + fullName + " was found and chosen:");
                 System.out.println(existPatient);
                 return existPatient;
             }
@@ -212,9 +202,9 @@ public class ConsoleMenu {
         int answer = requestingInfoWithChoice(
                 """
                         Choose an action:
-                        [1] - Try to find the patient again
+                        [1] - Try to find and choose the patient again
                         [2] - Register new patient
-                        [3] - Show all patients to choose
+                        [3] - Show all patients to choose one of them
                         [4] - Go to main menu
                         [5] - Exit
                         """, 5);
@@ -224,13 +214,13 @@ public class ConsoleMenu {
             }
             case (2) -> {
                 patient = registerNewPatient();
-                System.out.println("New patient was registered");
+                System.out.println("New patient (" + patient.getFirstName() + " " + patient.getLastName() + ") was registered");
                 toComplain();
                 System.out.println(patient);
                 return patient;
             }
             case (3) -> {
-                return showPatients();
+                return choosePatient();
             }
             case (4) -> {
                 runMainMenu();
@@ -247,6 +237,7 @@ public class ConsoleMenu {
     private Patient registerNewPatient() {
         Patient newPatient = Creator.setPatient();
         Address address = Creator.setAddress();
+        System.out.println("Registration of a new patient");
         newPatient.setFirstName(requestingInfoString("Enter your first name: "));
         newPatient.setLastName(requestingInfoString("Enter your last name: "));
         newPatient.setAge(requestingInfoInt("Enter your age: "));
@@ -268,6 +259,24 @@ public class ConsoleMenu {
                         [3] - Broken bone
                         [4] - Unknown
                         """, 4)));
+        serviceMenu();
+        String answer = requestingInfoWithYesOrNo("Do you want to choose doctor? (y/n): ");
+        if (answer.equals("y")) {
+            chooseDoctor();
+        } else {
+            System.out.println("OK!");
+        }
+        answer = requestingInfoWithYesOrNo("Do you want to choose VIP service? (y/n): ");
+        if (answer.equals("y")) {
+            vipServiceMenu();
+        } else {
+            System.out.println("OK!");
+        }
+        addServicesToDoctor();
+        patient.getDoctor().addPatient(patient);
+    }
+
+    private void serviceMenu() {
         do {
             Service service = getService(requestingInfoWithChoice(
                     """
@@ -284,20 +293,6 @@ public class ConsoleMenu {
                 break;
             }
         } while (true);
-        String answer = requestingInfoWithYesOrNo("Do you want to choose doctor? (y/n): ");
-        if (answer.equals("y")) {
-            chooseDoctor();
-        } else {
-            System.out.println("OK!");
-        }
-        answer = requestingInfoWithYesOrNo("Do you want to choose VIP service? (y/n): ");
-        if (answer.equals("y")) {
-            vipServiceMenu();
-        } else {
-            System.out.println("OK!");
-        }
-        addServicesToDoctor();
-        patient.getDoctor().addPatient(patient);
     }
 
     private void addServicesToDoctor() {
@@ -360,6 +355,15 @@ public class ConsoleMenu {
         };
     }
 
+    private VipService getVipService(int number) {
+        return switch (number) {
+            case (1) -> VipService.SEPARATE_ROOM;
+            case (2) -> VipService.SPECIAL_FOOD;
+            case (3) -> VipService.WALK_IN_SERVICE;
+            default -> VipService.ENTERTAINMENT;
+        };
+    }
+
     private String requestingInfoWithYesOrNo(String text) {
         String answer;
         do {
@@ -419,7 +423,12 @@ public class ConsoleMenu {
             } catch (NumberFormatException e) {
                 answer = "";
             }
-        } while (answer.isEmpty() || numberFromAnswer < 1);
+            if (answer.isEmpty() || numberFromAnswer < 1) {
+                text = "Please, enter correct data: ";
+            } else {
+                break;
+            }
+        } while (true);
         return numberFromAnswer;
     }
 }

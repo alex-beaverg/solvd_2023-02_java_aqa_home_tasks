@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
-public class Department implements IAddPatients, IGetEmployees {
+public class Department implements IAddPatients, IGetEmployeesBySomething {
     private final String title;
     private final int officeNumber;
     private Employee[] employees;
