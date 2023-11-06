@@ -1,25 +1,22 @@
 package org.example.hospital.people;
 
 public enum Position {
-    DEPT_HEAD ("Department Head", 3, 1, 1.81),
-    DOCTOR_1_CATEGORY("Doctor 1st category", 2, 1, 1.01),
-    DOCTOR_2_CATEGORY("Doctor 2nd category", 2, 2, 1.21),
-    DOCTOR_3_CATEGORY("Doctor 3rd category", 2, 3, 1.61),
-    NURSE ("Nurse", 1, 1, 1.01);
+    DEPT_HEAD ("Department Head", 3, 1),
+    DOCTOR_1_CATEGORY("Doctor 1st category", 2, 1),
+    DOCTOR_2_CATEGORY("Doctor 2nd category", 2, 2),
+    DOCTOR_3_CATEGORY("Doctor 3rd category", 2, 3),
+    NURSE ("Nurse", 1, 1);
 
     private final String title;
     private final int specialistClass;
     private final int category;
-    private final double serviceCoefficient;
 
     Position(String title,
              int specialistClass,
-             int category,
-             double serviceCoefficient) {
+             int category) {
         this.title = title;
         this.specialistClass = specialistClass;
         this.category = category;
-        this.serviceCoefficient = serviceCoefficient;
     }
 
     public int getSpecialistClass() {
@@ -28,10 +25,6 @@ public enum Position {
 
     public int getCategory() {
         return category;
-    }
-
-    public double getServiceCoefficient() {
-        return serviceCoefficient;
     }
 
     public String getTitle() {

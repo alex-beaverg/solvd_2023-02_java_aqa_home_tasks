@@ -1,6 +1,7 @@
 package org.example.hospital.people;
 
 import org.example.hospital.structure.*;
+import org.example.hospital.structure.accounting.Accounting;
 
 import java.util.ArrayList;
 import java.util.Objects;
