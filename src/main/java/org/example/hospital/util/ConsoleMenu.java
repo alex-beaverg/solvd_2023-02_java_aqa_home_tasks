@@ -30,6 +30,7 @@ public final class ConsoleMenu {
                         """, 4);
         switch (answer) {
             case (1) -> {
+                System.out.println("All departments in hospital:");
                 for (Department department : objects.hospital.getDepartments()) {
                     System.out.println(department);
                 }
