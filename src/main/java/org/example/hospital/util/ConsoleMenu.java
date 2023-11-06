@@ -11,7 +11,7 @@ import java.util.Scanner;
 public final class ConsoleMenu {
     private final HardCodeObjects objects = new HardCodeObjects();
     private Patient patient;
-    Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     public void runApp() {
         objects.fillArrays();

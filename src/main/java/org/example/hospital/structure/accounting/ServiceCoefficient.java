@@ -15,7 +15,7 @@ public enum ServiceCoefficient implements IGetValue {
     private final double serviceCoefficient;
 
     ServiceCoefficient(String title,
-                        double serviceCoefficient) {
+                       double serviceCoefficient) {
         this.title = title;
         this.serviceCoefficient = serviceCoefficient;
     }

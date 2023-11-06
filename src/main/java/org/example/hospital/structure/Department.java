@@ -20,24 +20,24 @@ public class Department implements IAddPatients, IGetEmployeesBySomething {
     }
 
     @Override
-    public void addPatient(Patient patient) {
+    public final void addPatient(Patient patient) {
         patients.add(patient);
     }
 
-    public String getTitle() {
+    public final String getTitle() {
         return title;
     }
 
-    public int getOfficeNumber() {
+    public final int getOfficeNumber() {
         return officeNumber;
     }
 
-    public void setEmployees(Employee[] employees) {
+    public final void setEmployees(Employee[] employees) {
         this.employees = employees;
     }
 
     @Override
-    public ArrayList<Employee> getEmployeesBySpecialistClass(int specialistClass) {
+    public final ArrayList<Employee> getEmployeesBySpecialistClass(int specialistClass) {
         ArrayList<Employee> tempList = new ArrayList<>();
         for (Employee employee: employees) {
             if (employee.getPosition().getSpecialistClass() == specialistClass) {
@@ -47,7 +47,7 @@ public class Department implements IAddPatients, IGetEmployeesBySomething {
         return tempList;
     }
 
-    public Employee getRandomEmployeeBySpecialistClass(int specialistClass) {
+    public final Employee getRandomEmployeeBySpecialistClass(int specialistClass) {
         ArrayList<Employee> tempList = new ArrayList<>();
         for (Employee employee: employees) {
             if (employee.getPosition().getSpecialistClass() == specialistClass) {

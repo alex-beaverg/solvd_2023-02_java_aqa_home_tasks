@@ -4,7 +4,7 @@ import org.example.hospital.people.*;
 import org.example.hospital.structure.*;
 import org.example.hospital.util.Creator;
 
-public class HardCodeObjects {
+public final class HardCodeObjects {
     public Hospital hospital = Creator.setHospital("City Hospital");
 
     public Department therapeuticDept = Creator.setDepartment("Therapeutic department", 103);

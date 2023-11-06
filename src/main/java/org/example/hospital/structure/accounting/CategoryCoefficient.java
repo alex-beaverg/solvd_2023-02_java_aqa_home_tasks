@@ -9,7 +9,7 @@ public enum CategoryCoefficient implements IGetValue {
     private final double categoryCoefficient;
 
     CategoryCoefficient(String title,
-             double categoryCoefficient) {
+                        double categoryCoefficient) {
         this.title = title;
         this.categoryCoefficient = categoryCoefficient;
     }

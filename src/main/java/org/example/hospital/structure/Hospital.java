@@ -5,7 +5,7 @@ import org.example.hospital.people.Patient;
 
 import java.util.ArrayList;
 
-public class Hospital implements IAddPatients, IGetEmployeesBySomething {
+public final class Hospital implements IAddPatients, IGetEmployeesBySomething {
     private final String title;
     private Department[] departments;
     private Employee[] employees;
