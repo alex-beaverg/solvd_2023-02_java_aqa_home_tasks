@@ -1,6 +1,6 @@
 package org.example.hospital.structure.accounting;
 
-public enum CategoryCoefficient {
+public enum CategoryCoefficient implements IGetValue {
     CAT1_COEF("1st category coefficient", 1.32),
     CAT2_COEF("2nd category coefficient", 1.61),
     CAT3_COEF("3rd category coefficient", 1.89);
@@ -14,7 +14,8 @@ public enum CategoryCoefficient {
         this.categoryCoefficient = categoryCoefficient;
     }
 
-    public double getCategoryCoefficient() {
+    @Override
+    public double getValue() {
         return categoryCoefficient;
     }
 

@@ -70,9 +70,9 @@ public final class Accounting {
 
     private static double getCategoryCoefficient(int category) {
         return switch (category) {
-            case (1) -> CategoryCoefficient.CAT1_COEF.getCategoryCoefficient();
-            case (2) -> CategoryCoefficient.CAT2_COEF.getCategoryCoefficient();
-            default -> CategoryCoefficient.CAT3_COEF.getCategoryCoefficient();
+            case (1) -> CategoryCoefficient.CAT1_COEF.getValue();
+            case (2) -> CategoryCoefficient.CAT2_COEF.getValue();
+            default -> CategoryCoefficient.CAT3_COEF.getValue();
         };
     }
 
@@ -80,21 +80,21 @@ public final class Accounting {
         double serviceCoefficient;
         if (specialistClass == 1) {
             switch (category) {
-                case (1) -> serviceCoefficient = ServiceCoefficient.SC1_CAT1_SERV_COEF.getServiceCoefficient();
-                case (2) -> serviceCoefficient = ServiceCoefficient.SC1_CAT2_SERV_COEF.getServiceCoefficient();
-                default -> serviceCoefficient = ServiceCoefficient.SC1_CAT3_SERV_COEF.getServiceCoefficient();
+                case (1) -> serviceCoefficient = ServiceCoefficient.SC1_CAT1_COEF.getValue();
+                case (2) -> serviceCoefficient = ServiceCoefficient.SC1_CAT2_COEF.getValue();
+                default -> serviceCoefficient = ServiceCoefficient.SC1_CAT3_COEF.getValue();
             }
         } else if (specialistClass == 2) {
             switch (category) {
-                case (1) -> serviceCoefficient = ServiceCoefficient.SC2_CAT1_SERV_COEF.getServiceCoefficient();
-                case (2) -> serviceCoefficient = ServiceCoefficient.SC2_CAT2_SERV_COEF.getServiceCoefficient();
-                default -> serviceCoefficient = ServiceCoefficient.SC2_CAT3_SERV_COEF.getServiceCoefficient();
+                case (1) -> serviceCoefficient = ServiceCoefficient.SC2_CAT1_COEF.getValue();
+                case (2) -> serviceCoefficient = ServiceCoefficient.SC2_CAT2_COEF.getValue();
+                default -> serviceCoefficient = ServiceCoefficient.SC2_CAT3_COEF.getValue();
             }
         } else {
             switch (category) {
-                case (1) -> serviceCoefficient = ServiceCoefficient.SC3_CAT1_SERV_COEF.getServiceCoefficient();
-                case (2) -> serviceCoefficient = ServiceCoefficient.SC3_CAT2_SERV_COEF.getServiceCoefficient();
-                default -> serviceCoefficient = ServiceCoefficient.SC3_CAT3_SERV_COEF.getServiceCoefficient();
+                case (1) -> serviceCoefficient = ServiceCoefficient.SC3_CAT1_COEF.getValue();
+                case (2) -> serviceCoefficient = ServiceCoefficient.SC3_CAT2_COEF.getValue();
+                default -> serviceCoefficient = ServiceCoefficient.SC3_CAT3_COEF.getValue();
             }
         }
         return serviceCoefficient;
