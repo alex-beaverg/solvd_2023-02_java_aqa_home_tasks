@@ -11,7 +11,7 @@ import java.util.Objects;
 public class Patient extends Person implements IAddServices {
     private Diagnosis diagnosis;
     private Department department;
-    private Employee therapist;
+    private Employee doctor;
     private Employee nurse;
     private final ArrayList<Service> services = new ArrayList<>();
     private final ArrayList<VipService> vipServices = new ArrayList<>();
@@ -74,12 +74,12 @@ public class Patient extends Person implements IAddServices {
         return department;
     }
 
-    public Employee getTherapist() {
-        return therapist;
+    public Employee getDoctor() {
+        return doctor;
     }
 
-    public void setTherapist(Employee therapist) {
-        this.therapist = therapist;
+    public void setDoctor(Employee doctor) {
+        this.doctor = doctor;
 
     }
 
@@ -153,7 +153,7 @@ public class Patient extends Person implements IAddServices {
                     "\n\tDiagnosis: " + diagnosis.getTitle() +
                     "\n\tDepartment: " + department.getTitle() +
                     "\n\tOffice: " + department.getOfficeNumber() +
-                    "\n\tTherapist: " + therapist.getFirstName() + " " + therapist.getLastName() + " (" + therapist.getPosition().getTitle() + ")" +
+                    "\n\tDoctor: " + doctor.getFirstName() + " " + doctor.getLastName() + " (" + doctor.getPosition().getTitle() + ")" +
                     "\n\tNurse: " + nurse.getFirstName() + " " + nurse.getLastName() +
                     "\n\tServices: " + combineServices() +
                     "\n\tPrice: " + Math.ceil(servicesPrice * 100) / 100 + " BYN" +

@@ -58,7 +58,7 @@ public class Employee extends Person implements IAddPatients, IAddServices, IDel
     @Override
     public void deleteService(Service service) {
         this.services.remove(service);
-        vipServicesPrice = Accounting.calculateVipServicesPrice(this);
+        servicesPrice = Accounting.calculateServicesPrice(this);
         salary = Accounting.calculateEmployeeSalary(this);
     }
 
@@ -166,6 +166,8 @@ public class Employee extends Person implements IAddPatients, IAddServices, IDel
                 "\n\tPatients: " + combinePatients() +
                 "\n\tServices: " + combineServices() +
                 "\n\tVIP services: " + combineVipServices() +
-                "\n\tSalary: " + Math.ceil(salary * 100) / 100 + " BYN";
+                "\n\tSalary: " + Math.ceil(salary * 100) / 100 + " BYN" +
+                "\n\tServ price: " + servicesPrice +
+                "\n\tVipServ price: " + vipServicesPrice;
     }
 }

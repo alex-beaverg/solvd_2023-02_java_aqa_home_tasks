@@ -22,7 +22,7 @@ public final class Accounting {
 
     public static double calculateServicesPrice(Patient patient) {
         double servicesPrice = 0;
-        double serviceCoefficient = patient.getTherapist().getPosition().getServiceCoefficient();
+        double serviceCoefficient = patient.getDoctor().getPosition().getServiceCoefficient();
         for (Service service: patient.getServices()) {
             servicesPrice += service.getPrice() * serviceCoefficient;
         }
@@ -41,7 +41,7 @@ public final class Accounting {
 
     public static double calculateVipServicesPrice(Patient patient) {
         double vipServicesPrice = 0;
-        double serviceCoefficient = patient.getTherapist().getPosition().getServiceCoefficient();
+        double serviceCoefficient = patient.getDoctor().getPosition().getServiceCoefficient();
         for (VipService vipService: patient.getVipServices()) {
             vipServicesPrice += vipService.getPrice() * serviceCoefficient;
         }

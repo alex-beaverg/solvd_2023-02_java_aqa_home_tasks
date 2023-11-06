@@ -42,11 +42,11 @@ public class HardCodeObjects {
             surgeryDept, Position.NURSE, Schedule.BEFORE_NOON_EVEN_DAYS);
 
     public Patient ericAdams = Creator.setPatient("Eric", "Adams", 30, "Minsk",
-            "Main str.", 22, 11, Diagnosis.COVID, therapeuticDept);
+            "Main str.", 22, 11, Diagnosis.FLU, therapeuticDept);
     public Patient lisaBourne = Creator.setPatient("Lisa", "Bourne", 28, "Minsk",
             "Green str.", 45, 9, Diagnosis.BONE_FRACTURE, surgeryDept);
     public Patient roseDart = Creator.setPatient("Rose", "Dart", 23, "Brest",
-            "Old str.", 4, 66, Diagnosis.FLU, therapeuticDept);
+            "Old str.", 4, 66, Diagnosis.COVID, therapeuticDept);
     public Patient maxCorn = Creator.setPatient("Max", "Corn", 33, "Minsk",
             "Red str.", 5, 97, Diagnosis.UNKNOWN, therapeuticDept);
 
@@ -60,35 +60,35 @@ public class HardCodeObjects {
         hospital.addPatient(ericAdams);
         therapeuticDept.addPatient(ericAdams);
         ericAdams.setDiagnosis(Diagnosis.FLU);
-        ericAdams.setTherapist(therapeuticDept.getRandomEmployeeBySpecialistClass(2));
+        ericAdams.setDoctor(therapeuticDept.getRandomEmployeeBySpecialistClass(2));
         ericAdams.setNurse(therapeuticDept.getRandomEmployeeBySpecialistClass(1));
         ericAdams.addService(Service.APPOINTMENT);
         ericAdams.addService(Service.TREATMENT);
         ericAdams.addVipService(VipService.WALK_IN_SERVICE);
-        ericAdams.getTherapist().addService(Service.APPOINTMENT);
-        ericAdams.getTherapist().addService(Service.TREATMENT);
-        ericAdams.getTherapist().addVipService(VipService.WALK_IN_SERVICE);
-        ericAdams.getTherapist().addPatient(ericAdams);
+        ericAdams.getDoctor().addService(Service.APPOINTMENT);
+        ericAdams.getDoctor().addService(Service.TREATMENT);
+        ericAdams.getDoctor().addVipService(VipService.WALK_IN_SERVICE);
+        ericAdams.getDoctor().addPatient(ericAdams);
 
         hospital.addPatient(lisaBourne);
         surgeryDept.addPatient(lisaBourne);
-        lisaBourne.setDiagnosis(Diagnosis.COVID);
-        lisaBourne.setTherapist(surgeryDept.getRandomEmployeeBySpecialistClass(2));
+        lisaBourne.setDiagnosis(Diagnosis.BONE_FRACTURE);
+        lisaBourne.setDoctor(surgeryDept.getRandomEmployeeBySpecialistClass(2));
         lisaBourne.setNurse(surgeryDept.getRandomEmployeeBySpecialistClass(1));
         lisaBourne.addService(Service.APPOINTMENT);
         lisaBourne.addService(Service.HOSPITALIZATION);
         lisaBourne.addVipService(VipService.SEPARATE_ROOM);
         lisaBourne.addVipService(VipService.SPECIAL_FOOD);
-        lisaBourne.getTherapist().addService(Service.APPOINTMENT);
-        lisaBourne.getTherapist().addService(Service.HOSPITALIZATION);
-        lisaBourne.getTherapist().addVipService(VipService.SEPARATE_ROOM);
-        lisaBourne.getTherapist().addVipService(VipService.SPECIAL_FOOD);
-        lisaBourne.getTherapist().addPatient(lisaBourne);
+        lisaBourne.getDoctor().addService(Service.APPOINTMENT);
+        lisaBourne.getDoctor().addService(Service.HOSPITALIZATION);
+        lisaBourne.getDoctor().addVipService(VipService.SEPARATE_ROOM);
+        lisaBourne.getDoctor().addVipService(VipService.SPECIAL_FOOD);
+        lisaBourne.getDoctor().addPatient(lisaBourne);
 
         hospital.addPatient(roseDart);
         therapeuticDept.addPatient(roseDart);
-        roseDart.setDiagnosis(Diagnosis.BONE_FRACTURE);
-        roseDart.setTherapist(therapeuticDept.getRandomEmployeeBySpecialistClass(2));
+        roseDart.setDiagnosis(Diagnosis.COVID);
+        roseDart.setDoctor(therapeuticDept.getRandomEmployeeBySpecialistClass(2));
         roseDart.setNurse(therapeuticDept.getRandomEmployeeBySpecialistClass(1));
         roseDart.addService(Service.APPOINTMENT);
         roseDart.addService(Service.HOSPITALIZATION);
@@ -98,29 +98,29 @@ public class HardCodeObjects {
         roseDart.addVipService(VipService.SPECIAL_FOOD);
         roseDart.addVipService(VipService.WALK_IN_SERVICE);
         roseDart.addVipService(VipService.ENTERTAINMENT);
-        roseDart.getTherapist().addService(Service.APPOINTMENT);
-        roseDart.getTherapist().addService(Service.HOSPITALIZATION);
-        roseDart.getTherapist().addService(Service.TREATMENT);
-        roseDart.getTherapist().addService(Service.EXAMINATION);
-        roseDart.getTherapist().addVipService(VipService.SEPARATE_ROOM);
-        roseDart.getTherapist().addVipService(VipService.SPECIAL_FOOD);
-        roseDart.getTherapist().addVipService(VipService.WALK_IN_SERVICE);
-        roseDart.getTherapist().addVipService(VipService.ENTERTAINMENT);
-        roseDart.getTherapist().addPatient(roseDart);
+        roseDart.getDoctor().addService(Service.APPOINTMENT);
+        roseDart.getDoctor().addService(Service.HOSPITALIZATION);
+        roseDart.getDoctor().addService(Service.TREATMENT);
+        roseDart.getDoctor().addService(Service.EXAMINATION);
+        roseDart.getDoctor().addVipService(VipService.SEPARATE_ROOM);
+        roseDart.getDoctor().addVipService(VipService.SPECIAL_FOOD);
+        roseDart.getDoctor().addVipService(VipService.WALK_IN_SERVICE);
+        roseDart.getDoctor().addVipService(VipService.ENTERTAINMENT);
+        roseDart.getDoctor().addPatient(roseDart);
 
         hospital.addPatient(maxCorn);
         therapeuticDept.addPatient(maxCorn);
         maxCorn.setDiagnosis(Diagnosis.UNKNOWN);
-        maxCorn.setTherapist(therapeuticDept.getRandomEmployeeBySpecialistClass(2));
+        maxCorn.setDoctor(therapeuticDept.getRandomEmployeeBySpecialistClass(2));
         maxCorn.setNurse(therapeuticDept.getRandomEmployeeBySpecialistClass(1));
         maxCorn.addService(Service.APPOINTMENT);
         maxCorn.addService(Service.HOSPITALIZATION);
         maxCorn.addVipService(VipService.SPECIAL_FOOD);
         maxCorn.addVipService(VipService.WALK_IN_SERVICE);
-        maxCorn.getTherapist().addService(Service.APPOINTMENT);
-        maxCorn.getTherapist().addService(Service.HOSPITALIZATION);
-        maxCorn.getTherapist().addVipService(VipService.SPECIAL_FOOD);
-        maxCorn.getTherapist().addVipService(VipService.WALK_IN_SERVICE);
-        maxCorn.getTherapist().addPatient(maxCorn);
+        maxCorn.getDoctor().addService(Service.APPOINTMENT);
+        maxCorn.getDoctor().addService(Service.HOSPITALIZATION);
+        maxCorn.getDoctor().addVipService(VipService.SPECIAL_FOOD);
+        maxCorn.getDoctor().addVipService(VipService.WALK_IN_SERVICE);
+        maxCorn.getDoctor().addPatient(maxCorn);
     }
 }
