@@ -378,7 +378,7 @@ public class ConsoleMenu {
         return answer;
     }
 
-    private int requestingInfoWithChoice(String text, int to) {
+    private int requestingInfoWithChoice(String text, int menuItemsNumber) {
         String answer;
         int numberFromAnswer = 0;
         do {
@@ -389,7 +389,7 @@ public class ConsoleMenu {
             } catch (NumberFormatException e) {
                 answer = "";
             }
-            if (answer.isEmpty() || numberFromAnswer < 1 || numberFromAnswer > to) {
+            if (answer.isEmpty() || numberFromAnswer < 1 || numberFromAnswer > menuItemsNumber) {
                 text = "Please, enter correct data: ";
             } else {
                 break;
