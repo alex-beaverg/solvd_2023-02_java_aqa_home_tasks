@@ -159,7 +159,7 @@ public class Employee extends Person implements IAddPatients, IAddServices, IDel
 
     @Override
     public String toString() {
-        return "\nEmployee (" + getRole() + "): " +
+        return "Employee (" + getRole() + "): " +
                 super.toString() +
                 "\n\tDepartment: " + department.getTitle() +
                 "\n\tPosition: " + position +

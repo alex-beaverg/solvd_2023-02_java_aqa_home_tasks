@@ -8,7 +8,7 @@ import org.example.hospital.structure.VipService;
 
 import java.util.Scanner;
 
-public class ConsoleMenu {
+public final class ConsoleMenu {
     private final HardCodeObjects objects = new HardCodeObjects();
     private Patient patient;
     Scanner scanner = new Scanner(System.in);
