@@ -5,7 +5,7 @@ import org.example.hospital.structure.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Employee extends Person implements IAddPatients, IAddServices, IDelete {
+public class Employee extends Person implements IAddPatients, IAddServices, IDeleteItems {
     private final Department department;
     private final Position position;
     private final Schedule schedule;

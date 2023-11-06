@@ -42,14 +42,6 @@ public class Patient extends Person implements IAddServices {
         return vipServices;
     }
 
-    public void setServicesPrice() {
-        servicesPrice = Accounting.calculateServicesPrice(this);
-    }
-
-    public void setVipServicesPrice() {
-        vipServicesPrice = Accounting.calculateVipServicesPrice(this);
-    }
-
     @Override
     public void addService(Service service) {
         services.add(service);
@@ -80,7 +72,8 @@ public class Patient extends Person implements IAddServices {
 
     public void setDoctor(Employee doctor) {
         this.doctor = doctor;
-
+        servicesPrice = Accounting.calculateServicesPrice(this);
+        vipServicesPrice = Accounting.calculateVipServicesPrice(this);
     }
 
     public void setNurse(Employee nurse) {

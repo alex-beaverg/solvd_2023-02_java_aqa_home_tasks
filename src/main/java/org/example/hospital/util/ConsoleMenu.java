@@ -131,8 +131,6 @@ public class ConsoleMenu {
         patient.getDoctor().deletePatient(patient);
         patient.setDoctor(patient.getDepartment().getEmployeesBySpecialistClass(2).get(answer - 1));
         patient.getDoctor().addPatient(patient);
-        patient.setServicesPrice();
-        patient.setVipServicesPrice();
         addServicesToDoctor();
         System.out.println("Doctor was changed");
     }
