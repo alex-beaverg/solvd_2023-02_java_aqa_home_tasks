@@ -166,8 +166,6 @@ public class Employee extends Person implements IAddPatients, IAddServices, IDel
                 "\n\tPatients: " + combinePatients() +
                 "\n\tServices: " + combineServices() +
                 "\n\tVIP services: " + combineVipServices() +
-                "\n\tSalary: " + Math.ceil(salary * 100) / 100 + " BYN" +
-                "\n\tServ price: " + servicesPrice +
-                "\n\tVipServ price: " + vipServicesPrice;
+                "\n\tSalary: " + Math.ceil(salary * 100) / 100 + " BYN";
     }
 }
