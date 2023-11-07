@@ -44,14 +44,40 @@ public class Patient extends Person implements IAddServices {
 
     @Override
     public void addService(Service service) {
-        services.add(service);
-        servicesPrice = Accounting.calculateServicesPrice(this);
+        boolean isService = false;
+        for (Service addedService: services) {
+            if (service == addedService) {
+                isService = true;
+                break;
+            }
+        }
+        if (!isService) {
+            services.add(service);
+            servicesPrice = Accounting.calculateServicesPrice(this);
+            System.out.println("This service (" + service.getTitle() + ") was added to patient");
+        } else {
+            System.out.println("This service (" + service.getTitle() + ") has already been added earlier. " +
+                    "Choose another service");
+        }
     }
 
     @Override
     public void addVipService(VipService vipService) {
-        vipServices.add(vipService);
-        vipServicesPrice = Accounting.calculateVipServicesPrice(this);
+        boolean isVipService = false;
+        for (VipService addedVipService: vipServices) {
+            if (vipService == addedVipService) {
+                isVipService = true;
+                break;
+            }
+        }
+        if (!isVipService) {
+            vipServices.add(vipService);
+            vipServicesPrice = Accounting.calculateVipServicesPrice(this);
+            System.out.println("This VIP service (" + vipService.getTitle() + ") was added to patient");
+        } else {
+            System.out.println("This VIP service (" + vipService.getTitle() + ") has already been added earlier. " +
+                    "Choose another VIP service");
+        }
     }
 
     public void setDiagnosis(Diagnosis diagnosis) {
