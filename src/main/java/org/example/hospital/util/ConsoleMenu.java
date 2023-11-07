@@ -5,6 +5,7 @@ import org.example.hospital.people.*;
 import org.example.hospital.structure.Department;
 import org.example.hospital.structure.Service;
 import org.example.hospital.structure.VipService;
+import org.example.hospital.util.menu_enums.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -20,15 +21,18 @@ public final class ConsoleMenu {
         runMainMenu();
     }
 
+    private int runAnyMenu(String title, IMenu[] menuItems) {
+        int index = 1;
+        System.out.println(title);
+        for (IMenu item : menuItems) {
+            System.out.println("[" + index + "] - " + item.getTitle());
+            index++;
+        }
+        return requestingInfoWithChoice("Enter the menu item number: ", index - 1);
+    }
+
     private void runMainMenu() {
-        int answer = requestingInfoWithChoice(
-                """
-                        Choose an action:
-                        [1] - Show departments
-                        [2] - Doctors menu actions
-                        [3] - Patients menu actions
-                        [4] - Exit
-                        """, 4);
+        int answer = runAnyMenu("Main menu:", MainMenu.values());
         switch (answer) {
             case (1) -> {
                 System.out.println("All departments in hospital:");
@@ -47,13 +51,7 @@ public final class ConsoleMenu {
     }
 
     private void runDoctorsMenu() {
-        int answer = requestingInfoWithChoice(
-                """
-                        Choose an action:
-                        [1] - Show all doctors
-                        [2] - Go to main menu
-                        [3] - Exit
-                        """, 3);
+        int answer = runAnyMenu("Doctors menu:", DoctorsMenu.values());
         if (answer == 1) {
             showDoctors();
             runDoctorsMenu();
@@ -66,33 +64,27 @@ public final class ConsoleMenu {
     }
 
     private void runPatientsMenu() {
-        int answer = requestingInfoWithChoice(
-                """
-                        Choose an action:
-                        [1] - Find and choose the patient in registry
-                        [2] - Register new patient
-                        [3] - Show all patients and choose one of them
-                        [4] - Go to main menu
-                        [5] - Exit
-                        """, 5);
+        int answer = runAnyMenu("Patients menu:", PatientsMenu.values());
         switch (answer) {
             case (1) -> {
                 patient = findExistPatient();
                 if (patient != null) {
-                    runPatientsSubmenu();
+                    runPatientMenu();
+                } else {
+                    runPatientsMenu();
                 }
             }
             case (2) -> {
                 patient = registerNewPatient();
                 System.out.println("New patient (" + patient.getFullName() + ") was registered");
-                toComplain();
+                runComplaintsMenu();
                 System.out.println(patient);
-                runPatientsSubmenu();
+                runPatientMenu();
             }
             case (3) -> {
                 patient = choosePatient();
                 System.out.println("Patient (" + patient.getFullName() + ") was chosen!");
-                runPatientsSubmenu();
+                runPatientMenu();
             }
             case (4) -> runMainMenu();
             default -> {
@@ -102,34 +94,36 @@ public final class ConsoleMenu {
         }
     }
 
-    private void runPatientsSubmenu() {
-        System.out.println("Patient " + patient.getFullName());
-        int answer = requestingInfoWithChoice(
-                """
-                        Choose an action:
-                        [1] - Change doctor
-                        [2] - Delete VIP service
-                        [3] - Add VIP service
-                        [4] - Show full information about patient
-                        [5] - Go to main menu
-                        [6] - Exit
-                        """, 6);
+    private Patient findExistPatient() {
+        String fullName = requestingInfoString("Enter patient full name for searching: ");
+        for (Patient existPatient: objects.hospital.getPatients()) {
+            if ((existPatient.getFirstName() + " " + existPatient.getLastName()).equals(fullName)) {
+                System.out.println("Patient " + fullName + " was found and chosen:");
+                return existPatient;
+            }
+        }
+        System.out.println("Patient " + fullName + " was not found. Try it again");
+        return null;
+    }
+
+    private void runPatientMenu() {
+        int answer = runAnyMenu("Patient menu:", PatientMenu.values());
         switch (answer) {
             case (1) -> {
                 changeDoctor();
-                runPatientsSubmenu();
+                runPatientMenu();
             }
             case (2) -> {
                 deleteVipService();
-                runPatientsSubmenu();
+                runPatientMenu();
             }
             case (3) -> {
                 runVipServiceMenu();
-                runPatientsSubmenu();
+                runPatientMenu();
             }
             case (4) -> {
                 System.out.println(patient);
-                runPatientsSubmenu();
+                runPatientMenu();
             }
             case (5) -> runMainMenu();
             default -> {
@@ -156,7 +150,7 @@ public final class ConsoleMenu {
             } else {
                 System.out.println("The patient has no VIP services");
             }
-            String answer = requestingInfoWithYesOrNo("Do you want to choose another VIP service? (y/n): ");
+            String answer = requestingInfoWithYesOrNo("Do you want to delete another VIP service? (y/n): ");
             if (answer.equals("n")) {
                 System.out.println("OK!");
                 break;
@@ -253,51 +247,6 @@ public final class ConsoleMenu {
         System.out.println("Dr. " + oldDoctor.getFullName() + " has been replaced by dr. " + patient.getDoctor().getFullName());
     }
 
-    private Patient findExistPatient() {
-        String fullName = requestingInfoString("Enter patient full name for searching: ");
-        for (Patient existPatient: objects.hospital.getPatients()) {
-            if ((existPatient.getFirstName() + " " + existPatient.getLastName()).equals(fullName)) {
-                System.out.println("Patient " + fullName + " was found and chosen:");
-                System.out.println(existPatient);
-                return existPatient;
-            }
-        }
-        System.out.println("Patient " + fullName + " was not found.");
-        int answer = requestingInfoWithChoice(
-                """
-                        Choose an action:
-                        [1] - Try to find and choose the patient again
-                        [2] - Register new patient
-                        [3] - Show all patients to choose one of them
-                        [4] - Go to main menu
-                        [5] - Exit
-                        """, 5);
-        switch (answer) {
-            case (1) -> {
-                return findExistPatient();
-            }
-            case (2) -> {
-                patient = registerNewPatient();
-                System.out.println("New patient (" + patient.getFullName() + ") was registered");
-                toComplain();
-                System.out.println(patient);
-                return patient;
-            }
-            case (3) -> {
-                return choosePatient();
-            }
-            case (4) -> {
-                runMainMenu();
-                return null;
-            }
-            default -> {
-                scanner.close();
-                System.out.println("Good bye!");
-                return null;
-            }
-        }
-    }
-
     private Patient registerNewPatient() {
         Patient newPatient = Creator.setPatient();
         Address address = Creator.setAddress();
@@ -314,24 +263,18 @@ public final class ConsoleMenu {
         return newPatient;
     }
 
-    private void toComplain() {
-        patient.setDiagnosis(getDiagnose(requestingInfoWithChoice(
-                """
-                        Enter your complaint:
-                        [1] - Cough
-                        [2] - No smells
-                        [3] - Broken bone
-                        [4] - Unknown
-                        """, 4)));
-        String answer = requestingInfoWithYesOrNo("Do you want to assign doctor? (y/n): ");
-        if (answer.equals("y")) {
+    private void runComplaintsMenu() {
+        int answer = runAnyMenu("Complaints menu:", ComplaintsMenu.values());
+        patient.setDiagnosis(getDiagnose(answer - 1));
+        String answerString = requestingInfoWithYesOrNo("Do you want to assign doctor? (y/n): ");
+        if (answerString.equals("y")) {
             assignDoctor();
         } else {
             System.out.println("Your doctor (" + patient.getDoctor().getFullName() + ") was assigned by hospital automatically");
         }
         runServiceMenu();
-        answer = requestingInfoWithYesOrNo("Do you want to choose VIP service? (y/n): ");
-        if (answer.equals("y")) {
+        answerString = requestingInfoWithYesOrNo("Do you want to choose VIP service? (y/n): ");
+        if (answerString.equals("y")) {
             runVipServiceMenu();
         } else {
             System.out.println("OK!");
