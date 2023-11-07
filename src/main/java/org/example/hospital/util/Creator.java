@@ -36,6 +36,15 @@ public class Creator {
     }
 
     public static Address setAddress(String city, String street, int houseNumber, int flatNumber) {
-        return new Address(city, street, houseNumber, flatNumber);
+        try (Address address = new Address(null, null, 0, 0)) {
+            address.setCity(city);
+            address.setStreet(street);
+            address.setHouseNumber(houseNumber);
+            address.setFlatNumber(flatNumber);
+            return address;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }

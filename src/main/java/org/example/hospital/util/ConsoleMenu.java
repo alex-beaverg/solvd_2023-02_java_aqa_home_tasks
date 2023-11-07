@@ -1,5 +1,6 @@
 package org.example.hospital.util;
 
+import org.example.hospital.custom_exceptions.*;
 import org.example.hospital.data.HardCodeObjects;
 import org.example.hospital.people.*;
 import org.example.hospital.structure.Department;
@@ -28,7 +29,18 @@ public final class ConsoleMenu {
             System.out.println("[" + index + "] - " + item.getTitle());
             index++;
         }
-        return requestingInfoWithChoice("Enter the menu item number: ", index - 1);
+        int answer;
+        do {
+            try {
+                answer = requestingInfoWithChoice("Enter the menu item number: ", index - 1);
+                break;
+            } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
+                System.out.println(e.getMessage());
+            } catch (NumberFormatException e) {
+                System.out.println("[NumberFormatException]: Entered data is not a number!");
+            }
+        } while (true);
+        return answer;
     }
 
     private void runMainMenu() {
@@ -95,10 +107,18 @@ public final class ConsoleMenu {
     }
 
     private Patient findExistPatient() {
-        String fullName = requestingInfoString("Enter patient full name for searching: ");
+        String fullName;
+        do {
+            try {
+                fullName = requestingInfoString("Enter patient full name for searching: ");
+                break;
+            } catch (EmptyInputException | StringFormatException e) {
+                System.out.println(e.getMessage());
+            }
+        } while (true);
         for (Patient existPatient: objects.hospital.getPatients()) {
-            if ((existPatient.getFirstName() + " " + existPatient.getLastName()).equals(fullName)) {
-                System.out.println("Patient " + fullName + " was found and chosen:");
+            if ((existPatient.getFirstName() + " " + existPatient.getLastName()).equalsIgnoreCase(fullName)) {
+                System.out.println("Patient " + existPatient.getFullName() + " was found and chosen:");
                 return existPatient;
             }
         }
@@ -142,7 +162,17 @@ public final class ConsoleMenu {
                     System.out.println("[" + index + "] - " + vipService.getTitle());
                     index++;
                 }
-                int answer = requestingInfoWithChoice("Enter number of VIP service to delete it: ", index - 1);
+                int answer;
+                do {
+                    try {
+                        answer = requestingInfoWithChoice("Enter number of VIP service to delete it: ", index - 1);
+                        break;
+                    } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
+                        System.out.println(e.getMessage());
+                    } catch (NumberFormatException e) {
+                        System.out.println("[NumberFormatException]: Entered data is not a number!");
+                    }
+                } while (true);
                 VipService vipServiceToDelete = patient.getVipServices().get(answer - 1);
                 patient.deleteVipService(vipServiceToDelete);
                 patient.getDoctor().deleteVipService(vipServiceToDelete);
@@ -150,7 +180,15 @@ public final class ConsoleMenu {
             } else {
                 System.out.println("The patient has no VIP services");
             }
-            String answer = requestingInfoWithYesOrNo("Do you want to delete another VIP service? (y/n): ");
+            String answer;
+            do {
+                try {
+                    answer = requestingInfoWithYesOrNo("Do you want to delete another VIP service? (y/n): ");
+                    break;
+                } catch (EmptyInputException | YesOrNoException e) {
+                    System.out.println(e.getMessage());
+                }
+            } while (true);
             if (answer.equals("n")) {
                 System.out.println("OK!");
                 break;
@@ -171,7 +209,17 @@ public final class ConsoleMenu {
                         index++;
                     }
                 }
-                int answer = requestingInfoWithChoice("Enter number of VIP service to add it: ", index - 1);
+                int answer;
+                do {
+                    try {
+                        answer = requestingInfoWithChoice("Enter number of VIP service to add it: ", index - 1);
+                        break;
+                    } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
+                        System.out.println(e.getMessage());
+                    } catch (NumberFormatException e) {
+                        System.out.println("[NumberFormatException]: Entered data is not a number!");
+                    }
+                } while (true);
                 VipService vipServiceToAdd = tempList.get(answer - 1);
                 patient.addVipService(vipServiceToAdd);
                 patient.getDoctor().addVipService(vipServiceToAdd);
@@ -179,7 +227,15 @@ public final class ConsoleMenu {
             } else {
                 System.out.println("The patient has all VIP services");
             }
-            String answer = requestingInfoWithYesOrNo("Do you want to choose another VIP service? (y/n): ");
+            String answer;
+            do {
+                try {
+                    answer = requestingInfoWithYesOrNo("Do you want to choose another VIP service? (y/n): ");
+                    break;
+                } catch (EmptyInputException | YesOrNoException e) {
+                    System.out.println(e.getMessage());
+                }
+            } while (true);
             if (answer.equals("n")) {
                 System.out.println("OK!");
                 break;
@@ -194,7 +250,17 @@ public final class ConsoleMenu {
             System.out.println("[" + index + "] - " + doctor.getPersonToPrintInList());
             index++;
         }
-        int answer = requestingInfoWithChoice("Enter number of doctor to show more information: ", index - 1);
+        int answer;
+        do {
+            try {
+                answer = requestingInfoWithChoice("Enter number of doctor to show more information: ", index - 1);
+                break;
+            } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
+                System.out.println(e.getMessage());
+            } catch (NumberFormatException e) {
+                System.out.println("[NumberFormatException]: Entered data is not a number!");
+            }
+        } while (true);
         System.out.println(objects.hospital.getEmployeesBySpecialistClass(2).get(answer - 1));
     }
 
@@ -205,7 +271,17 @@ public final class ConsoleMenu {
             System.out.println("[" + index + "] - " + existPatient.getPersonToPrintInList());
             index++;
         }
-        int answer = requestingInfoWithChoice("Enter number of patient to choose him: ", index - 1);
+        int answer;
+        do {
+            try {
+                answer = requestingInfoWithChoice("Enter number of patient to choose him: ", index - 1);
+                break;
+            } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
+                System.out.println(e.getMessage());
+            } catch (NumberFormatException e) {
+                System.out.println("[NumberFormatException]: Entered data is not a number!");
+            }
+        } while (true);
         System.out.println(objects.hospital.getPatients().get(answer - 1));
         return objects.hospital.getPatients().get(answer - 1);
     }
@@ -221,7 +297,17 @@ public final class ConsoleMenu {
                 index++;
             }
         }
-        int answer = requestingInfoWithChoice("Enter number of doctor to choose him: ", index - 1);
+        int answer;
+        do {
+            try {
+                answer = requestingInfoWithChoice("Enter number of doctor to choose him: ", index - 1);
+                break;
+            } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
+                System.out.println(e.getMessage());
+            } catch (NumberFormatException e) {
+                System.out.println("[NumberFormatException]: Entered data is not a number!");
+            }
+        } while (true);
         patient.setDoctor(tempList.get(answer - 1));
         System.out.println("Your doctor (" + patient.getDoctor().getFirstName() + " " + patient.getDoctor().getLastName() + ") was assigned!");
     }
@@ -237,7 +323,17 @@ public final class ConsoleMenu {
                 index++;
             }
         }
-        int answer = requestingInfoWithChoice("Enter number of doctor to choose him: ", index - 1);
+        int answer;
+        do {
+            try {
+                answer = requestingInfoWithChoice("Enter number of doctor to choose him: ", index - 1);
+                break;
+            } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
+                System.out.println(e.getMessage());
+            } catch (NumberFormatException e) {
+                System.out.println("[NumberFormatException]: Entered data is not a number!");
+            }
+        } while (true);
         deleteAllServicesFromDoctor();
         Employee oldDoctor = patient.getDoctor();
         patient.getDoctor().deletePatient(patient);
@@ -247,33 +343,118 @@ public final class ConsoleMenu {
         System.out.println("Dr. " + oldDoctor.getFullName() + " has been replaced by dr. " + patient.getDoctor().getFullName());
     }
 
-    private Patient registerNewPatient() {
+    private Patient registerNewPatient(){
         Patient newPatient = Creator.setPatient();
         Address address = Creator.setAddress();
         System.out.println("Registration of a new patient");
-        newPatient.setFirstName(requestingInfoString("Enter your first name: "));
-        newPatient.setLastName(requestingInfoString("Enter your last name: "));
-        newPatient.setAge(requestingInfoInt("Enter your age: "));
-        address.setCity(requestingInfoString("Enter your city: "));
-        address.setStreet(requestingInfoString("Enter your street: "));
-        address.setHouseNumber(requestingInfoInt("Enter your house number: "));
-        address.setFlatNumber(requestingInfoInt("Enter your flat number: "));
+        do {
+            try {
+                newPatient.setFirstName(requestingInfoString("Enter your first name: "));
+                break;
+            } catch (EmptyInputException | StringFormatException e) {
+                System.out.println(e.getMessage());
+            }
+        } while (true);
+        do {
+            try {
+                newPatient.setLastName(requestingInfoString("Enter your last name: "));
+                break;
+            } catch (EmptyInputException | StringFormatException e) {
+                System.out.println(e.getMessage());
+            }
+        } while (true);
+        do {
+            try {
+                setAge(newPatient);
+                break;
+            } catch (AgeException e) {
+                System.out.println(e.getMessage());
+            }
+        } while (true);
+        do {
+            try {
+                address.setCity(requestingInfoString("Enter your city: "));
+                break;
+            } catch (EmptyInputException | StringFormatException e) {
+                System.out.println(e.getMessage());
+            }
+        } while (true);
+        do {
+            try {
+                address.setStreet(requestingInfoString("Enter your street: "));
+                break;
+            } catch (EmptyInputException | StringFormatException e) {
+                System.out.println(e.getMessage());
+            }
+        } while (true);
+        do {
+            try {
+                address.setHouseNumber(requestingInfoInt("Enter your house number: "));
+                break;
+            } catch (EmptyInputException | NegativeNumberException e) {
+                System.out.println(e.getMessage());
+            } catch (NumberFormatException e) {
+                System.out.println("[NumberFormatException]: Entered data is not a number!");
+            }
+        } while (true);
+        do {
+            try {
+                address.setFlatNumber(requestingInfoInt("Enter your flat number: "));
+                break;
+            } catch (EmptyInputException | NegativeNumberException e) {
+                System.out.println(e.getMessage());
+            } catch (NumberFormatException e) {
+                System.out.println("[NumberFormatException]: Entered data is not a number!");
+            }
+        } while (true);
         newPatient.setAddress(address);
         objects.hospital.addPatient(newPatient);
         return newPatient;
     }
 
+    private void setAge(Patient newPatient) throws AgeException {
+        do {
+            try {
+                int age = requestingInfoInt("Enter your age: ");
+                if (age > 122) {
+                    throw new AgeException("[AgeException]: Age can not be more than 122 years");
+                }
+                newPatient.setAge(age);
+                break;
+            } catch (EmptyInputException | NegativeNumberException e) {
+                System.out.println(e.getMessage());
+            } catch (NumberFormatException e) {
+                System.out.println("[NumberFormatException]: Entered data is not a number!");
+            }
+        } while (true);
+    }
+
     private void runComplaintsMenu() {
         int answer = runAnyMenu("Complaints menu:", ComplaintsMenu.values());
         patient.setDiagnosis(getDiagnose(answer - 1));
-        String answerString = requestingInfoWithYesOrNo("Do you want to assign doctor? (y/n): ");
+        String answerString;
+        do {
+            try {
+                answerString = requestingInfoWithYesOrNo("Do you want to assign doctor? (y/n): ");
+                break;
+            } catch (EmptyInputException | YesOrNoException e) {
+                System.out.println(e.getMessage());
+            }
+        } while (true);
         if (answerString.equals("y")) {
             assignDoctor();
         } else {
             System.out.println("Your doctor (" + patient.getDoctor().getFullName() + ") was assigned by hospital automatically");
         }
         runServiceMenu();
-        answerString = requestingInfoWithYesOrNo("Do you want to choose VIP service? (y/n): ");
+        do {
+            try {
+                answerString = requestingInfoWithYesOrNo("Do you want to choose VIP service? (y/n): ");
+                break;
+            } catch (EmptyInputException | YesOrNoException e) {
+                System.out.println(e.getMessage());
+            }
+        } while (true);
         if (answerString.equals("y")) {
             runVipServiceMenu();
         } else {
@@ -295,7 +476,17 @@ public final class ConsoleMenu {
                         index++;
                     }
                 }
-                int answer = requestingInfoWithChoice("Enter number of service to choose it: ", index - 1);
+                int answer;
+                do {
+                    try {
+                        answer = requestingInfoWithChoice("Enter number of service to choose it: ", index - 1);
+                        break;
+                    } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
+                        System.out.println(e.getMessage());
+                    } catch (NumberFormatException e) {
+                        System.out.println("[NumberFormatException]: Entered data is not a number!");
+                    }
+                } while (true);
                 Service serviceToAdd = tempList.get(answer - 1);
                 patient.addService(serviceToAdd);
                 patient.getDoctor().addService(serviceToAdd);
@@ -303,7 +494,15 @@ public final class ConsoleMenu {
             } else {
                 System.out.println("The patient has all services");
             }
-            String answer = requestingInfoWithYesOrNo("Do you want to choose another service? (y/n): ");
+            String answer;
+            do {
+                try {
+                    answer = requestingInfoWithYesOrNo("Do you want to choose another service? (y/n): ");
+                    break;
+                } catch (EmptyInputException | YesOrNoException e) {
+                    System.out.println(e.getMessage());
+                }
+            } while (true);
             if (answer.equals("n")) {
                 System.out.println("OK!");
                 break;
@@ -362,71 +561,56 @@ public final class ConsoleMenu {
         }
     }
 
-    private String requestingInfoWithYesOrNo(String text) {
-        String answer;
-        do {
-            System.out.print(text);
-            answer = scanner.nextLine();
-            if (!answer.equals("y") && !answer.equals("n")) {
-                text = "Please, enter correct data: ";
-            } else {
-                break;
-            }
-        } while (true);
+    private String requestingInfoWithYesOrNo(String text) throws EmptyInputException, YesOrNoException {
+        System.out.print(text);
+        String answer = scanner.nextLine();
+        if (answer.isEmpty()) {
+            throw new EmptyInputException("[EmptyInputException]: Entered data can not be empty!");
+        }
+        if (!answer.equals("y") && !answer.equals("n")) {
+            throw new YesOrNoException("[YesOrNoException]: Entered data must be equal to 'y' or 'n'!");
+        }
         return answer;
     }
 
-    private int requestingInfoWithChoice(String text, int menuItemsNumber) {
-        String answer;
-        int numberFromAnswer = 0;
-        do {
-            System.out.print(text);
-            answer = scanner.nextLine();
-            try {
-                numberFromAnswer = Integer.parseInt(answer);
-            } catch (NumberFormatException e) {
-                answer = "";
-            }
-            if (answer.isEmpty() || numberFromAnswer < 1 || numberFromAnswer > menuItemsNumber) {
-                text = "Please, enter correct data: ";
-            } else {
-                break;
-            }
-        } while (true);
+    private int requestingInfoWithChoice(String text, int menuItemsNumber)
+            throws EmptyInputException, NumberFormatException, MenuItemNumberOutOfBoundsException {
+        System.out.print(text);
+        String answer = scanner.nextLine();
+        if (answer.isEmpty()) {
+            throw new EmptyInputException("[EmptyInputException]: Entered data can not be empty!");
+        }
+        int numberFromAnswer = Integer.parseInt(answer);
+        if (numberFromAnswer < 1 || numberFromAnswer > menuItemsNumber) {
+            throw new MenuItemNumberOutOfBoundsException("[MenuItemNumberOutOfBoundsException]: Entered data " +
+                    "must be equal to some menu item!");
+        }
         return numberFromAnswer;
     }
 
-    private String requestingInfoString(String text) {
-        String answer;
-        do {
-            System.out.print(text);
-            answer = scanner.nextLine();
-            if (answer.isEmpty()) {
-                text = "Please, enter correct data: ";
-            } else {
-                break;
-            }
-        } while (true);
+    private String requestingInfoString(String text) throws EmptyInputException, StringFormatException {
+        System.out.print(text);
+        String answer = scanner.nextLine();
+        if (answer.isEmpty()) {
+            throw new EmptyInputException("[EmptyInputException]: Entered data can not be empty!");
+        }
+        if (!answer.matches("^[a-zA-Zа-яёА-ЯЁ]+[\\s-]?[a-zA-Zа-яёА-ЯЁ]+$")) {
+            throw new StringFormatException("[StringFormatException]: Entered data is not a letter character!");
+        }
         return answer;
     }
 
-    private int requestingInfoInt(String text) {
-        String answer;
-        int numberFromAnswer = 0;
-        do {
-            System.out.print(text);
-            answer = scanner.nextLine();
-            try {
-                numberFromAnswer = Integer.parseInt(answer);
-            } catch (NumberFormatException e) {
-                answer = "";
-            }
-            if (answer.isEmpty() || numberFromAnswer < 1) {
-                text = "Please, enter correct data: ";
-            } else {
-                break;
-            }
-        } while (true);
+    private int requestingInfoInt(String text)
+            throws EmptyInputException, NumberFormatException, NegativeNumberException {
+        System.out.print(text);
+        String answer = scanner.nextLine();
+        if (answer.isEmpty()) {
+            throw new EmptyInputException("[EmptyInputException]: Entered data can not be empty!");
+        }
+        int numberFromAnswer = Integer.parseInt(answer);
+        if (numberFromAnswer < 0) {
+            throw new NegativeNumberException("[NegativeNumberException]: Entered data can not be negative");
+        }
         return numberFromAnswer;
     }
 }
