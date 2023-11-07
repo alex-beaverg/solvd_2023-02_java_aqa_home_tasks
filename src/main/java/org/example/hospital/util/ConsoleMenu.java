@@ -6,6 +6,7 @@ import org.example.hospital.structure.Department;
 import org.example.hospital.structure.Service;
 import org.example.hospital.structure.VipService;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public final class ConsoleMenu {
@@ -32,7 +33,7 @@ public final class ConsoleMenu {
             case (1) -> {
                 System.out.println("All departments in hospital:");
                 for (Department department : objects.hospital.getDepartments()) {
-                    System.out.println(department);
+                    System.out.println("- " + department);
                 }
                 runMainMenu();
             }
@@ -83,14 +84,14 @@ public final class ConsoleMenu {
             }
             case (2) -> {
                 patient = registerNewPatient();
-                System.out.println("New patient was registered");
+                System.out.println("New patient (" + patient.getFullName() + ") was registered");
                 toComplain();
                 System.out.println(patient);
                 runPatientsSubmenu();
             }
             case (3) -> {
                 patient = choosePatient();
-                System.out.println("Your patient (" + patient.getFirstName() + " " + patient.getLastName() + ") was chosen!");
+                System.out.println("Patient (" + patient.getFullName() + ") was chosen!");
                 runPatientsSubmenu();
             }
             case (4) -> runMainMenu();
@@ -102,44 +103,100 @@ public final class ConsoleMenu {
     }
 
     private void runPatientsSubmenu() {
+        System.out.println("Patient " + patient.getFullName());
         int answer = requestingInfoWithChoice(
                 """
                         Choose an action:
                         [1] - Change doctor
-                        [2] - Go to main menu
-                        [3] - Exit
-                        """, 3);
-        if (answer == 1) {
-            changeDoctor();
-            runPatientsSubmenu();
-        } else if (answer == 2) {
-            runMainMenu();
-        } else {
-            scanner.close();
-            System.out.println("Good bye!");
+                        [2] - Delete VIP service
+                        [3] - Add VIP service
+                        [4] - Show full information about patient
+                        [5] - Go to main menu
+                        [6] - Exit
+                        """, 6);
+        switch (answer) {
+            case (1) -> {
+                changeDoctor();
+                runPatientsSubmenu();
+            }
+            case (2) -> {
+                deleteVipService();
+                runPatientsSubmenu();
+            }
+            case (3) -> {
+                runVipServiceMenu();
+                runPatientsSubmenu();
+            }
+            case (4) -> {
+                System.out.println(patient);
+                runPatientsSubmenu();
+            }
+            case (5) -> runMainMenu();
+            default -> {
+                scanner.close();
+                System.out.println("Good bye!");
+            }
         }
     }
 
-    private void changeDoctor() {
-        int index = 1;
-        System.out.println("Choose the doctor from your department:");
-        for (Employee doctor : patient.getDepartment().getEmployeesBySpecialistClass(2)) {
-            System.out.println("[" + index + "] - " + doctor.getPersonToPrintInList());
-            index++;
-        }
-        int answer = requestingInfoWithChoice("Enter number of doctor to choose him: ", index - 1);
-        deleteServicesFromDoctor();
-        patient.getDoctor().deletePatient(patient);
-        patient.setDoctor(patient.getDepartment().getEmployeesBySpecialistClass(2).get(answer - 1));
-        patient.getDoctor().addPatient(patient);
-        addServicesToDoctor();
-        System.out.println("Doctor was changed");
+    private void deleteVipService() {
+        do {
+            if (patient.getVipServices().size() > 0) {
+                int index = 1;
+                System.out.println("All your available VIP services to delete:");
+                for (VipService vipService : patient.getVipServices()) {
+                    System.out.println("[" + index + "] - " + vipService.getTitle());
+                    index++;
+                }
+                int answer = requestingInfoWithChoice("Enter number of VIP service to delete it: ", index - 1);
+                VipService vipServiceToDelete = patient.getVipServices().get(answer - 1);
+                patient.deleteVipService(vipServiceToDelete);
+                patient.getDoctor().deleteVipService(vipServiceToDelete);
+                System.out.println("This VIP service (" + vipServiceToDelete.getTitle() + ") was deleted from patient and his doctor");
+            } else {
+                System.out.println("The patient has no VIP services");
+            }
+            String answer = requestingInfoWithYesOrNo("Do you want to choose another VIP service? (y/n): ");
+            if (answer.equals("n")) {
+                System.out.println("OK!");
+                break;
+            }
+        } while (true);
+    }
+
+    private void runVipServiceMenu() {
+        do {
+            if (patient.getVipServices().size() < VipService.values().length) {
+                int index = 1;
+                ArrayList<VipService> tempList = new ArrayList<>();
+                System.out.println("All available VIP services:");
+                for (VipService vipService: VipService.values()) {
+                    if (!patient.getVipServices().contains(vipService)) {
+                        System.out.println("[" + index + "] - " + vipService.getTitle());
+                        tempList.add(vipService);
+                        index++;
+                    }
+                }
+                int answer = requestingInfoWithChoice("Enter number of VIP service to add it: ", index - 1);
+                VipService vipServiceToAdd = tempList.get(answer - 1);
+                patient.addVipService(vipServiceToAdd);
+                patient.getDoctor().addVipService(vipServiceToAdd);
+                System.out.println("This VIP service (" + vipServiceToAdd.getTitle() + ") was added to patient");
+            } else {
+                System.out.println("The patient has all VIP services");
+            }
+            String answer = requestingInfoWithYesOrNo("Do you want to choose another VIP service? (y/n): ");
+            if (answer.equals("n")) {
+                System.out.println("OK!");
+                break;
+            }
+        } while (true);
     }
 
     private void showDoctors() {
         int index = 1;
         System.out.println("All doctors in the hospital:");
-        for (Employee doctor : objects.hospital.getEmployeesBySpecialistClass(2)) {
+        for (Employee doctor: objects.hospital.getEmployeesBySpecialistClass(2)) {
             System.out.println("[" + index + "] - " + doctor.getPersonToPrintInList());
             index++;
         }
@@ -150,7 +207,7 @@ public final class ConsoleMenu {
     private Patient choosePatient() {
         int index = 1;
         System.out.println("All patients in the hospital:");
-        for (Patient existPatient : objects.hospital.getPatients()) {
+        for (Patient existPatient: objects.hospital.getPatients()) {
             System.out.println("[" + index + "] - " + existPatient.getPersonToPrintInList());
             index++;
         }
@@ -159,40 +216,46 @@ public final class ConsoleMenu {
         return objects.hospital.getPatients().get(answer - 1);
     }
 
-    private void vipServiceMenu() {
-        do {
-            VipService vipService = getVipService(requestingInfoWithChoice(
-                    """
-                            Choose VIP service:
-                            [1] - Provision of a separate room
-                            [2] - Provision of a special food
-                            [3] - Walk-in service
-                            [4] - Providing entertainment
-                            """, 4));
-            patient.addVipService(vipService);
-            String answer = requestingInfoWithYesOrNo("Do you want to choose another VIP service? (y/n): ");
-            if (answer.equals("n")) {
-                System.out.println("OK!");
-                break;
-            }
-        } while (true);
-    }
-
-    private void chooseDoctor() {
+    private void assignDoctor() {
         int index = 1;
-        System.out.println("All doctors in your department:");
-        for (Employee employee : patient.getDepartment().getEmployeesBySpecialistClass(2)) {
-            System.out.println("[" + index + "] - " + employee.getPersonToPrintInList());
-            index++;
+        ArrayList<Employee> tempList = new ArrayList<>();
+        System.out.println("All available doctors in your department:");
+        for (Employee doctor: patient.getDepartment().getEmployeesBySpecialistClass(2)) {
+            if (doctor != patient.getDoctor()) {
+                System.out.println("[" + index + "] - " + doctor.getPersonToPrintInList());
+                tempList.add(doctor);
+                index++;
+            }
         }
         int answer = requestingInfoWithChoice("Enter number of doctor to choose him: ", index - 1);
-        patient.setDoctor(patient.getDepartment().getEmployeesBySpecialistClass(2).get(answer - 1));
-        System.out.println("Your doctor (" + patient.getDoctor().getFirstName() + " " + patient.getDoctor().getLastName() + ") was chosen!");
+        patient.setDoctor(tempList.get(answer - 1));
+        System.out.println("Your doctor (" + patient.getDoctor().getFirstName() + " " + patient.getDoctor().getLastName() + ") was assigned!");
+    }
+
+    private void changeDoctor() {
+        int index = 1;
+        ArrayList<Employee> tempList = new ArrayList<>();
+        System.out.println("All available doctors in your department:");
+        for (Employee doctor: patient.getDepartment().getEmployeesBySpecialistClass(2)) {
+            if (doctor != patient.getDoctor()) {
+                System.out.println("[" + index + "] - " + doctor.getPersonToPrintInList());
+                tempList.add(doctor);
+                index++;
+            }
+        }
+        int answer = requestingInfoWithChoice("Enter number of doctor to choose him: ", index - 1);
+        deleteAllServicesFromDoctor();
+        Employee oldDoctor = patient.getDoctor();
+        patient.getDoctor().deletePatient(patient);
+        patient.setDoctor(tempList.get(answer - 1));
+        patient.getDoctor().addPatient(patient);
+        addAllServicesToDoctor();
+        System.out.println("Dr. " + oldDoctor.getFullName() + " has been replaced by dr. " + patient.getDoctor().getFullName());
     }
 
     private Patient findExistPatient() {
         String fullName = requestingInfoString("Enter patient full name for searching: ");
-        for (Patient existPatient : objects.hospital.getPatients()) {
+        for (Patient existPatient: objects.hospital.getPatients()) {
             if ((existPatient.getFirstName() + " " + existPatient.getLastName()).equals(fullName)) {
                 System.out.println("Patient " + fullName + " was found and chosen:");
                 System.out.println(existPatient);
@@ -215,7 +278,7 @@ public final class ConsoleMenu {
             }
             case (2) -> {
                 patient = registerNewPatient();
-                System.out.println("New patient (" + patient.getFirstName() + " " + patient.getLastName() + ") was registered");
+                System.out.println("New patient (" + patient.getFullName() + ") was registered");
                 toComplain();
                 System.out.println(patient);
                 return patient;
@@ -260,34 +323,43 @@ public final class ConsoleMenu {
                         [3] - Broken bone
                         [4] - Unknown
                         """, 4)));
-        serviceMenu();
-        String answer = requestingInfoWithYesOrNo("Do you want to choose doctor? (y/n): ");
+        String answer = requestingInfoWithYesOrNo("Do you want to assign doctor? (y/n): ");
         if (answer.equals("y")) {
-            chooseDoctor();
+            assignDoctor();
         } else {
-            System.out.println("OK!");
+            System.out.println("Your doctor (" + patient.getDoctor().getFullName() + ") was assigned by hospital automatically");
         }
+        runServiceMenu();
         answer = requestingInfoWithYesOrNo("Do you want to choose VIP service? (y/n): ");
         if (answer.equals("y")) {
-            vipServiceMenu();
+            runVipServiceMenu();
         } else {
             System.out.println("OK!");
         }
-        addServicesToDoctor();
         patient.getDoctor().addPatient(patient);
     }
 
-    private void serviceMenu() {
+    private void runServiceMenu() {
         do {
-            Service service = getService(requestingInfoWithChoice(
-                    """
-                            Choose the service:
-                            [1] - Make an appointment
-                            [2] - Prescribe treatment
-                            [3] - Hospitalization
-                            [4] - Medical examination
-                            """, 4));
-            patient.addService(service);
+            if (patient.getServices().size() < Service.values().length) {
+                int index = 1;
+                ArrayList<Service> tempList = new ArrayList<>();
+                System.out.println("All available services:");
+                for (Service service : Service.values()) {
+                    if (!patient.getServices().contains(service)) {
+                        System.out.println("[" + index + "] - " + service.getTitle());
+                        tempList.add(service);
+                        index++;
+                    }
+                }
+                int answer = requestingInfoWithChoice("Enter number of service to choose it: ", index - 1);
+                Service serviceToAdd = tempList.get(answer - 1);
+                patient.addService(serviceToAdd);
+                patient.getDoctor().addService(serviceToAdd);
+                System.out.println("This service (" + serviceToAdd.getTitle() + ") was added to patient");
+            } else {
+                System.out.println("The patient has all services");
+            }
             String answer = requestingInfoWithYesOrNo("Do you want to choose another service? (y/n): ");
             if (answer.equals("n")) {
                 System.out.println("OK!");
@@ -296,20 +368,20 @@ public final class ConsoleMenu {
         } while (true);
     }
 
-    private void addServicesToDoctor() {
-        for (Service service : patient.getServices()) {
+    private void addAllServicesToDoctor() {
+        for (Service service: patient.getServices()) {
             patient.getDoctor().addService(service);
         }
-        for (VipService vipService : patient.getVipServices()) {
+        for (VipService vipService: patient.getVipServices()) {
             patient.getDoctor().addVipService(vipService);
         }
     }
 
-    private void deleteServicesFromDoctor() {
-        for (Service service : patient.getServices()) {
+    private void deleteAllServicesFromDoctor() {
+        for (Service service: patient.getServices()) {
             patient.getDoctor().deleteService(service);
         }
-        for (VipService vipService : patient.getVipServices()) {
+        for (VipService vipService: patient.getVipServices()) {
             patient.getDoctor().deleteVipService(vipService);
         }
     }
@@ -345,24 +417,6 @@ public final class ConsoleMenu {
                 return Diagnosis.UNKNOWN;
             }
         }
-    }
-
-    private Service getService(int number) {
-        return switch (number) {
-            case (1) -> Service.APPOINTMENT;
-            case (2) -> Service.TREATMENT;
-            case (3) -> Service.HOSPITALIZATION;
-            default -> Service.EXAMINATION;
-        };
-    }
-
-    private VipService getVipService(int number) {
-        return switch (number) {
-            case (1) -> VipService.SEPARATE_ROOM;
-            case (2) -> VipService.SPECIAL_FOOD;
-            case (3) -> VipService.WALK_IN_SERVICE;
-            default -> VipService.ENTERTAINMENT;
-        };
     }
 
     private String requestingInfoWithYesOrNo(String text) {

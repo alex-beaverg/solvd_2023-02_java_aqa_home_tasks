@@ -59,7 +59,6 @@ public final class Hospital implements IAddPatients, IGetEmployeesBySomething {
 
     @Override
     public String toString() {
-        return "Hospital '" + title + "':" +
-                "\n\tDepartments: " + combineObjectTitles(departments);
+        return "Hospital '" + title + "' / Departments: " + combineObjectTitles(departments);
     }
 }

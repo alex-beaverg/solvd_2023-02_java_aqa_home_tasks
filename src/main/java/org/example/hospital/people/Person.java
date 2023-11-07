@@ -46,6 +46,10 @@ public abstract class Person {
         return lastName;
     }
 
+    public final String getFullName() {
+        return firstName + " " + lastName;
+    }
+
     @Override
     public String toString() {
         return "\n\tFirst name: " + firstName +

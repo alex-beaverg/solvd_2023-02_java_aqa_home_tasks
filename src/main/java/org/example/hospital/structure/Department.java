@@ -88,7 +88,6 @@ public class Department implements IAddPatients, IGetEmployeesBySomething {
 
     @Override
     public String toString() {
-        return "Department '" + title + "':" +
-                "\n\tEmployees: " + combineObjectTitles(employees);
+        return "Department '" + title + "' / Employees: " + combineObjectTitles(employees);
     }
 }
