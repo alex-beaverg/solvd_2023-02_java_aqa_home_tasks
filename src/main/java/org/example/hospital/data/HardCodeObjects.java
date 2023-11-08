@@ -2,6 +2,7 @@ package org.example.hospital.data;
 
 import org.example.hospital.people.*;
 import org.example.hospital.structure.*;
+import org.example.hospital.structure.accounting.Accounting;
 import org.example.hospital.util.Creator;
 
 public final class HardCodeObjects {

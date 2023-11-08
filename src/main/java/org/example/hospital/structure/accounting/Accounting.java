@@ -99,4 +99,30 @@ public final class Accounting {
         }
         return serviceCoefficient;
     }
+
+    public static String getPayslip(Employee employee) {
+        int specialistClass = employee.getPosition().getSpecialistClass();
+        int category = employee.getPosition().getCategory();
+        double serviceCoefficient = getServiceCoefficient(specialistClass, category);
+        double serviceAllowance = employee.getServicesPrice() / 6;
+        double vipServiceAllowance = employee.getVipServicesPrice() / 6;
+        double categoryCoefficient = getCategoryCoefficient(employee.getPosition().getCategory());
+        double salaryWithoutTax = (BASE_SALARY + serviceAllowance + vipServiceAllowance) * specialistClass * categoryCoefficient;
+        return "Doctor's payslip:" +
+                "\n\tFull name: " + employee.getFullName() +
+                "\n\tPosition: " + employee.getPosition().getTitle() +
+                "\n\tSpecialist class: " + employee.getPosition().getSpecialistClass() +
+                "\n\tCategory: " + employee.getPosition().getCategory() +
+                "\n\tBase salary: " + BASE_SALARY + " BYN" +
+                "\n\tNumber of patients: " + employee.getPatients().size() +
+                "\n\tService coefficient: " + serviceCoefficient +
+                "\n\tServices allowance: " + Math.ceil(serviceAllowance * 100) / 100 + " BYN" +
+                "\n\tVIP services allowance: " + Math.ceil(vipServiceAllowance * 100) / 100 + " BYN" +
+                "\n\tTotal services allowance: " + Math.ceil((serviceAllowance + vipServiceAllowance) * 100) / 100 + " BYN" +
+                "\n\tCategory coefficient: " + categoryCoefficient +
+                "\n\tSalary without tax: " + Math.ceil(salaryWithoutTax * 100) / 100 + " BYN" +
+                "\n\tTax: " + (TAX * 100) + " %" +
+                "\n\t------" +
+                "\n\tSalary: " + Math.ceil(calculateEmployeeSalary(employee) * 100) / 100 + " BYN";
+    }
 }

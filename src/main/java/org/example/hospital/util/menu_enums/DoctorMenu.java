@@ -1,17 +1,15 @@
 package org.example.hospital.util.menu_enums;
 
-public enum PatientMenu implements IMenu {
-    CHANGE_DOCTOR("Change doctor"),
-    DELETE_VIP("Delete VIP service"),
-    ADD_VIP("Add VIP service"),
-    SHOW_PATIENT_INFO("Show full information about patient"),
-    PATIENTS_MENU("Return to patients menu actions"),
+public enum DoctorMenu implements IMenu {
+    SHOW_DOCTOR_INFO("Show full information about doctor"),
+    SHOW_DOCTOR_PAYSLIP("Show doctor's payslip"),
+    DOCTORS_MENU("Return to doctors menu actions"),
     MAIN_MENU("Go to main menu"),
     EXIT("Exit");
 
     private final String title;
 
-    PatientMenu(String title) {
+    DoctorMenu(String title) {
         this.title = title;
     }
 

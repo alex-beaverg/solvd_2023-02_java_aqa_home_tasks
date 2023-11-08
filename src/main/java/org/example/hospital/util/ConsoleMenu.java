@@ -8,6 +8,7 @@ import org.example.hospital.people.*;
 import org.example.hospital.structure.Department;
 import org.example.hospital.structure.Service;
 import org.example.hospital.structure.VipService;
+import org.example.hospital.structure.accounting.Accounting;
 import org.example.hospital.util.menu_enums.*;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public final class ConsoleMenu {
     private final static Logger LOGGER_TO_CONSOLE_AND_FILE = LogManager.getLogger("Errors_To_Console_And_File");
     private final HardCodeObjects objects = new HardCodeObjects();
     private Patient patient;
+    private Employee doctor;
     private final Scanner scanner = new Scanner(System.in);
 
     public void runApp() {
@@ -71,13 +73,33 @@ public final class ConsoleMenu {
     private void runDoctorsMenu() {
         int answer = runAnyMenu("Doctors menu:", DoctorsMenu.values());
         if (answer == 1) {
-            showDoctors();
-            runDoctorsMenu();
+            doctor = showDoctors();
+            runDoctorMenu();
         } else if (answer == 2) {
             runMainMenu();
         } else {
             scanner.close();
             LOGGER_LN.info("Good bye!");
+        }
+    }
+
+    private void runDoctorMenu() {
+        int answer = runAnyMenu("Doctor (" + doctor.getFullName() + ") menu:", DoctorMenu.values());
+        switch (answer) {
+            case (1) -> {
+                LN_LOGGER_LN.info(doctor);
+                runDoctorMenu();
+            }
+            case (2) -> {
+                LN_LOGGER_LN.info(Accounting.getPayslip(doctor));
+                runDoctorMenu();
+            }
+            case (3) -> runDoctorsMenu();
+            case (4) -> runMainMenu();
+            default -> {
+                scanner.close();
+                LOGGER_LN.info("Good bye!");
+            }
         }
     }
 
@@ -150,7 +172,8 @@ public final class ConsoleMenu {
                 LN_LOGGER_LN.info(patient);
                 runPatientMenu();
             }
-            case (5) -> runMainMenu();
+            case (5) -> runPatientsMenu();
+            case (6) -> runMainMenu();
             default -> {
                 scanner.close();
                 LOGGER_LN.info("Good bye!");
@@ -248,7 +271,7 @@ public final class ConsoleMenu {
         } while (true);
     }
 
-    private void showDoctors() {
+    private Employee showDoctors() {
         int index = 1;
         LN_LOGGER_LN.info("All doctors in the hospital:");
         for (Employee doctor: objects.hospital.getEmployeesBySpecialistClass(2)) {
@@ -266,7 +289,9 @@ public final class ConsoleMenu {
                 LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
             }
         } while (true);
-        LN_LOGGER_LN.info(objects.hospital.getEmployeesBySpecialistClass(2).get(answer - 1));
+        doctor = objects.hospital.getEmployeesBySpecialistClass(2).get(answer - 1);
+        LOGGER_LN.info("Doctor " + doctor.getFullName() + " was chosen");
+        return doctor;
     }
 
     private Patient choosePatient() {

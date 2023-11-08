@@ -49,6 +49,10 @@ public class Employee extends Person implements IAddPatients, IAddServices, IDel
         return vipServices;
     }
 
+    public ArrayList<Patient> getPatients() {
+        return patients;
+    }
+
     @Override
     public void addService(Service service) {
         this.services.add(service);
@@ -162,7 +166,7 @@ public class Employee extends Person implements IAddPatients, IAddServices, IDel
         return "Employee (" + getRole() + "): " +
                 super.toString() +
                 "\n\tDepartment: " + department.getTitle() +
-                "\n\tPosition: " + position +
+                "\n\tPosition: " + position.getTitle() +
                 "\n\tSchedule: " + schedule +
                 "\n\tPatients: " + combinePatients() +
                 "\n\tServices: " + combineServices() +

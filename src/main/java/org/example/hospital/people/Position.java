@@ -33,6 +33,6 @@ public enum Position {
 
     @Override
     public String toString() {
-        return title;
+        return title + ", Specialist class: " + specialistClass + ", category: " + category;
     }
 }

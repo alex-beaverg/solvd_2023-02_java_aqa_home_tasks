@@ -26,6 +26,6 @@ public enum VipService implements IService {
 
     @Override
     public String toString() {
-        return title + " (price: " + price + " BYN)";
+        return title;
     }
 }
