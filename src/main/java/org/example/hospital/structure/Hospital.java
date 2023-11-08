@@ -9,7 +9,11 @@ public final class Hospital implements IAddPatients, IGetEmployeesBySomething {
     private final String title;
     private Department[] departments;
     private Employee[] employees;
-    private final ArrayList<Patient> patients = new ArrayList<>();
+    private final ArrayList<Patient> patients;
+
+    {
+        patients = new ArrayList<>();
+    }
 
     public Hospital(String title) {
         this.title = title;

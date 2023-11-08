@@ -13,10 +13,15 @@ public class Patient extends Person implements IAddServices {
     private Department department;
     private Employee doctor;
     private Employee nurse;
-    private final ArrayList<Service> services = new ArrayList<>();
-    private final ArrayList<VipService> vipServices = new ArrayList<>();
+    private final ArrayList<Service> services;
+    private final ArrayList<VipService> vipServices;
     private double servicesPrice;
     private double vipServicesPrice;
+
+    {
+        services = new ArrayList<>();
+        vipServices = new ArrayList<>();
+    }
 
     public Patient() {
         super();

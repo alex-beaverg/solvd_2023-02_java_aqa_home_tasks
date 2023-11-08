@@ -11,11 +11,17 @@ public class Employee extends Person implements IAddPatients, IAddServices, IDel
     private final Position position;
     private final Schedule schedule;
     private double salary;
-    private final ArrayList<Service> services = new ArrayList<>();
-    private final ArrayList<VipService> vipServices = new ArrayList<>();
+    private final ArrayList<Service> services;
+    private final ArrayList<VipService> vipServices;
     private double servicesPrice;
     private double vipServicesPrice;
-    private final ArrayList<Patient> patients = new ArrayList<>();
+    private final ArrayList<Patient> patients;
+
+    {
+        services = new ArrayList<>();
+        vipServices = new ArrayList<>();
+        patients = new ArrayList<>();
+    }
 
     public Employee(String firstName,
                     String lastName,

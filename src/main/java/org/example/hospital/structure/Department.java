@@ -11,7 +11,11 @@ public class Department implements IAddPatients, IGetEmployeesBySomething {
     private final String title;
     private final int officeNumber;
     private Employee[] employees;
-    private final ArrayList<Patient> patients = new ArrayList<>();
+    private final ArrayList<Patient> patients;
+
+    {
+        patients = new ArrayList<>();
+    }
 
     public Department(String title,
                       int officeNumber) {

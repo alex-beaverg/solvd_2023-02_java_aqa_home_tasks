@@ -19,16 +19,21 @@ public final class ConsoleMenu {
     private final static Logger LOGGER;
     private final static Logger LN_LOGGER_LN;
     private final static Logger LOGGER_TO_CONSOLE_AND_FILE;
-    private final HardCodeObjects objects = new HardCodeObjects();
+    private final HardCodeObjects objects;
     private Patient patient;
     private Employee doctor;
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
 
     static {
         LOGGER_LN = LogManager.getLogger("InsteadOfSOUT_ln");
         LOGGER = LogManager.getLogger("InsteadOfSOUT");
         LN_LOGGER_LN = LogManager.getLogger("ln_InsteadOfSOUT_ln");
         LOGGER_TO_CONSOLE_AND_FILE = LogManager.getLogger("Errors_To_Console_And_File");
+    }
+
+    {
+        objects = new HardCodeObjects();
+        scanner = new Scanner(System.in);
     }
 
     public void runApp() {
