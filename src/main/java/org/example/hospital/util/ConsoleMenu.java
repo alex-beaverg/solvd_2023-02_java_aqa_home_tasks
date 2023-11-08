@@ -15,14 +15,21 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public final class ConsoleMenu {
-    private final static Logger LOGGER_LN = LogManager.getLogger("InsteadOfSOUT_ln");
-    private final static Logger LOGGER = LogManager.getLogger("InsteadOfSOUT");
-    private final static Logger LN_LOGGER_LN = LogManager.getLogger("ln_InsteadOfSOUT_ln");
-    private final static Logger LOGGER_TO_CONSOLE_AND_FILE = LogManager.getLogger("Errors_To_Console_And_File");
+    private final static Logger LOGGER_LN;
+    private final static Logger LOGGER;
+    private final static Logger LN_LOGGER_LN;
+    private final static Logger LOGGER_TO_CONSOLE_AND_FILE;
     private final HardCodeObjects objects = new HardCodeObjects();
     private Patient patient;
     private Employee doctor;
     private final Scanner scanner = new Scanner(System.in);
+
+    static {
+        LOGGER_LN = LogManager.getLogger("InsteadOfSOUT_ln");
+        LOGGER = LogManager.getLogger("InsteadOfSOUT");
+        LN_LOGGER_LN = LogManager.getLogger("ln_InsteadOfSOUT_ln");
+        LOGGER_TO_CONSOLE_AND_FILE = LogManager.getLogger("Errors_To_Console_And_File");
+    }
 
     public void runApp() {
         objects.fillArrays();
