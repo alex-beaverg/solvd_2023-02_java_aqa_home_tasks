@@ -49,3 +49,7 @@
 2023-11-08 23:31:40,170 ERROR Errors_To_Console_And_File [main] [StringFormatException]: Entered data is not a letter character!
 2023-11-08 23:31:59,555 ERROR Errors_To_Console_And_File [main] [NumberFormatException]: Entered data is not a number!
 2023-11-08 23:32:02,229 ERROR Errors_To_Console_And_File [main] [NegativeNumberException]: Entered data can not be negative
+2023-11-08 23:40:08,827 ERROR Errors_To_Console_And_File [main] [StringFormatException]: Entered data is not a letter character!
+2023-11-08 23:40:20,814 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-08 23:40:38,492 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-08 23:41:32,158 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!

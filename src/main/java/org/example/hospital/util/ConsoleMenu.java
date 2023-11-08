@@ -472,7 +472,7 @@ public final class ConsoleMenu {
 
     private void runComplaintsMenu() {
         int answer = runAnyMenu("Complaints menu:", ComplaintsMenu.values());
-        patient.setDiagnosis(getDiagnose(answer - 1));
+        patient.setDiagnosis(getDiagnose(answer));
         LOGGER_LN.info("Diagnosis (" + patient.getDiagnosis().getTitle() + ") was made");
         String answerString;
         do {
