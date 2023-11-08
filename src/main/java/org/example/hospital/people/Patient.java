@@ -34,6 +34,10 @@ public class Patient extends Person implements IAddServices {
         this.department = department;
     }
 
+    public Diagnosis getDiagnosis() {
+        return diagnosis;
+    }
+
     public ArrayList<Service> getServices() {
         return services;
     }

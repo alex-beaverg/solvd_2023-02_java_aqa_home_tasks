@@ -1,5 +1,7 @@
 package org.example.hospital.util;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.hospital.custom_exceptions.*;
 import org.example.hospital.data.HardCodeObjects;
 import org.example.hospital.people.*;
@@ -12,21 +14,25 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public final class ConsoleMenu {
+    private final static Logger LOGGER_LN = LogManager.getLogger("InsteadOfSOUT_ln");
+    private final static Logger LOGGER = LogManager.getLogger("InsteadOfSOUT");
+    private final static Logger LN_LOGGER_LN = LogManager.getLogger("ln_InsteadOfSOUT_ln");
+    private final static Logger LOGGER_TO_CONSOLE_AND_FILE = LogManager.getLogger("Errors_To_Console_And_File");
     private final HardCodeObjects objects = new HardCodeObjects();
     private Patient patient;
     private final Scanner scanner = new Scanner(System.in);
 
     public void runApp() {
         objects.fillArrays();
-        System.out.println("\nWelcome to the " + objects.hospital);
+        LN_LOGGER_LN.info("Welcome to the " + objects.hospital);
         runMainMenu();
     }
 
     private int runAnyMenu(String title, IMenu[] menuItems) {
         int index = 1;
-        System.out.println(title);
+        LN_LOGGER_LN.info(title);
         for (IMenu item : menuItems) {
-            System.out.println("[" + index + "] - " + item.getTitle());
+            LOGGER_LN.info("[" + index + "] - " + item.getTitle());
             index++;
         }
         int answer;
@@ -35,9 +41,9 @@ public final class ConsoleMenu {
                 answer = requestingInfoWithChoice("Enter the menu item number: ", index - 1);
                 break;
             } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
-                System.out.println(e.getMessage());
+                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
             } catch (NumberFormatException e) {
-                System.out.println("[NumberFormatException]: Entered data is not a number!");
+                LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
             }
         } while (true);
         return answer;
@@ -47,9 +53,9 @@ public final class ConsoleMenu {
         int answer = runAnyMenu("Main menu:", MainMenu.values());
         switch (answer) {
             case (1) -> {
-                System.out.println("All departments in hospital:");
+                LN_LOGGER_LN.info("All departments in hospital:");
                 for (Department department : objects.hospital.getDepartments()) {
-                    System.out.println("- " + department);
+                    LOGGER_LN.info("- " + department);
                 }
                 runMainMenu();
             }
@@ -57,7 +63,7 @@ public final class ConsoleMenu {
             case (3) -> runPatientsMenu();
             default -> {
                 scanner.close();
-                System.out.println("Good bye!");
+                LOGGER_LN.info("Good bye!");
             }
         }
     }
@@ -71,7 +77,7 @@ public final class ConsoleMenu {
             runMainMenu();
         } else {
             scanner.close();
-            System.out.println("Good bye!");
+            LOGGER_LN.info("Good bye!");
         }
     }
 
@@ -88,20 +94,19 @@ public final class ConsoleMenu {
             }
             case (2) -> {
                 patient = registerNewPatient();
-                System.out.println("New patient (" + patient.getFullName() + ") was registered");
+                LOGGER_LN.info("New patient (" + patient.getFullName() + ") was registered");
                 runComplaintsMenu();
-                System.out.println(patient);
                 runPatientMenu();
             }
             case (3) -> {
                 patient = choosePatient();
-                System.out.println("Patient (" + patient.getFullName() + ") was chosen!");
+                LOGGER_LN.info("Patient (" + patient.getFullName() + ") was chosen");
                 runPatientMenu();
             }
             case (4) -> runMainMenu();
             default -> {
                 scanner.close();
-                System.out.println("Good bye!");
+                LOGGER_LN.info("Good bye!");
             }
         }
     }
@@ -110,24 +115,24 @@ public final class ConsoleMenu {
         String fullName;
         do {
             try {
-                fullName = requestingInfoString("Enter patient full name for searching: ");
+                fullName = requestingInfoString("\nEnter patient full name for searching: ");
                 break;
             } catch (EmptyInputException | StringFormatException e) {
-                System.out.println(e.getMessage());
+                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
             }
         } while (true);
         for (Patient existPatient: objects.hospital.getPatients()) {
             if ((existPatient.getFirstName() + " " + existPatient.getLastName()).equalsIgnoreCase(fullName)) {
-                System.out.println("Patient " + existPatient.getFullName() + " was found and chosen:");
+                LOGGER_LN.info("Patient " + existPatient.getFullName() + " was found and chosen");
                 return existPatient;
             }
         }
-        System.out.println("Patient " + fullName + " was not found. Try it again");
+        LOGGER_LN.info("Patient " + fullName + " was not found. Try it again");
         return null;
     }
 
     private void runPatientMenu() {
-        int answer = runAnyMenu("Patient menu:", PatientMenu.values());
+        int answer = runAnyMenu("Patient (" + patient.getFullName() + ") menu:", PatientMenu.values());
         switch (answer) {
             case (1) -> {
                 changeDoctor();
@@ -142,13 +147,13 @@ public final class ConsoleMenu {
                 runPatientMenu();
             }
             case (4) -> {
-                System.out.println(patient);
+                LN_LOGGER_LN.info(patient);
                 runPatientMenu();
             }
             case (5) -> runMainMenu();
             default -> {
                 scanner.close();
-                System.out.println("Good bye!");
+                LOGGER_LN.info("Good bye!");
             }
         }
     }
@@ -157,9 +162,9 @@ public final class ConsoleMenu {
         do {
             if (patient.getVipServices().size() > 0) {
                 int index = 1;
-                System.out.println("All your available VIP services to delete:");
+                LN_LOGGER_LN.info("All your available VIP services to delete:");
                 for (VipService vipService : patient.getVipServices()) {
-                    System.out.println("[" + index + "] - " + vipService.getTitle());
+                    LOGGER_LN.info("[" + index + "] - " + vipService.getTitle());
                     index++;
                 }
                 int answer;
@@ -168,17 +173,17 @@ public final class ConsoleMenu {
                         answer = requestingInfoWithChoice("Enter number of VIP service to delete it: ", index - 1);
                         break;
                     } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
-                        System.out.println(e.getMessage());
+                        LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
                     } catch (NumberFormatException e) {
-                        System.out.println("[NumberFormatException]: Entered data is not a number!");
+                        LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
                     }
                 } while (true);
                 VipService vipServiceToDelete = patient.getVipServices().get(answer - 1);
                 patient.deleteVipService(vipServiceToDelete);
                 patient.getDoctor().deleteVipService(vipServiceToDelete);
-                System.out.println("This VIP service (" + vipServiceToDelete.getTitle() + ") was deleted from patient and his doctor");
+                LOGGER_LN.info("This VIP service (" + vipServiceToDelete.getTitle() + ") was deleted from patient");
             } else {
-                System.out.println("The patient has no VIP services");
+                LOGGER_LN.info("The patient has no VIP services");
             }
             String answer;
             do {
@@ -186,11 +191,11 @@ public final class ConsoleMenu {
                     answer = requestingInfoWithYesOrNo("Do you want to delete another VIP service? (y/n): ");
                     break;
                 } catch (EmptyInputException | YesOrNoException e) {
-                    System.out.println(e.getMessage());
+                    LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
                 }
             } while (true);
             if (answer.equals("n")) {
-                System.out.println("OK!");
+                LOGGER_LN.info("OK!");
                 break;
             }
         } while (true);
@@ -201,10 +206,10 @@ public final class ConsoleMenu {
             if (patient.getVipServices().size() < VipService.values().length) {
                 int index = 1;
                 ArrayList<VipService> tempList = new ArrayList<>();
-                System.out.println("All available VIP services:");
+                LN_LOGGER_LN.info("All available VIP services:");
                 for (VipService vipService: VipService.values()) {
                     if (!patient.getVipServices().contains(vipService)) {
-                        System.out.println("[" + index + "] - " + vipService.getTitle());
+                        LOGGER_LN.info("[" + index + "] - " + vipService.getTitle());
                         tempList.add(vipService);
                         index++;
                     }
@@ -215,17 +220,17 @@ public final class ConsoleMenu {
                         answer = requestingInfoWithChoice("Enter number of VIP service to add it: ", index - 1);
                         break;
                     } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
-                        System.out.println(e.getMessage());
+                        LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
                     } catch (NumberFormatException e) {
-                        System.out.println("[NumberFormatException]: Entered data is not a number!");
+                        LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
                     }
                 } while (true);
                 VipService vipServiceToAdd = tempList.get(answer - 1);
                 patient.addVipService(vipServiceToAdd);
                 patient.getDoctor().addVipService(vipServiceToAdd);
-                System.out.println("This VIP service (" + vipServiceToAdd.getTitle() + ") was added to patient");
+                LOGGER_LN.info("This VIP service (" + vipServiceToAdd.getTitle() + ") was added to patient");
             } else {
-                System.out.println("The patient has all VIP services");
+                LOGGER_LN.info("The patient has all VIP services");
             }
             String answer;
             do {
@@ -233,11 +238,11 @@ public final class ConsoleMenu {
                     answer = requestingInfoWithYesOrNo("Do you want to choose another VIP service? (y/n): ");
                     break;
                 } catch (EmptyInputException | YesOrNoException e) {
-                    System.out.println(e.getMessage());
+                    LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
                 }
             } while (true);
             if (answer.equals("n")) {
-                System.out.println("OK!");
+                LOGGER_LN.info("OK!");
                 break;
             }
         } while (true);
@@ -245,9 +250,9 @@ public final class ConsoleMenu {
 
     private void showDoctors() {
         int index = 1;
-        System.out.println("All doctors in the hospital:");
+        LN_LOGGER_LN.info("All doctors in the hospital:");
         for (Employee doctor: objects.hospital.getEmployeesBySpecialistClass(2)) {
-            System.out.println("[" + index + "] - " + doctor.getPersonToPrintInList());
+            LOGGER_LN.info("[" + index + "] - " + doctor.getPersonToPrintInList());
             index++;
         }
         int answer;
@@ -256,19 +261,19 @@ public final class ConsoleMenu {
                 answer = requestingInfoWithChoice("Enter number of doctor to show more information: ", index - 1);
                 break;
             } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
-                System.out.println(e.getMessage());
+                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
             } catch (NumberFormatException e) {
-                System.out.println("[NumberFormatException]: Entered data is not a number!");
+                LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
             }
         } while (true);
-        System.out.println(objects.hospital.getEmployeesBySpecialistClass(2).get(answer - 1));
+        LN_LOGGER_LN.info(objects.hospital.getEmployeesBySpecialistClass(2).get(answer - 1));
     }
 
     private Patient choosePatient() {
         int index = 1;
-        System.out.println("All patients in the hospital:");
+        LN_LOGGER_LN.info("All patients in the hospital:");
         for (Patient existPatient: objects.hospital.getPatients()) {
-            System.out.println("[" + index + "] - " + existPatient.getPersonToPrintInList());
+            LOGGER_LN.info("[" + index + "] - " + existPatient.getPersonToPrintInList());
             index++;
         }
         int answer;
@@ -277,22 +282,21 @@ public final class ConsoleMenu {
                 answer = requestingInfoWithChoice("Enter number of patient to choose him: ", index - 1);
                 break;
             } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
-                System.out.println(e.getMessage());
+                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
             } catch (NumberFormatException e) {
-                System.out.println("[NumberFormatException]: Entered data is not a number!");
+                LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
             }
         } while (true);
-        System.out.println(objects.hospital.getPatients().get(answer - 1));
         return objects.hospital.getPatients().get(answer - 1);
     }
 
     private void assignDoctor() {
         int index = 1;
         ArrayList<Employee> tempList = new ArrayList<>();
-        System.out.println("All available doctors in your department:");
+        LN_LOGGER_LN.info("All available doctors in your department:");
         for (Employee doctor: patient.getDepartment().getEmployeesBySpecialistClass(2)) {
             if (doctor != patient.getDoctor()) {
-                System.out.println("[" + index + "] - " + doctor.getPersonToPrintInList());
+                LOGGER_LN.info("[" + index + "] - " + doctor.getPersonToPrintInList());
                 tempList.add(doctor);
                 index++;
             }
@@ -303,22 +307,22 @@ public final class ConsoleMenu {
                 answer = requestingInfoWithChoice("Enter number of doctor to choose him: ", index - 1);
                 break;
             } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
-                System.out.println(e.getMessage());
+                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
             } catch (NumberFormatException e) {
-                System.out.println("[NumberFormatException]: Entered data is not a number!");
+                LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
             }
         } while (true);
         patient.setDoctor(tempList.get(answer - 1));
-        System.out.println("Your doctor (" + patient.getDoctor().getFirstName() + " " + patient.getDoctor().getLastName() + ") was assigned!");
+        LOGGER_LN.info("Your doctor (" + patient.getDoctor().getFirstName() + " " + patient.getDoctor().getLastName() + ") was assigned");
     }
 
     private void changeDoctor() {
         int index = 1;
         ArrayList<Employee> tempList = new ArrayList<>();
-        System.out.println("All available doctors in your department:");
+        LN_LOGGER_LN.info("All available doctors in your department:");
         for (Employee doctor: patient.getDepartment().getEmployeesBySpecialistClass(2)) {
             if (doctor != patient.getDoctor()) {
-                System.out.println("[" + index + "] - " + doctor.getPersonToPrintInList());
+                LOGGER_LN.info("[" + index + "] - " + doctor.getPersonToPrintInList());
                 tempList.add(doctor);
                 index++;
             }
@@ -329,9 +333,9 @@ public final class ConsoleMenu {
                 answer = requestingInfoWithChoice("Enter number of doctor to choose him: ", index - 1);
                 break;
             } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
-                System.out.println(e.getMessage());
+                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
             } catch (NumberFormatException e) {
-                System.out.println("[NumberFormatException]: Entered data is not a number!");
+                LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
             }
         } while (true);
         deleteAllServicesFromDoctor();
@@ -340,19 +344,19 @@ public final class ConsoleMenu {
         patient.setDoctor(tempList.get(answer - 1));
         patient.getDoctor().addPatient(patient);
         addAllServicesToDoctor();
-        System.out.println("Dr. " + oldDoctor.getFullName() + " has been replaced by dr. " + patient.getDoctor().getFullName());
+        LOGGER_LN.info("Dr. " + oldDoctor.getFullName() + " has been replaced by dr. " + patient.getDoctor().getFullName());
     }
 
     private Patient registerNewPatient(){
         Patient newPatient = Creator.setPatient();
         Address address = Creator.setAddress();
-        System.out.println("Registration of a new patient");
+        LN_LOGGER_LN.info("Registration of a new patient");
         do {
             try {
                 newPatient.setFirstName(requestingInfoString("Enter your first name: "));
                 break;
             } catch (EmptyInputException | StringFormatException e) {
-                System.out.println(e.getMessage());
+                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
             }
         } while (true);
         do {
@@ -360,7 +364,7 @@ public final class ConsoleMenu {
                 newPatient.setLastName(requestingInfoString("Enter your last name: "));
                 break;
             } catch (EmptyInputException | StringFormatException e) {
-                System.out.println(e.getMessage());
+                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
             }
         } while (true);
         do {
@@ -368,7 +372,7 @@ public final class ConsoleMenu {
                 setAge(newPatient);
                 break;
             } catch (AgeException e) {
-                System.out.println(e.getMessage());
+                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
             }
         } while (true);
         do {
@@ -376,7 +380,7 @@ public final class ConsoleMenu {
                 address.setCity(requestingInfoString("Enter your city: "));
                 break;
             } catch (EmptyInputException | StringFormatException e) {
-                System.out.println(e.getMessage());
+                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
             }
         } while (true);
         do {
@@ -384,7 +388,7 @@ public final class ConsoleMenu {
                 address.setStreet(requestingInfoString("Enter your street: "));
                 break;
             } catch (EmptyInputException | StringFormatException e) {
-                System.out.println(e.getMessage());
+                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
             }
         } while (true);
         do {
@@ -392,9 +396,9 @@ public final class ConsoleMenu {
                 address.setHouseNumber(requestingInfoInt("Enter your house number: "));
                 break;
             } catch (EmptyInputException | NegativeNumberException e) {
-                System.out.println(e.getMessage());
+                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
             } catch (NumberFormatException e) {
-                System.out.println("[NumberFormatException]: Entered data is not a number!");
+                LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
             }
         } while (true);
         do {
@@ -402,9 +406,9 @@ public final class ConsoleMenu {
                 address.setFlatNumber(requestingInfoInt("Enter your flat number: "));
                 break;
             } catch (EmptyInputException | NegativeNumberException e) {
-                System.out.println(e.getMessage());
+                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
             } catch (NumberFormatException e) {
-                System.out.println("[NumberFormatException]: Entered data is not a number!");
+                LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
             }
         } while (true);
         newPatient.setAddress(address);
@@ -422,9 +426,9 @@ public final class ConsoleMenu {
                 newPatient.setAge(age);
                 break;
             } catch (EmptyInputException | NegativeNumberException e) {
-                System.out.println(e.getMessage());
+                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
             } catch (NumberFormatException e) {
-                System.out.println("[NumberFormatException]: Entered data is not a number!");
+                LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
             }
         } while (true);
     }
@@ -432,33 +436,34 @@ public final class ConsoleMenu {
     private void runComplaintsMenu() {
         int answer = runAnyMenu("Complaints menu:", ComplaintsMenu.values());
         patient.setDiagnosis(getDiagnose(answer - 1));
+        LOGGER_LN.info("Diagnosis (" + patient.getDiagnosis().getTitle() + ") was made");
         String answerString;
         do {
             try {
-                answerString = requestingInfoWithYesOrNo("Do you want to assign doctor? (y/n): ");
+                answerString = requestingInfoWithYesOrNo("\nDo you want to assign doctor? (y/n): ");
                 break;
             } catch (EmptyInputException | YesOrNoException e) {
-                System.out.println(e.getMessage());
+                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
             }
         } while (true);
         if (answerString.equals("y")) {
             assignDoctor();
         } else {
-            System.out.println("Your doctor (" + patient.getDoctor().getFullName() + ") was assigned by hospital automatically");
+            LOGGER_LN.info("Your doctor (" + patient.getDoctor().getFullName() + ") was assigned by hospital automatically");
         }
         runServiceMenu();
         do {
             try {
-                answerString = requestingInfoWithYesOrNo("Do you want to choose VIP service? (y/n): ");
+                answerString = requestingInfoWithYesOrNo("\nDo you want to choose VIP service? (y/n): ");
                 break;
             } catch (EmptyInputException | YesOrNoException e) {
-                System.out.println(e.getMessage());
+                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
             }
         } while (true);
         if (answerString.equals("y")) {
             runVipServiceMenu();
         } else {
-            System.out.println("OK!");
+            LOGGER_LN.info("OK!");
         }
         patient.getDoctor().addPatient(patient);
     }
@@ -468,10 +473,10 @@ public final class ConsoleMenu {
             if (patient.getServices().size() < Service.values().length) {
                 int index = 1;
                 ArrayList<Service> tempList = new ArrayList<>();
-                System.out.println("All available services:");
+                LN_LOGGER_LN.info("All available services:");
                 for (Service service : Service.values()) {
                     if (!patient.getServices().contains(service)) {
-                        System.out.println("[" + index + "] - " + service.getTitle());
+                        LOGGER_LN.info("[" + index + "] - " + service.getTitle());
                         tempList.add(service);
                         index++;
                     }
@@ -482,17 +487,17 @@ public final class ConsoleMenu {
                         answer = requestingInfoWithChoice("Enter number of service to choose it: ", index - 1);
                         break;
                     } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
-                        System.out.println(e.getMessage());
+                        LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
                     } catch (NumberFormatException e) {
-                        System.out.println("[NumberFormatException]: Entered data is not a number!");
+                        LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
                     }
                 } while (true);
                 Service serviceToAdd = tempList.get(answer - 1);
                 patient.addService(serviceToAdd);
                 patient.getDoctor().addService(serviceToAdd);
-                System.out.println("This service (" + serviceToAdd.getTitle() + ") was added to patient");
+                LOGGER_LN.info("This service (" + serviceToAdd.getTitle() + ") was added to patient");
             } else {
-                System.out.println("The patient has all services");
+                LOGGER_LN.info("The patient has all services");
             }
             String answer;
             do {
@@ -500,11 +505,11 @@ public final class ConsoleMenu {
                     answer = requestingInfoWithYesOrNo("Do you want to choose another service? (y/n): ");
                     break;
                 } catch (EmptyInputException | YesOrNoException e) {
-                    System.out.println(e.getMessage());
+                    LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
                 }
             } while (true);
             if (answer.equals("n")) {
-                System.out.println("OK!");
+                LOGGER_LN.info("OK!");
                 break;
             }
         } while (true);
@@ -562,7 +567,7 @@ public final class ConsoleMenu {
     }
 
     private String requestingInfoWithYesOrNo(String text) throws EmptyInputException, YesOrNoException {
-        System.out.print(text);
+        LOGGER.info(text);
         String answer = scanner.nextLine();
         if (answer.isEmpty()) {
             throw new EmptyInputException("[EmptyInputException]: Entered data can not be empty!");
@@ -575,7 +580,7 @@ public final class ConsoleMenu {
 
     private int requestingInfoWithChoice(String text, int menuItemsNumber)
             throws EmptyInputException, NumberFormatException, MenuItemNumberOutOfBoundsException {
-        System.out.print(text);
+        LOGGER.info(text);
         String answer = scanner.nextLine();
         if (answer.isEmpty()) {
             throw new EmptyInputException("[EmptyInputException]: Entered data can not be empty!");
@@ -589,7 +594,7 @@ public final class ConsoleMenu {
     }
 
     private String requestingInfoString(String text) throws EmptyInputException, StringFormatException {
-        System.out.print(text);
+        LOGGER.info(text);
         String answer = scanner.nextLine();
         if (answer.isEmpty()) {
             throw new EmptyInputException("[EmptyInputException]: Entered data can not be empty!");
@@ -602,7 +607,7 @@ public final class ConsoleMenu {
 
     private int requestingInfoInt(String text)
             throws EmptyInputException, NumberFormatException, NegativeNumberException {
-        System.out.print(text);
+        LOGGER.info(text);
         String answer = scanner.nextLine();
         if (answer.isEmpty()) {
             throw new EmptyInputException("[EmptyInputException]: Entered data can not be empty!");
