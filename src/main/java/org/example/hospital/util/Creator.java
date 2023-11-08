@@ -11,7 +11,11 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Creator {
-    private final static Logger LOGGER_TO_CONSOLE_AND_FILE = LogManager.getLogger("Errors_To_Console_And_File");
+    private final static Logger LOGGER_TO_CONSOLE_AND_FILE;
+
+    static {
+        LOGGER_TO_CONSOLE_AND_FILE = LogManager.getLogger("Errors_To_Console_And_File");
+    }
 
     public static Hospital setHospital(String title) {
         return new Hospital(title);
