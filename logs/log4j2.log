@@ -27,3 +27,25 @@
 2023-11-08 16:53:59,057 ERROR Errors_To_Console_And_File [main] [IOException]: File not found!
 2023-11-08 16:54:15,440 ERROR Errors_To_Console_And_File [main] [IOException]: File not found!
 2023-11-08 17:00:26,801 ERROR Errors_To_Console_And_File [main] [IOException]: File not found!
+2023-11-08 23:18:31,014 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-08 23:18:37,652 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-08 23:18:42,221 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-08 23:18:43,971 ERROR Errors_To_Console_And_File [main] [NumberFormatException]: Entered data is not a number!
+2023-11-08 23:19:04,298 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-08 23:25:35,804 ERROR Errors_To_Console_And_File [main] [StringFormatException]: Entered data is not a letter character!
+2023-11-08 23:25:47,912 ERROR Errors_To_Console_And_File [main] [StringFormatException]: Entered data is not a letter character!
+2023-11-08 23:25:56,137 ERROR Errors_To_Console_And_File [main] [NumberFormatException]: Entered data is not a number!
+2023-11-08 23:25:59,422 ERROR Errors_To_Console_And_File [main] [NegativeNumberException]: Entered data can not be negative
+2023-11-08 23:26:30,972 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-08 23:26:34,649 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-08 23:26:35,737 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-08 23:27:29,407 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-08 23:27:31,210 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-08 23:27:41,655 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-08 23:27:49,216 ERROR Errors_To_Console_And_File [main] [YesOrNoException]: Entered data must be equal to 'y' or 'n'!
+2023-11-08 23:27:51,695 ERROR Errors_To_Console_And_File [main] [YesOrNoException]: Entered data must be equal to 'y' or 'n'!
+2023-11-08 23:27:56,361 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-08 23:30:53,560 ERROR Errors_To_Console_And_File [main] [AgeException]: Age can not be more than 122 years
+2023-11-08 23:31:40,170 ERROR Errors_To_Console_And_File [main] [StringFormatException]: Entered data is not a letter character!
+2023-11-08 23:31:59,555 ERROR Errors_To_Console_And_File [main] [NumberFormatException]: Entered data is not a number!
+2023-11-08 23:32:02,229 ERROR Errors_To_Console_And_File [main] [NegativeNumberException]: Entered data can not be negative
