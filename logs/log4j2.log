@@ -16,3 +16,14 @@
 2023-11-08 15:32:01,165 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
 2023-11-08 15:43:19,006 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
 2023-11-08 15:44:10,841 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-08 16:48:59,215 ERROR Errors_To_Console_And_File [main] [IOException]: File not found!
+2023-11-08 16:50:00,784 ERROR Errors_To_Console_And_File [main] [IOException]: File not found!
+2023-11-08 16:50:32,471 ERROR Errors_To_Console_And_File [main] [IOException]: File not found!
+2023-11-08 16:51:44,474 ERROR Errors_To_Console_And_File [main] [IOException]: File not found!
+2023-11-08 16:51:53,580 ERROR Errors_To_Console_And_File [main] [IOException]: File not found!
+2023-11-08 16:52:03,218 ERROR Errors_To_Console_And_File [main] [IOException]: File not found!
+2023-11-08 16:53:36,657 ERROR Errors_To_Console_And_File [main] [IOException]: File not found!
+2023-11-08 16:53:52,741 ERROR Errors_To_Console_And_File [main] [IOException]: File not found!
+2023-11-08 16:53:59,057 ERROR Errors_To_Console_And_File [main] [IOException]: File not found!
+2023-11-08 16:54:15,440 ERROR Errors_To_Console_And_File [main] [IOException]: File not found!
+2023-11-08 17:00:26,801 ERROR Errors_To_Console_And_File [main] [IOException]: File not found!

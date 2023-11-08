@@ -2,7 +2,7 @@ package org.example.hospital.people;
 
 import java.util.Objects;
 
-public final class Address implements AutoCloseable {
+public final class Address {
     private String city;
     private String street;
     private int houseNumber;
@@ -36,9 +36,6 @@ public final class Address implements AutoCloseable {
     public void setFlatNumber(int flatNumber) {
         this.flatNumber = flatNumber;
     }
-
-    @Override
-    public void close() { }
 
     @Override
     public int hashCode() {

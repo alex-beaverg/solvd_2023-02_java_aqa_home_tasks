@@ -2,7 +2,6 @@ package org.example.hospital.data;
 
 import org.example.hospital.people.*;
 import org.example.hospital.structure.*;
-import org.example.hospital.structure.accounting.Accounting;
 import org.example.hospital.util.Creator;
 
 public final class HardCodeObjects {
@@ -17,9 +16,12 @@ public final class HardCodeObjects {
     public Employee alexWhite = Creator.setEmployee("Alex", "White", 51,
             "Minsk", "New street", 10, 215,
             surgeryDept, Position.DEPT_HEAD, Schedule.BEFORE_NOON_ODD_DAYS);
+
+    private final Address emmaGreetAddress = Creator
+            .setAddress("./src/main/java/org/example/hospital/data/addresses/emma_greet_address.txt");
     public Employee emmaGreet = Creator.setEmployee("Emma", "Greet", 29,
-            "Minsk", "Yellow avenue", 1, 1,
-            therapeuticDept, Position.DOCTOR_1_CATEGORY, Schedule.AFTERNOON_EVEN_DAYS);
+            emmaGreetAddress, therapeuticDept, Position.DOCTOR_1_CATEGORY, Schedule.AFTERNOON_EVEN_DAYS);
+
     public Employee jakeTube = Creator.setEmployee("Jake", "Tube", 35,
             "Minsk", "Red street", 4, 100,
             therapeuticDept, Position.DOCTOR_2_CATEGORY, Schedule.AFTERNOON_ODD_DAYS);

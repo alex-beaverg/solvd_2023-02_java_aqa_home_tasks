@@ -1,10 +1,17 @@
 package org.example.hospital.util;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.hospital.people.*;
 import org.example.hospital.structure.Department;
 import org.example.hospital.structure.Hospital;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
+
 public class Creator {
+    private final static Logger LOGGER_TO_CONSOLE_AND_FILE = LogManager.getLogger("Errors_To_Console_And_File");
 
     public static Hospital setHospital(String title) {
         return new Hospital(title);
@@ -18,6 +25,11 @@ public class Creator {
                                        int houseNumber, int flatNumber, Department department, Position position,
                                        Schedule schedule) {
         Address address = setAddress(city, street, houseNumber, flatNumber);
+        return new Employee(firstName, lastName, age, address, department, position, schedule);
+    }
+
+    public static Employee setEmployee(String firstName, String lastName, int age, Address address,
+                                       Department department, Position position, Schedule schedule) {
         return new Employee(firstName, lastName, age, address, department, position, schedule);
     }
 
@@ -36,14 +48,22 @@ public class Creator {
     }
 
     public static Address setAddress(String city, String street, int houseNumber, int flatNumber) {
-        try (Address address = new Address(null, null, 0, 0)) {
-            address.setCity(city);
-            address.setStreet(street);
-            address.setHouseNumber(houseNumber);
-            address.setFlatNumber(flatNumber);
-            return address;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        return new Address(city, street, houseNumber, flatNumber);
+    }
+
+    public static Address setAddress(String path) {
+        try (FileReader fileReader = new FileReader(path)) {
+            Scanner scanner = new Scanner(fileReader);
+            String city = scanner.nextLine();
+            String street = scanner.nextLine();
+            int houseNumber = Integer.parseInt(scanner.nextLine());
+            int flatNumber = Integer.parseInt(scanner.nextLine());
+            return new Address(city, street, houseNumber, flatNumber);
+        } catch (IOException e) {
+            LOGGER_TO_CONSOLE_AND_FILE.error("[IOException]: File not found!");
+            return null;
+        } catch (NumberFormatException e) {
+            LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
             return null;
         }
     }
