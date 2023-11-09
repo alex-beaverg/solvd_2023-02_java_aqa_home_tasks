@@ -63,7 +63,7 @@ public final class ConsoleMenu {
         return answer;
     }
 
-    private void runMainMenu() {
+    private ConsoleMenu runMainMenu() {
         int answer = runAnyMenu("Main menu:", MainMenu.values());
         switch (answer) {
             case (1) -> {
@@ -71,76 +71,90 @@ public final class ConsoleMenu {
                 for (Department department : objects.hospital.getDepartments()) {
                     LOGGER_LN.info("- " + department);
                 }
-                runMainMenu();
+                return runMainMenu();
             }
-            case (2) -> runDoctorsMenu();
-            case (3) -> runPatientsMenu();
+            case (2) -> {
+                return runDoctorsMenu();
+            }
+            case (3) -> {
+                return runPatientsMenu();
+            }
             default -> {
                 scanner.close();
                 LOGGER_LN.info("Good bye!");
+                return null;
             }
         }
     }
 
-    private void runDoctorsMenu() {
+    private ConsoleMenu runDoctorsMenu() {
         int answer = runAnyMenu("Doctors menu:", DoctorsMenu.values());
         if (answer == 1) {
             doctor = showDoctors();
-            runDoctorMenu();
+            return runDoctorMenu();
         } else if (answer == 2) {
-            runMainMenu();
+            return runMainMenu();
         } else {
             scanner.close();
             LOGGER_LN.info("Good bye!");
+            return null;
         }
     }
 
-    private void runDoctorMenu() {
+    private ConsoleMenu runDoctorMenu() {
         int answer = runAnyMenu("Doctor (" + doctor.getFullName() + ") menu:", DoctorMenu.values());
         switch (answer) {
             case (1) -> {
                 LN_LOGGER_LN.info(doctor);
-                runDoctorMenu();
+                return runDoctorMenu();
             }
             case (2) -> {
                 LN_LOGGER_LN.info(Accounting.getPayslip(doctor));
-                runDoctorMenu();
+                return runDoctorMenu();
             }
-            case (3) -> runDoctorsMenu();
-            case (4) -> runMainMenu();
+            case (3) -> {
+                return runDoctorsMenu();
+            }
+            case (4) -> {
+                return runMainMenu();
+            }
             default -> {
                 scanner.close();
                 LOGGER_LN.info("Good bye!");
+                return null;
             }
         }
     }
 
-    private void runPatientsMenu() {
+    private ConsoleMenu runPatientsMenu() {
         int answer = runAnyMenu("Patients menu:", PatientsMenu.values());
         switch (answer) {
             case (1) -> {
                 patient = findExistPatient();
                 if (patient != null) {
-                    runPatientMenu();
+                    return runPatientMenu();
                 } else {
-                    runPatientsMenu();
+                    return runPatientsMenu();
                 }
             }
             case (2) -> {
                 patient = registerNewPatient();
                 LOGGER_LN.info("New patient (" + patient.getFullName() + ") was registered");
-                runComplaintsMenu();
-                runPatientMenu();
+                patient = runComplaintsMenu();
+                return runPatientMenu();
             }
             case (3) -> {
                 patient = choosePatient();
                 LOGGER_LN.info("Patient (" + patient.getFullName() + ") was chosen");
-                runPatientMenu();
+                return runPatientMenu();
             }
-            case (4) -> runMainMenu();
+            case (4) -> {
+                return runMainMenu();
+            }
             default -> {
                 scanner.close();
                 LOGGER_LN.info("Good bye!");
+                return null;
             }
         }
     }
@@ -165,35 +179,40 @@ public final class ConsoleMenu {
         return null;
     }
 
-    private void runPatientMenu() {
+    private ConsoleMenu runPatientMenu() {
         int answer = runAnyMenu("Patient (" + patient.getFullName() + ") menu:", PatientMenu.values());
         switch (answer) {
             case (1) -> {
-                changeDoctor();
-                runPatientMenu();
+                patient = changeDoctor();
+                return runPatientMenu();
             }
             case (2) -> {
-                deleteVipService();
-                runPatientMenu();
+                patient = deleteVipService();
+                return runPatientMenu();
             }
             case (3) -> {
-                runVipServiceMenu();
-                runPatientMenu();
+                patient = runVipServiceMenu();
+                return runPatientMenu();
             }
             case (4) -> {
                 LN_LOGGER_LN.info(patient);
-                runPatientMenu();
+                return runPatientMenu();
             }
-            case (5) -> runPatientsMenu();
-            case (6) -> runMainMenu();
+            case (5) -> {
+                return runPatientsMenu();
+            }
+            case (6) -> {
+                return runMainMenu();
+            }
             default -> {
                 scanner.close();
                 LOGGER_LN.info("Good bye!");
+                return null;
             }
         }
     }
 
-    private void deleteVipService() {
+    private Patient deleteVipService() {
         do {
             if (patient.getVipServices().size() > 0) {
                 int index = 1;
@@ -234,9 +253,10 @@ public final class ConsoleMenu {
                 break;
             }
         } while (true);
+        return patient;
     }
 
-    private void runVipServiceMenu() {
+    private Patient runVipServiceMenu() {
         do {
             if (patient.getVipServices().size() < VipService.values().length) {
                 int index = 1;
@@ -281,6 +301,7 @@ public final class ConsoleMenu {
                 break;
             }
         } while (true);
+        return patient;
     }
 
     private Employee showDoctors() {
@@ -293,7 +314,7 @@ public final class ConsoleMenu {
         int answer;
         do {
             try {
-                answer = requestingInfoWithChoice("Enter number of doctor to show more information: ", index - 1);
+                answer = requestingInfoWithChoice("Enter number of doctor to choose him: ", index - 1);
                 break;
             } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
                 LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
@@ -327,7 +348,7 @@ public final class ConsoleMenu {
         return objects.hospital.getPatients().get(answer - 1);
     }
 
-    private void assignDoctor() {
+    private Patient assignDoctor() {
         int index = 1;
         ArrayList<Employee> tempList = new ArrayList<>();
         LN_LOGGER_LN.info("All available doctors in your department:");
@@ -351,9 +372,10 @@ public final class ConsoleMenu {
         } while (true);
         patient.setDoctor(tempList.get(answer - 1));
         LOGGER_LN.info("Your doctor (" + patient.getDoctor().getFirstName() + " " + patient.getDoctor().getLastName() + ") was assigned");
+        return patient;
     }
 
-    private void changeDoctor() {
+    private Patient changeDoctor() {
         int index = 1;
         ArrayList<Employee> tempList = new ArrayList<>();
         LN_LOGGER_LN.info("All available doctors in your department:");
@@ -375,13 +397,24 @@ public final class ConsoleMenu {
                 LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
             }
         } while (true);
-        deleteAllServicesFromDoctor();
-        Employee oldDoctor = patient.getDoctor();
+        for (Service service: patient.getServices()) {
+            patient.getDoctor().deleteService(service);
+        }
+        for (VipService vipService: patient.getVipServices()) {
+            patient.getDoctor().deleteVipService(vipService);
+        }
+        String fullNameOfOldDoctor = patient.getDoctor().getFullName();
         patient.getDoctor().deletePatient(patient);
         patient.setDoctor(tempList.get(answer - 1));
         patient.getDoctor().addPatient(patient);
-        addAllServicesToDoctor();
-        LOGGER_LN.info("Dr. " + oldDoctor.getFullName() + " has been replaced by dr. " + patient.getDoctor().getFullName());
+        for (Service service: patient.getServices()) {
+            patient.getDoctor().addService(service);
+        }
+        for (VipService vipService: patient.getVipServices()) {
+            patient.getDoctor().addVipService(vipService);
+        }
+        LOGGER_LN.info("Dr. " + fullNameOfOldDoctor + " has been replaced by dr. " + patient.getDoctor().getFullName());
+        return patient;
     }
 
     private Patient registerNewPatient(){
@@ -406,7 +439,7 @@ public final class ConsoleMenu {
         } while (true);
         do {
             try {
-                setAge(newPatient);
+                newPatient.setAge(getAgeFromConsole());
                 break;
             } catch (AgeException e) {
                 LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
@@ -453,15 +486,14 @@ public final class ConsoleMenu {
         return newPatient;
     }
 
-    private void setAge(Patient newPatient) throws AgeException {
+    private int getAgeFromConsole() throws AgeException {
         do {
             try {
                 int age = requestingInfoInt("Enter your age: ");
                 if (age > 122) {
                     throw new AgeException("[AgeException]: Age can not be more than 122 years");
                 }
-                newPatient.setAge(age);
-                break;
+                return age;
             } catch (EmptyInputException | NegativeNumberException e) {
                 LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
             } catch (NumberFormatException e) {
@@ -470,7 +502,7 @@ public final class ConsoleMenu {
         } while (true);
     }
 
-    private void runComplaintsMenu() {
+    private Patient runComplaintsMenu() {
         int answer = runAnyMenu("Complaints menu:", ComplaintsMenu.values());
         patient.setDiagnosis(getDiagnose(answer));
         LOGGER_LN.info("Diagnosis (" + patient.getDiagnosis().getTitle() + ") was made");
@@ -484,11 +516,11 @@ public final class ConsoleMenu {
             }
         } while (true);
         if (answerString.equals("y")) {
-            assignDoctor();
+            patient = assignDoctor();
         } else {
             LOGGER_LN.info("Your doctor (" + patient.getDoctor().getFullName() + ") was assigned by hospital automatically");
         }
-        runServiceMenu();
+        patient = runServiceMenu();
         do {
             try {
                 answerString = requestingInfoWithYesOrNo("\nDo you want to choose VIP service? (y/n): ");
@@ -498,14 +530,15 @@ public final class ConsoleMenu {
             }
         } while (true);
         if (answerString.equals("y")) {
-            runVipServiceMenu();
+            patient = runVipServiceMenu();
         } else {
             LOGGER_LN.info("OK!");
         }
         patient.getDoctor().addPatient(patient);
+        return patient;
     }
 
-    private void runServiceMenu() {
+    private Patient runServiceMenu() {
         do {
             if (patient.getServices().size() < Service.values().length) {
                 int index = 1;
@@ -550,24 +583,7 @@ public final class ConsoleMenu {
                 break;
             }
         } while (true);
-    }
-
-    private void addAllServicesToDoctor() {
-        for (Service service: patient.getServices()) {
-            patient.getDoctor().addService(service);
-        }
-        for (VipService vipService: patient.getVipServices()) {
-            patient.getDoctor().addVipService(vipService);
-        }
-    }
-
-    private void deleteAllServicesFromDoctor() {
-        for (Service service: patient.getServices()) {
-            patient.getDoctor().deleteService(service);
-        }
-        for (VipService vipService: patient.getVipServices()) {
-            patient.getDoctor().deleteVipService(vipService);
-        }
+        return patient;
     }
 
     private Diagnosis getDiagnose(int number) {
