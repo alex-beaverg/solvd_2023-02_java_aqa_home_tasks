@@ -63,6 +63,12 @@ public final class ConsoleMenu {
         return answer;
     }
 
+    private ConsoleMenu tearDown() {
+        scanner.close();
+        LOGGER_LN.info("Good bye!");
+        return null;
+    }
+
     private ConsoleMenu runMainMenu() {
         int answer = runAnyMenu("Main menu:", MainMenu.values());
         switch (answer) {
@@ -80,9 +86,7 @@ public final class ConsoleMenu {
                 return runPatientsMenu();
             }
             default -> {
-                scanner.close();
-                LOGGER_LN.info("Good bye!");
-                return null;
+                return tearDown();
             }
         }
     }
@@ -95,9 +99,7 @@ public final class ConsoleMenu {
         } else if (answer == 2) {
             return runMainMenu();
         } else {
-            scanner.close();
-            LOGGER_LN.info("Good bye!");
-            return null;
+            return tearDown();
         }
     }
 
@@ -119,9 +121,7 @@ public final class ConsoleMenu {
                 return runMainMenu();
             }
             default -> {
-                scanner.close();
-                LOGGER_LN.info("Good bye!");
-                return null;
+                return tearDown();
             }
         }
     }
@@ -152,9 +152,7 @@ public final class ConsoleMenu {
                 return runMainMenu();
             }
             default -> {
-                scanner.close();
-                LOGGER_LN.info("Good bye!");
-                return null;
+                return tearDown();
             }
         }
     }
@@ -205,9 +203,7 @@ public final class ConsoleMenu {
                 return runMainMenu();
             }
             default -> {
-                scanner.close();
-                LOGGER_LN.info("Good bye!");
-                return null;
+                return tearDown();
             }
         }
     }
