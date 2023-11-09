@@ -2,8 +2,8 @@ package org.example.hospital.structure;
 
 import org.example.hospital.people.Employee;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface IGetEmployeesBySomething {
-    ArrayList<Employee> getEmployeesBySpecialistClass(int specialistClass);
+    List<Employee> getEmployeesBySpecialistClass(int specialistClass);
 }

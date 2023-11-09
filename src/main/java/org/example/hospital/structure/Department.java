@@ -4,6 +4,7 @@ import org.example.hospital.people.Employee;
 import org.example.hospital.people.Patient;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
@@ -11,7 +12,7 @@ public class Department implements IAddPatients, IGetEmployeesBySomething {
     private final String title;
     private final int officeNumber;
     private Employee[] employees;
-    private final ArrayList<Patient> patients;
+    private final List<Patient> patients;
 
     {
         patients = new ArrayList<>();
@@ -41,8 +42,8 @@ public class Department implements IAddPatients, IGetEmployeesBySomething {
     }
 
     @Override
-    public final ArrayList<Employee> getEmployeesBySpecialistClass(int specialistClass) {
-        ArrayList<Employee> tempList = new ArrayList<>();
+    public final List<Employee> getEmployeesBySpecialistClass(int specialistClass) {
+        List<Employee> tempList = new ArrayList<>();
         for (Employee employee: employees) {
             if (employee.getPosition().getSpecialistClass() == specialistClass) {
                 tempList.add(employee);

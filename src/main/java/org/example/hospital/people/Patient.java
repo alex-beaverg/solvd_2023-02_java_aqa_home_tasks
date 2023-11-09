@@ -6,6 +6,7 @@ import org.example.hospital.structure.Department;
 import org.example.hospital.structure.VipService;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Patient extends Person implements IAddServices {
@@ -13,8 +14,8 @@ public class Patient extends Person implements IAddServices {
     private Department department;
     private Employee doctor;
     private Employee nurse;
-    private final ArrayList<Service> services;
-    private final ArrayList<VipService> vipServices;
+    private final List<Service> services;
+    private final List<VipService> vipServices;
     private double servicesPrice;
     private double vipServicesPrice;
 
@@ -43,11 +44,11 @@ public class Patient extends Person implements IAddServices {
         return diagnosis;
     }
 
-    public ArrayList<Service> getServices() {
+    public List<Service> getServices() {
         return services;
     }
 
-    public ArrayList<VipService> getVipServices() {
+    public List<VipService> getVipServices() {
         return vipServices;
     }
 

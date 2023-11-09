@@ -4,6 +4,7 @@ import org.example.hospital.structure.*;
 import org.example.hospital.structure.accounting.Accounting;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Employee extends Person implements IAddPatients, IAddServices, IDeleteItems {
@@ -11,11 +12,11 @@ public class Employee extends Person implements IAddPatients, IAddServices, IDel
     private final Position position;
     private final Schedule schedule;
     private double salary;
-    private final ArrayList<Service> services;
-    private final ArrayList<VipService> vipServices;
+    private final List<Service> services;
+    private final List<VipService> vipServices;
     private double servicesPrice;
     private double vipServicesPrice;
-    private final ArrayList<Patient> patients;
+    private final List<Patient> patients;
 
     {
         services = new ArrayList<>();
@@ -47,15 +48,15 @@ public class Employee extends Person implements IAddPatients, IAddServices, IDel
         return vipServicesPrice;
     }
 
-    public ArrayList<Service> getServices() {
+    public List<Service> getServices() {
         return services;
     }
 
-    public ArrayList<VipService> getVipServices() {
+    public List<VipService> getVipServices() {
         return vipServices;
     }
 
-    public ArrayList<Patient> getPatients() {
+    public List<Patient> getPatients() {
         return patients;
     }
 

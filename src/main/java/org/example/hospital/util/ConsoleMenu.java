@@ -12,6 +12,7 @@ import org.example.hospital.structure.accounting.Accounting;
 import org.example.hospital.util.menu_enums.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public final class ConsoleMenu {
@@ -256,7 +257,7 @@ public final class ConsoleMenu {
         do {
             if (patient.getVipServices().size() < VipService.values().length) {
                 int index = 1;
-                ArrayList<VipService> tempList = new ArrayList<>();
+                List<VipService> tempList = new ArrayList<>();
                 LN_LOGGER_LN.info("All available VIP services:");
                 for (VipService vipService: VipService.values()) {
                     if (!patient.getVipServices().contains(vipService)) {
@@ -346,7 +347,7 @@ public final class ConsoleMenu {
 
     private Patient assignDoctor() {
         int index = 1;
-        ArrayList<Employee> tempList = new ArrayList<>();
+        List<Employee> tempList = new ArrayList<>();
         LN_LOGGER_LN.info("All available doctors in your department:");
         for (Employee doctor: patient.getDepartment().getEmployeesBySpecialistClass(2)) {
             if (doctor != patient.getDoctor()) {
@@ -373,7 +374,7 @@ public final class ConsoleMenu {
 
     private Patient changeDoctor() {
         int index = 1;
-        ArrayList<Employee> tempList = new ArrayList<>();
+        List<Employee> tempList = new ArrayList<>();
         LN_LOGGER_LN.info("All available doctors in your department:");
         for (Employee doctor: patient.getDepartment().getEmployeesBySpecialistClass(2)) {
             if (doctor != patient.getDoctor()) {
@@ -538,7 +539,7 @@ public final class ConsoleMenu {
         do {
             if (patient.getServices().size() < Service.values().length) {
                 int index = 1;
-                ArrayList<Service> tempList = new ArrayList<>();
+                List<Service> tempList = new ArrayList<>();
                 LN_LOGGER_LN.info("All available services:");
                 for (Service service : Service.values()) {
                     if (!patient.getServices().contains(service)) {

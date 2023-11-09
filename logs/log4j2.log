@@ -10,3 +10,7 @@
 2023-11-09 14:18:00,315 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
 2023-11-09 14:18:52,532 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
 2023-11-09 14:18:52,559 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-09 20:04:14,876 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-09 20:05:22,824 ERROR Errors_To_Console_And_File [main] [YesOrNoException]: Entered data must be equal to 'y' or 'n'!
+2023-11-09 20:06:40,170 ERROR Errors_To_Console_And_File [main] [YesOrNoException]: Entered data must be equal to 'y' or 'n'!
+2023-11-09 20:06:57,797 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!

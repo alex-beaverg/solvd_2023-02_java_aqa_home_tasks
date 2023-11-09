@@ -4,12 +4,13 @@ import org.example.hospital.people.Employee;
 import org.example.hospital.people.Patient;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public final class Hospital implements IAddPatients, IGetEmployeesBySomething {
     private final String title;
     private Department[] departments;
     private Employee[] employees;
-    private final ArrayList<Patient> patients;
+    private final List<Patient> patients;
 
     {
         patients = new ArrayList<>();
@@ -36,13 +37,13 @@ public final class Hospital implements IAddPatients, IGetEmployeesBySomething {
         this.employees = employees;
     }
 
-    public ArrayList<Patient> getPatients() {
+    public List<Patient> getPatients() {
         return patients;
     }
 
     @Override
-    public ArrayList<Employee> getEmployeesBySpecialistClass(int specialistClass) {
-        ArrayList<Employee> tempList = new ArrayList<>();
+    public List<Employee> getEmployeesBySpecialistClass(int specialistClass) {
+        List<Employee> tempList = new ArrayList<>();
         for (Employee employee: employees) {
             if (employee.getPosition().getSpecialistClass() == specialistClass) {
                 tempList.add(employee);
