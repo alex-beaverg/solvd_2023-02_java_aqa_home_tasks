@@ -11,17 +11,21 @@ import java.util.Random;
 public class Department implements IAddPatients, IGetEmployeesBySomething {
     private final String title;
     private final int officeNumber;
-    private Employee[] employees;
+    private final String diseasesType;
+    private final List<Employee> employees;
     private final List<Patient> patients;
 
     {
+        employees = new ArrayList<>();
         patients = new ArrayList<>();
     }
 
     public Department(String title,
-                      int officeNumber) {
+                      int officeNumber,
+                      String diseasesType) {
         this.title = title;
         this.officeNumber = officeNumber;
+        this.diseasesType = diseasesType;
     }
 
     @Override
@@ -33,12 +37,16 @@ public class Department implements IAddPatients, IGetEmployeesBySomething {
         return title;
     }
 
+    public String getDiseasesType() {
+        return diseasesType;
+    }
+
     public final int getOfficeNumber() {
         return officeNumber;
     }
 
-    public final void setEmployees(Employee[] employees) {
-        this.employees = employees;
+    public final void addEmployee(Employee employee) {
+        employees.add(employee);
     }
 
     @Override
@@ -63,12 +71,10 @@ public class Department implements IAddPatients, IGetEmployeesBySomething {
         return tempList.get(random.nextInt(tempList.size()));
     }
 
-    private StringBuilder combineObjectTitles(Object[] objects) {
+    private StringBuilder combineObjectTitles(List<Employee> empls) {
         StringBuilder combiningObjectTitles = new StringBuilder();
-        if (objects instanceof Employee[] empls) {
-            for (Employee employee: empls) {
-                combiningObjectTitles.append("[").append(employee.getFirstName()).append(" ").append(employee.getLastName()).append("] ");
-            }
+        for (Employee employee: empls) {
+            combiningObjectTitles.append("[").append(employee.getFirstName()).append(" ").append(employee.getLastName()).append("] ");
         }
         return combiningObjectTitles;
     }
@@ -77,7 +83,7 @@ public class Department implements IAddPatients, IGetEmployeesBySomething {
     public int hashCode() {
         int result = title == null ? 0 : title.hashCode();
         result = 31 * result + officeNumber;
-        result = 31 * result + patients.hashCode();
+        result = 31 * result + (diseasesType == null ? 0 : diseasesType.hashCode());
         return result;
     }
 
@@ -87,7 +93,7 @@ public class Department implements IAddPatients, IGetEmployeesBySomething {
         if (obj == null || getClass() != obj.getClass()) return false;
         Department that = (Department) obj;
         if (!Objects.equals(title, that.title)) return false;
-        if (!Objects.equals(patients, that.patients)) return false;
+        if (!Objects.equals(diseasesType, that.diseasesType)) return false;
         return officeNumber == that.officeNumber;
     }
 

@@ -1,15 +1,21 @@
 package org.example.hospital.people;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.example.hospital.custom_exceptions.EmptyInputException;
+import org.example.hospital.custom_exceptions.MenuItemNumberOutOfBoundsException;
 import org.example.hospital.structure.accounting.Accounting;
 import org.example.hospital.structure.Service;
 import org.example.hospital.structure.Department;
 import org.example.hospital.structure.VipService;
+import org.example.hospital.util.RequestMethods;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Patient extends Person implements IAddServices {
+    private final static Logger LOGGER_LN;
+    private final static Logger LN_LOGGER_LN;
+    private final static Logger LOGGER_TO_CONSOLE_AND_FILE;
     private Diagnosis diagnosis;
     private Department department;
     private Employee doctor;
@@ -18,6 +24,12 @@ public class Patient extends Person implements IAddServices {
     private final List<VipService> vipServices;
     private double servicesPrice;
     private double vipServicesPrice;
+
+    static {
+        LOGGER_LN = LogManager.getLogger("InsteadOfSOUT_ln");
+        LN_LOGGER_LN = LogManager.getLogger("ln_InsteadOfSOUT_ln");
+        LOGGER_TO_CONSOLE_AND_FILE = LogManager.getLogger("Errors_To_Console_And_File");
+    }
 
     {
         services = new ArrayList<>();
@@ -95,6 +107,71 @@ public class Patient extends Person implements IAddServices {
         this.nurse = nurse;
     }
 
+    public Patient assignDoctor() {
+        int index = 1;
+        LN_LOGGER_LN.info("All available doctors in your department:");
+        for (Employee doctor: getDepartment().getEmployeesBySpecialistClass(2)) {
+            LOGGER_LN.info("[" + index + "] - " + doctor.getPersonToPrintInList());
+            index++;
+        }
+        int answer;
+        do {
+            try {
+                answer = RequestMethods.requestingInfoWithChoice("Enter number of doctor to choose him: ", index - 1);
+                break;
+            } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
+                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
+            } catch (NumberFormatException e) {
+                LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
+            }
+        } while (true);
+        setDoctor(getDepartment().getEmployeesBySpecialistClass(2).get(answer - 1));
+        LOGGER_LN.info("Your doctor (" + getDoctor().getFullName() + ") was assigned");
+        return this;
+    }
+
+    public Patient changeDoctor() {
+        int index = 1;
+        List<Employee> tempList = new ArrayList<>();
+        LN_LOGGER_LN.info("All available doctors in your department:");
+        for (Employee doctor: getDepartment().getEmployeesBySpecialistClass(2)) {
+            if (doctor != getDoctor()) {
+                LOGGER_LN.info("[" + index + "] - " + doctor.getPersonToPrintInList());
+                tempList.add(doctor);
+                index++;
+            }
+        }
+        int answer;
+        do {
+            try {
+                answer = RequestMethods.requestingInfoWithChoice("Enter number of doctor to choose him: ", index - 1);
+                break;
+            } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
+                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
+            } catch (NumberFormatException e) {
+                LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
+            }
+        } while (true);
+        for (Service service: getServices()) {
+            getDoctor().deleteService(service);
+        }
+        for (VipService vipService: getVipServices()) {
+            getDoctor().deleteVipService(vipService);
+        }
+        String fullNameOfOldDoctor = getDoctor().getFullName();
+        getDoctor().deletePatient(this);
+        setDoctor(tempList.get(answer - 1));
+        getDoctor().addPatient(this);
+        for (Service service: getServices()) {
+            getDoctor().addService(service);
+        }
+        for (VipService vipService: getVipServices()) {
+            getDoctor().addVipService(vipService);
+        }
+        LOGGER_LN.info("Dr. " + fullNameOfOldDoctor + " has been replaced by dr. " + getDoctor().getFullName());
+        return this;
+    }
+
     @Override
     public String getPersonToPrintInList() {
         return firstName + " " + lastName + " (" + diagnosis.getTitle() + ", " + department.getTitle() + ")";
@@ -155,22 +232,18 @@ public class Patient extends Person implements IAddServices {
 
     @Override
     public String toString() {
-        try {
-            return "Patient: (" + getRole() + "): " +
-                    super.toString() +
-                    "\n\tDiagnosis: " + diagnosis.getTitle() +
-                    "\n\tDepartment: " + department.getTitle() +
-                    "\n\tOffice: " + department.getOfficeNumber() +
-                    "\n\tDoctor: " + doctor.getFirstName() + " " + doctor.getLastName() + " (" + doctor.getPosition().getTitle() + ")" +
-                    "\n\tNurse: " + nurse.getFirstName() + " " + nurse.getLastName() +
-                    "\n\tServices: " + combineServices() +
-                    "\n\tPrice: " + Math.ceil(servicesPrice * 100) / 100 + " BYN" +
-                    "\n\tVIP services: " + combineVipServices() +
-                    "\n\tVIP price: " + Math.ceil(vipServicesPrice * 100) / 100 + " BYN" +
-                    "\n\t------" +
-                    "\n\tTotal price: " + Math.ceil((servicesPrice + vipServicesPrice) * 100) / 100 + " BYN";
-        } catch (NullPointerException e) {
-            return "\nThe patient was not registered";
-        }
+        return "Patient: (" + getRole() + "): " +
+                super.toString() +
+                "\n\tDiagnosis: " + diagnosis.getTitle() +
+                "\n\tDepartment: " + department.getTitle() +
+                "\n\tOffice: " + department.getOfficeNumber() +
+                "\n\tDoctor: " + (doctor != null ? doctor.getFullName() + " (" + doctor.getPosition().getTitle() + ")" : null) +
+                "\n\tNurse: " + (nurse != null ? nurse.getFullName() : null) +
+                "\n\tServices: " + combineServices() +
+                "\n\tPrice: " + Math.ceil(servicesPrice * 100) / 100 + " BYN" +
+                "\n\tVIP services: " + combineVipServices() +
+                "\n\tVIP price: " + Math.ceil(vipServicesPrice * 100) / 100 + " BYN" +
+                "\n\t------" +
+                "\n\tTotal price: " + Math.ceil((servicesPrice + vipServicesPrice) * 100) / 100 + " BYN";
     }
 }

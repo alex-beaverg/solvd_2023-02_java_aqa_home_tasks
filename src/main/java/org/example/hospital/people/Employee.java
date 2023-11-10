@@ -40,6 +40,10 @@ public class Employee extends Person implements IAddPatients, IAddServices, IDel
         salary = Accounting.calculateEmployeeSalary(this);
     }
 
+    public Department getDepartment() {
+        return department;
+    }
+
     public double getServicesPrice() {
         return servicesPrice;
     }
@@ -145,9 +149,6 @@ public class Employee extends Person implements IAddPatients, IAddServices, IDel
         result = 31 * result + (department == null ? 0 : department.hashCode());
         result = 31 * result + (position == null ? 0 : position.hashCode());
         result = 31 * result + (schedule == null ? 0 : schedule.hashCode());
-        result = 31 * result + (int) salary;
-        result = 31 * result + (int) servicesPrice;
-        result = 31 * result + (int) vipServicesPrice;
         return result;
     }
 
@@ -162,9 +163,6 @@ public class Employee extends Person implements IAddPatients, IAddServices, IDel
         if (!Objects.equals(department, that.department)) return false;
         if (!Objects.equals(position, that.position)) return false;
         if (!Objects.equals(schedule, that.schedule)) return false;
-        if ((int) salary != (int) that.salary) return false;
-        if ((int) servicesPrice != (int) that.servicesPrice) return false;
-        if ((int) vipServicesPrice != (int) that.vipServicesPrice) return false;
         return age == that.age;
     }
 
