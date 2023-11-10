@@ -1,16 +1,1 @@
-2023-11-09 00:00:35,350 ERROR Errors_To_Console_And_File [main] [NumberFormatException]: Entered data is not a number!
-2023-11-09 00:00:48,438 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
-2023-11-09 00:00:52,712 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
-2023-11-09 14:12:52,321 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
-2023-11-09 14:12:55,937 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
-2023-11-09 14:12:59,984 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
-2023-11-09 14:13:15,000 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
-2023-11-09 14:13:17,339 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
-2023-11-09 14:17:34,880 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
-2023-11-09 14:18:00,315 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
-2023-11-09 14:18:52,532 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
-2023-11-09 14:18:52,559 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
-2023-11-09 20:04:14,876 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
-2023-11-09 20:05:22,824 ERROR Errors_To_Console_And_File [main] [YesOrNoException]: Entered data must be equal to 'y' or 'n'!
-2023-11-09 20:06:40,170 ERROR Errors_To_Console_And_File [main] [YesOrNoException]: Entered data must be equal to 'y' or 'n'!
-2023-11-09 20:06:57,797 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 11:44:10,007 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
