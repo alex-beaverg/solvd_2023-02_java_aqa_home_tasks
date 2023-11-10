@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public final class ConsoleMenu {
-    private final static Logger LOGGER_LN;
     private final static Logger LOGGER;
+    private final static Logger LOGGER_LN;
     private final static Logger LN_LOGGER_LN;
     private final static Logger LOGGER_TO_CONSOLE_AND_FILE;
     private final HardCodeObjects objects;
@@ -26,8 +26,8 @@ public final class ConsoleMenu {
     private final Scanner scanner;
 
     static {
-        LOGGER_LN = LogManager.getLogger("InsteadOfSOUT_ln");
         LOGGER = LogManager.getLogger("InsteadOfSOUT");
+        LOGGER_LN = LogManager.getLogger("InsteadOfSOUT_ln");
         LN_LOGGER_LN = LogManager.getLogger("ln_InsteadOfSOUT_ln");
         LOGGER_TO_CONSOLE_AND_FILE = LogManager.getLogger("Errors_To_Console_And_File");
     }
@@ -354,14 +354,10 @@ public final class ConsoleMenu {
 
     private Patient assignDoctor() {
         int index = 1;
-        List<Employee> tempList = new ArrayList<>();
         LN_LOGGER_LN.info("All available doctors in your department:");
         for (Employee doctor: patient.getDepartment().getEmployeesBySpecialistClass(2)) {
-            if (doctor != patient.getDoctor()) {
-                LOGGER_LN.info("[" + index + "] - " + doctor.getPersonToPrintInList());
-                tempList.add(doctor);
-                index++;
-            }
+            LOGGER_LN.info("[" + index + "] - " + doctor.getPersonToPrintInList());
+            index++;
         }
         int answer;
         do {
@@ -374,8 +370,8 @@ public final class ConsoleMenu {
                 LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
             }
         } while (true);
-        patient.setDoctor(tempList.get(answer - 1));
-        LOGGER_LN.info("Your doctor (" + patient.getDoctor().getFirstName() + " " + patient.getDoctor().getLastName() + ") was assigned");
+        patient.setDoctor(patient.getDepartment().getEmployeesBySpecialistClass(2).get(answer - 1));
+        LOGGER_LN.info("Your doctor (" + patient.getDoctor().getFullName() + ") was assigned");
         return patient;
     }
 
