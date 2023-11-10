@@ -24,6 +24,10 @@ public final class Hospital implements IAddPatients, IGetEmployeesBySomething {
         return departments;
     }
 
+    public Employee[] getEmployees() {
+        return employees;
+    }
+
     @Override
     public void addPatient(Patient patient) {
         patients.add(patient);

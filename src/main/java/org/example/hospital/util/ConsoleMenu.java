@@ -81,9 +81,16 @@ public final class ConsoleMenu {
                 return runMainMenu();
             }
             case (2) -> {
-                return runDoctorsMenu();
+                LN_LOGGER_LN.info("All employees in hospital:");
+                for (Employee employee : objects.hospital.getEmployees()) {
+                    LOGGER_LN.info("- " + employee.getPersonToPrintInList());
+                }
+                return runMainMenu();
             }
             case (3) -> {
+                return runDoctorsMenu();
+            }
+            case (4) -> {
                 return runPatientsMenu();
             }
             default -> {
