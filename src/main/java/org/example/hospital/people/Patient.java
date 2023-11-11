@@ -12,14 +12,14 @@ public class Patient extends Person implements IAddServices {
     private Department department;
     private Employee doctor;
     private Employee nurse;
-    private final List<Service> services;
+    private final Set<Service> services;
     private final List<VipService> vipServices;
     private double servicesPrice;
     private double vipServicesPrice;
 
     {
-        services = new ArrayList<>();
-        vipServices = new ArrayList<>();
+        services = new HashSet<>();
+        vipServices = new LinkedList<>();
     }
 
     public Patient() {
@@ -42,7 +42,7 @@ public class Patient extends Person implements IAddServices {
         return diagnosis;
     }
 
-    public List<Service> getServices() {
+    public Set<Service> getServices() {
         return services;
     }
 

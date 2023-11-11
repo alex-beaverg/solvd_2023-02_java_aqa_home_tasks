@@ -3,6 +3,7 @@ package org.example.hospital.util.menu_enums;
 public enum MainMenu implements IMenu {
     DEPARTMENTS("Show departments"),
     EMPLOYEES("Show all employees"),
+    DIAGNOSES_MAP("Show diagnoses map"),
     DOCTORS_MENU("Doctors menu actions"),
     PATIENTS_MENU("Patients menu actions"),
     EXIT("Exit");

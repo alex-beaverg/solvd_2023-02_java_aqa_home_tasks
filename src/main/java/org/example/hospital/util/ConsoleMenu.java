@@ -69,9 +69,13 @@ public final class ConsoleMenu {
                 return runMainMenu();
             }
             case (3) -> {
-                return runDoctorsMenu();
+                hospital.showDiagnosesMap();
+                return runMainMenu();
             }
             case (4) -> {
+                return runDoctorsMenu();
+            }
+            case (5) -> {
                 return runPatientsMenu();
             }
             default -> {
@@ -178,6 +182,7 @@ public final class ConsoleMenu {
     private ConsoleMenu runComplaintsMenu(Patient patient) {
         int answer = runAnyMenu("Complaints menu:", ComplaintsMenu.values());
         patient.setDiagnosis(GeneralActions.getDiagnose(hospital, patient, answer));
+        hospital.addPatientToDiagnosesMap(patient);
         LOGGER_LN.info("Diagnosis (" + patient.getDiagnosis().getTitle() + ") was made");
         return runPatientMenu(ServicesActions.addService(ServicesActions.requestForAssignDoctor(patient)));
     }

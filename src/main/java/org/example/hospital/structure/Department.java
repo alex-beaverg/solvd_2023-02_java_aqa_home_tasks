@@ -71,10 +71,10 @@ public class Department implements IAddPatients, IGetEmployeesBySomething {
         return tempList.get(random.nextInt(tempList.size()));
     }
 
-    private StringBuilder combineObjectTitles(List<Employee> empls) {
+    private StringBuilder combineEmployees(List<Employee> departmentEmployees) {
         StringBuilder combiningObjectTitles = new StringBuilder();
-        for (Employee employee: empls) {
-            combiningObjectTitles.append("[").append(employee.getFirstName()).append(" ").append(employee.getLastName()).append("] ");
+        for (Employee employee: departmentEmployees) {
+            combiningObjectTitles.append("[").append(employee.getFullName()).append("] ");
         }
         return combiningObjectTitles;
     }
@@ -99,6 +99,6 @@ public class Department implements IAddPatients, IGetEmployeesBySomething {
 
     @Override
     public String toString() {
-        return "Department '" + title + "' / Employees: " + combineObjectTitles(employees);
+        return "Department '" + title + "' / Employees: " + combineEmployees(employees);
     }
 }

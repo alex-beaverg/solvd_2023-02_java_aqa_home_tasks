@@ -99,6 +99,7 @@ public class Creator {
         // Add patients to Hospital:
         for (Patient patient : generatePatients(hospital)) {
             hospital.addPatient(patient);
+            hospital.addPatientToDiagnosesMap(patient);
         }
         // Add patients to departments:
         for (Department department : hospital.getDepartments()) {

@@ -59,7 +59,9 @@ public class ServicesActions {
                 LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
             }
         } while (true);
-        patient.setDoctor(patient.getDepartment().getEmployeesBySpecialistClass(2).get(answer - 1));
+        if (patient.getDoctor() != patient.getDepartment().getEmployeesBySpecialistClass(2).get(answer - 1)) {
+            patient.setDoctor(patient.getDepartment().getEmployeesBySpecialistClass(2).get(answer - 1));
+        }
         LOGGER_LN.info("Your doctor (" + patient.getDoctor().getFullName() + ") was assigned");
     }
 

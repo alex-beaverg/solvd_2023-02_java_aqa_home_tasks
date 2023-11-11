@@ -2,21 +2,27 @@ package org.example.hospital.structure;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.example.hospital.people.Diagnosis;
 import org.example.hospital.people.Employee;
 import org.example.hospital.people.Patient;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public final class Hospital implements IAddPatients, IGetEmployeesBySomething {
     private final String title;
     private final List<Department> departments;
     private final List<Employee> employees;
     private final List<Patient> patients;
+    private final Map<Diagnosis, List<Patient>> diagnosesMap;
+    public static final Logger LOGGER;
     public static final Logger LOGGER_LN;
     public static final Logger LN_LOGGER_LN;
 
     static {
+        LOGGER = LogManager.getLogger("InsteadOfSOUT");
         LOGGER_LN = LogManager.getLogger("InsteadOfSOUT_ln");
         LN_LOGGER_LN = LogManager.getLogger("ln_InsteadOfSOUT_ln");
     }
@@ -25,6 +31,7 @@ public final class Hospital implements IAddPatients, IGetEmployeesBySomething {
         departments = new ArrayList<>();
         employees = new ArrayList<>();
         patients = new ArrayList<>();
+        diagnosesMap = new HashMap<>();
     }
 
     public Hospital(String title) {
@@ -56,6 +63,15 @@ public final class Hospital implements IAddPatients, IGetEmployeesBySomething {
         return patients;
     }
 
+    public void addPatientToDiagnosesMap(Patient patient) {
+        List<Patient> tempList = diagnosesMap.get(patient.getDiagnosis());
+        if (tempList == null) {
+            tempList = new ArrayList<>();
+        }
+        tempList.add(patient);
+        diagnosesMap.put(patient.getDiagnosis(), tempList);
+    }
+
     public void showDepartments() {
         LN_LOGGER_LN.info("All departments in hospital:");
         for (Department department : getDepartments()) {
@@ -67,6 +83,17 @@ public final class Hospital implements IAddPatients, IGetEmployeesBySomething {
         LN_LOGGER_LN.info("All employees in hospital:");
         for (Employee employee : getEmployees()) {
             LOGGER_LN.info("- " + employee.getPersonToPrintInList());
+        }
+    }
+
+    public void showDiagnosesMap() {
+        LN_LOGGER_LN.info("Hospital diagnoses map:");
+        for (Map.Entry<Diagnosis, List<Patient>> entry : diagnosesMap.entrySet()) {
+            LOGGER.info("- " + entry.getKey() + ": ");
+            for (Patient patient : entry.getValue()) {
+                LOGGER.info("[" + patient.getFullName() + "] ");
+            }
+            LOGGER_LN.info("");
         }
     }
 
