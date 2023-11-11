@@ -16,10 +16,10 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Creator {
-    private final static Logger LOGGER_TO_CONSOLE_AND_FILE;
+    public static final Logger LOGGER_TO_CONSOLE_AND_FILE;
 
     static {
-        LOGGER_TO_CONSOLE_AND_FILE = LogManager.getLogger("Errors_To_Console_And_File");
+        LOGGER_TO_CONSOLE_AND_FILE = LogManager.getLogger(Creator.class);
     }
 
     public static Hospital setHospital(String title) {

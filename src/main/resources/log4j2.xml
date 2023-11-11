@@ -39,7 +39,19 @@
         <Logger name="ln_InsteadOfSOUT_ln" level="info" additivity="false">
             <AppenderRef ref="ln_InsteadOfSOUT_ln"/>
         </Logger>
-        <Logger name="Errors_To_Console_And_File" level="error" additivity="false">
+        <Logger name="org.example.hospital.util.ConsoleMenu" level="error" additivity="false">
+            <AppenderRef ref="rollingFile"/>
+            <AppenderRef ref="InsteadOfSOUT_ln_For_Errors"/>
+        </Logger>
+        <Logger name="org.example.hospital.structure.ServicesActions" level="error" additivity="false">
+            <AppenderRef ref="rollingFile"/>
+            <AppenderRef ref="InsteadOfSOUT_ln_For_Errors"/>
+        </Logger>
+        <Logger name="org.example.hospital.structure.GeneralActions" level="error" additivity="false">
+            <AppenderRef ref="rollingFile"/>
+            <AppenderRef ref="InsteadOfSOUT_ln_For_Errors"/>
+        </Logger>
+        <Logger name="org.example.hospital.data.Creator" level="error" additivity="false">
             <AppenderRef ref="rollingFile"/>
             <AppenderRef ref="InsteadOfSOUT_ln_For_Errors"/>
         </Logger>

@@ -1,0 +1,62 @@
+2023-11-10 11:44:10,007 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 11:58:37,689 ERROR Errors_To_Console_And_File [main] [YesOrNoException]: Entered data must be equal to 'y' or 'n'!
+2023-11-10 12:00:19,889 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 12:00:30,712 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-10 12:10:00,477 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 12:10:03,195 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 12:11:00,930 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 20:29:20,354 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-10 20:29:24,380 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 20:29:27,635 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 20:29:34,072 ERROR Errors_To_Console_And_File [main] [NumberFormatException]: Entered data is not a number!
+2023-11-10 20:55:23,656 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 20:55:25,920 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 20:55:30,880 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-10 20:55:33,257 ERROR Errors_To_Console_And_File [main] [NumberFormatException]: Entered data is not a number!
+2023-11-10 20:56:16,880 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 20:56:18,883 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 20:56:20,767 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-10 20:56:22,673 ERROR Errors_To_Console_And_File [main] [NumberFormatException]: Entered data is not a number!
+2023-11-10 20:57:27,063 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 20:57:29,404 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 20:57:31,951 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-10 20:57:34,410 ERROR Errors_To_Console_And_File [main] [NumberFormatException]: Entered data is not a number!
+2023-11-10 20:57:34,435 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-10 20:57:50,224 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 20:57:55,565 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 20:57:58,281 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-10 20:58:00,922 ERROR Errors_To_Console_And_File [main] [NumberFormatException]: Entered data is not a number!
+2023-11-10 21:00:11,419 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 21:00:11,448 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-10 21:00:13,265 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 21:00:13,293 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-10 21:00:16,059 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 21:10:39,796 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-10 21:47:49,770 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-10 22:44:12,564 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 22:44:15,266 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 22:44:19,598 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-10 22:44:24,694 ERROR Errors_To_Console_And_File [main] [NumberFormatException]: Entered data is not a number!
+2023-11-10 22:45:11,942 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 22:45:14,411 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 22:45:16,589 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-10 22:45:18,953 ERROR Errors_To_Console_And_File [main] [NumberFormatException]: Entered data is not a number!
+2023-11-10 22:45:47,274 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 22:45:49,619 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 22:45:52,866 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-10 22:45:54,866 ERROR Errors_To_Console_And_File [main] [NumberFormatException]: Entered data is not a number!
+2023-11-10 22:47:03,511 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 22:47:05,565 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 22:47:06,761 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-10 22:47:08,708 ERROR Errors_To_Console_And_File [main] [NumberFormatException]: Entered data is not a number!
+2023-11-10 22:47:21,390 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-10 22:47:46,049 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 22:47:48,292 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 22:47:50,738 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-10 22:47:52,488 ERROR Errors_To_Console_And_File [main] [NumberFormatException]: Entered data is not a number!
+2023-11-10 22:48:54,716 ERROR Errors_To_Console_And_File [main] [YesOrNoException]: Entered data must be equal to 'y' or 'n'!
+2023-11-10 22:50:31,315 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-10 22:50:35,323 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-10 22:50:45,840 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-10 22:50:55,119 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-10 22:51:10,246 ERROR Errors_To_Console_And_File [main] [EmptyInputException]: Entered data can not be empty!

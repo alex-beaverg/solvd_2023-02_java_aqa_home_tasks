@@ -1,21 +1,13 @@
 package org.example.hospital.people;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.example.hospital.custom_exceptions.EmptyInputException;
-import org.example.hospital.custom_exceptions.MenuItemNumberOutOfBoundsException;
 import org.example.hospital.structure.accounting.Accounting;
 import org.example.hospital.structure.Service;
 import org.example.hospital.structure.Department;
 import org.example.hospital.structure.VipService;
-import org.example.hospital.util.RequestMethods;
 
 import java.util.*;
 
 public class Patient extends Person implements IAddServices {
-    private final static Logger LOGGER_LN;
-    private final static Logger LN_LOGGER_LN;
-    private final static Logger LOGGER_TO_CONSOLE_AND_FILE;
     private Diagnosis diagnosis;
     private Department department;
     private Employee doctor;
@@ -24,12 +16,6 @@ public class Patient extends Person implements IAddServices {
     private final List<VipService> vipServices;
     private double servicesPrice;
     private double vipServicesPrice;
-
-    static {
-        LOGGER_LN = LogManager.getLogger("InsteadOfSOUT_ln");
-        LN_LOGGER_LN = LogManager.getLogger("ln_InsteadOfSOUT_ln");
-        LOGGER_TO_CONSOLE_AND_FILE = LogManager.getLogger("Errors_To_Console_And_File");
-    }
 
     {
         services = new ArrayList<>();
@@ -105,71 +91,6 @@ public class Patient extends Person implements IAddServices {
 
     public void setNurse(Employee nurse) {
         this.nurse = nurse;
-    }
-
-    public Patient assignDoctor() {
-        int index = 1;
-        LN_LOGGER_LN.info("All available doctors in your department:");
-        for (Employee doctor: getDepartment().getEmployeesBySpecialistClass(2)) {
-            LOGGER_LN.info("[" + index + "] - " + doctor.getPersonToPrintInList());
-            index++;
-        }
-        int answer;
-        do {
-            try {
-                answer = RequestMethods.requestingInfoWithChoice("Enter number of doctor to choose him: ", index - 1);
-                break;
-            } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
-                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
-            } catch (NumberFormatException e) {
-                LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
-            }
-        } while (true);
-        setDoctor(getDepartment().getEmployeesBySpecialistClass(2).get(answer - 1));
-        LOGGER_LN.info("Your doctor (" + getDoctor().getFullName() + ") was assigned");
-        return this;
-    }
-
-    public Patient changeDoctor() {
-        int index = 1;
-        List<Employee> tempList = new ArrayList<>();
-        LN_LOGGER_LN.info("All available doctors in your department:");
-        for (Employee doctor: getDepartment().getEmployeesBySpecialistClass(2)) {
-            if (doctor != getDoctor()) {
-                LOGGER_LN.info("[" + index + "] - " + doctor.getPersonToPrintInList());
-                tempList.add(doctor);
-                index++;
-            }
-        }
-        int answer;
-        do {
-            try {
-                answer = RequestMethods.requestingInfoWithChoice("Enter number of doctor to choose him: ", index - 1);
-                break;
-            } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
-                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
-            } catch (NumberFormatException e) {
-                LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
-            }
-        } while (true);
-        for (Service service: getServices()) {
-            getDoctor().deleteService(service);
-        }
-        for (VipService vipService: getVipServices()) {
-            getDoctor().deleteVipService(vipService);
-        }
-        String fullNameOfOldDoctor = getDoctor().getFullName();
-        getDoctor().deletePatient(this);
-        setDoctor(tempList.get(answer - 1));
-        getDoctor().addPatient(this);
-        for (Service service: getServices()) {
-            getDoctor().addService(service);
-        }
-        for (VipService vipService: getVipServices()) {
-            getDoctor().addVipService(vipService);
-        }
-        LOGGER_LN.info("Dr. " + fullNameOfOldDoctor + " has been replaced by dr. " + getDoctor().getFullName());
-        return this;
     }
 
     @Override
