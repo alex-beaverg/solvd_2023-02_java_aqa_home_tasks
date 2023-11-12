@@ -4,6 +4,7 @@ import org.example.hospital.structure.accounting.Accounting;
 import org.example.hospital.structure.Service;
 import org.example.hospital.structure.Department;
 import org.example.hospital.structure.VipService;
+import org.example.hospital.util.my_linked_list.MyLinkedList;
 
 import java.util.*;
 
@@ -13,13 +14,13 @@ public class Patient extends Person implements IAddServices {
     private Employee doctor;
     private Employee nurse;
     private final Set<Service> services;
-    private final List<VipService> vipServices;
+    private final MyLinkedList<VipService> vipServices;
     private double servicesPrice;
     private double vipServicesPrice;
 
     {
-        services = new HashSet<>();
-        vipServices = new LinkedList<>();
+        services = new TreeSet<>();
+        vipServices = new MyLinkedList<>();
     }
 
     public Patient() {
@@ -46,7 +47,7 @@ public class Patient extends Person implements IAddServices {
         return services;
     }
 
-    public List<VipService> getVipServices() {
+    public MyLinkedList<VipService> getVipServices() {
         return vipServices;
     }
 

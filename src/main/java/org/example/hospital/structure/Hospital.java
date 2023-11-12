@@ -6,15 +6,12 @@ import org.example.hospital.people.Diagnosis;
 import org.example.hospital.people.Employee;
 import org.example.hospital.people.Patient;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class Hospital implements IAddPatients, IGetEmployeesBySomething {
     private final String title;
     private final List<Department> departments;
-    private final List<Employee> employees;
+    private final Set<Employee> employees;
     private final List<Patient> patients;
     private final Map<Diagnosis, List<Patient>> diagnosesMap;
     public static final Logger LOGGER;
@@ -29,7 +26,7 @@ public final class Hospital implements IAddPatients, IGetEmployeesBySomething {
 
     {
         departments = new ArrayList<>();
-        employees = new ArrayList<>();
+        employees = new HashSet<>();
         patients = new ArrayList<>();
         diagnosesMap = new HashMap<>();
     }
@@ -42,7 +39,7 @@ public final class Hospital implements IAddPatients, IGetEmployeesBySomething {
         return departments;
     }
 
-    public List<Employee> getEmployees() {
+    public Set<Employee> getEmployees() {
         return employees;
     }
 

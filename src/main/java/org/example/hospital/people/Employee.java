@@ -3,9 +3,7 @@ package org.example.hospital.people;
 import org.example.hospital.structure.*;
 import org.example.hospital.structure.accounting.Accounting;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Employee extends Person implements IAddPatients, IAddServices, IDeleteItems {
     private final Department department;
@@ -19,9 +17,9 @@ public class Employee extends Person implements IAddPatients, IAddServices, IDel
     private final List<Patient> patients;
 
     {
-        services = new ArrayList<>();
-        vipServices = new ArrayList<>();
-        patients = new ArrayList<>();
+        services = new LinkedList<>();
+        vipServices = new LinkedList<>();
+        patients = new LinkedList<>();
     }
 
     public Employee(String firstName,
@@ -94,12 +92,12 @@ public class Employee extends Person implements IAddPatients, IAddServices, IDel
 
     @Override
     public void addPatient(Patient patient) {
-        this.patients.add(patient);
+        patients.add(patient);
     }
 
     @Override
     public void deletePatient(Patient patient) {
-        this.patients.remove(patient);
+        patients.remove(patient);
     }
 
     public Position getPosition() {
