@@ -4,10 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.hospital.custom_exceptions.*;
 import org.example.hospital.data.Creator;
-import org.example.hospital.people.Address;
-import org.example.hospital.people.Diagnosis;
-import org.example.hospital.people.Employee;
-import org.example.hospital.people.Patient;
+import org.example.hospital.people.*;
 import org.example.hospital.util.RequestMethods;
 
 public class GeneralActions {
@@ -21,17 +18,24 @@ public class GeneralActions {
         LOGGER_TO_CONSOLE_AND_FILE = LogManager.getLogger(GeneralActions.class);
     }
 
-    public static Employee chooseDoctorFromList(Hospital hospital) {
+    public static Person choosePersonFromList(String personType, Hospital hospital) {
         int index = 1;
-        LN_LOGGER_LN.info("All doctors in the hospital:");
-        for (Employee doctor: hospital.getEmployeesBySpecialistClass(2)) {
-            LOGGER_LN.info("[" + index + "] - " + doctor.getPersonToPrintInList());
-            index++;
+        LN_LOGGER_LN.info("All " + personType + "s in the hospital:");
+        if (personType.equals("doctor")) {
+            for (Employee doctor: hospital.getEmployeesBySpecialistClass(2)) {
+                LOGGER_LN.info("[" + index + "] - " + doctor.getPersonToPrintInList());
+                index++;
+            }
+        } else {
+            for (Patient patient: hospital.getPatients()) {
+                LOGGER_LN.info("[" + index + "] - " + patient.getPersonToPrintInList());
+                index++;
+            }
         }
         int answer;
         do {
             try {
-                answer = RequestMethods.requestingInfoWithChoice("Enter number of doctor to choose him: ", index - 1);
+                answer = RequestMethods.requestingInfoWithChoice("Enter number of " + personType + " to choose him: ", index - 1);
                 break;
             } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
                 LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
@@ -39,9 +43,14 @@ public class GeneralActions {
                 LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
             }
         } while (true);
-        Employee doctor = hospital.getEmployeesBySpecialistClass(2).get(answer - 1);
-        LOGGER_LN.info("Doctor " + doctor.getFullName() + " was chosen");
-        return doctor;
+        Person person;
+        if (personType.equals("doctor")) {
+            person = hospital.getEmployeesBySpecialistClass(2).get(answer - 1);
+        } else {
+            person = hospital.getPatients().get(answer - 1);
+        }
+        LOGGER_LN.info("Doctor " + person.getFullName() + " was chosen");
+        return person;
     }
 
     public static Patient findExistPatient(Hospital hospital) {
@@ -148,28 +157,6 @@ public class GeneralActions {
                 LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
             }
         } while (true);
-    }
-
-    public static Patient choosePatient(Hospital hospital) {
-        int index = 1;
-        LN_LOGGER_LN.info("All patients in the hospital:");
-        for (Patient existPatient: hospital.getPatients()) {
-            LOGGER_LN.info("[" + index + "] - " + existPatient.getPersonToPrintInList());
-            index++;
-        }
-        int answer;
-        do {
-            try {
-                answer = RequestMethods.requestingInfoWithChoice("Enter number of patient to choose him: ", index - 1);
-                break;
-            } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
-                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
-            } catch (NumberFormatException e) {
-                LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
-            }
-        } while (true);
-        LOGGER_LN.info("Patient (" + hospital.getPatients().get(answer - 1).getFullName() + ") was chosen");
-        return hospital.getPatients().get(answer - 1);
     }
 
     public static Diagnosis getDiagnose(Hospital hospital, Patient patient, int number) {

@@ -9,6 +9,8 @@ import org.example.hospital.structure.*;
 import org.example.hospital.structure.accounting.Accounting;
 import org.example.hospital.util.menu_enums.*;
 
+import java.util.List;
+
 public final class ConsoleMenu {
     private final Hospital hospital;
     public static final Logger LOGGER_LN;
@@ -88,7 +90,7 @@ public final class ConsoleMenu {
         int answer = runAnyMenu("Doctors menu:", DoctorsMenu.values());
         switch (answer) {
             case (1) -> {
-                return runDoctorMenu(GeneralActions.chooseDoctorFromList(hospital));
+                return runDoctorMenu((Employee) GeneralActions.choosePersonFromList("doctor", hospital));
             }
             case (2) -> {
                 return runMainMenu();
@@ -139,7 +141,7 @@ public final class ConsoleMenu {
                 return runComplaintsMenu(patient);
             }
             case (3) -> {
-                patient = GeneralActions.choosePatient(hospital);
+                patient = (Patient) GeneralActions.choosePersonFromList("patient", hospital);
                 return runPatientMenu(patient);
             }
             case (4) -> {
