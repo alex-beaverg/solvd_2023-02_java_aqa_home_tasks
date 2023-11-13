@@ -1,0 +1,61 @@
+2023-11-11 00:36:24,448 ERROR Errors_To_Console_And_File [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:28:52,256 ERROR o.e.h.u.ConsoleMenu [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:50:29,549 ERROR o.e.h.u.ConsoleMenu [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:50:31,880 ERROR o.e.h.u.ConsoleMenu [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:50:32,672 ERROR o.e.h.u.ConsoleMenu [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-11 12:50:35,065 ERROR o.e.h.u.ConsoleMenu [main] [NumberFormatException]: Entered data is not a number!
+2023-11-11 12:51:04,004 ERROR o.e.h.u.ConsoleMenu [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:51:05,687 ERROR o.e.h.u.ConsoleMenu [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:51:09,604 ERROR o.e.h.u.ConsoleMenu [main] [NumberFormatException]: Entered data is not a number!
+2023-11-11 12:51:10,649 ERROR o.e.h.u.ConsoleMenu [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-11 12:51:33,698 ERROR o.e.h.s.GeneralActions [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:51:35,652 ERROR o.e.h.s.GeneralActions [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:51:36,995 ERROR o.e.h.s.GeneralActions [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-11 12:51:38,686 ERROR o.e.h.s.GeneralActions [main] [NumberFormatException]: Entered data is not a number!
+2023-11-11 12:51:49,930 ERROR o.e.h.u.ConsoleMenu [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:51:52,754 ERROR o.e.h.u.ConsoleMenu [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:51:56,460 ERROR o.e.h.u.ConsoleMenu [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-11 12:51:57,816 ERROR o.e.h.u.ConsoleMenu [main] [NumberFormatException]: Entered data is not a number!
+2023-11-11 12:51:57,846 ERROR o.e.h.u.ConsoleMenu [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-11 12:52:51,719 ERROR o.e.h.u.ConsoleMenu [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:52:53,116 ERROR o.e.h.u.ConsoleMenu [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:52:55,205 ERROR o.e.h.u.ConsoleMenu [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-11 12:52:56,190 ERROR o.e.h.u.ConsoleMenu [main] [NumberFormatException]: Entered data is not a number!
+2023-11-11 12:53:18,444 ERROR o.e.h.s.GeneralActions [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:53:19,652 ERROR o.e.h.s.GeneralActions [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:53:20,476 ERROR o.e.h.s.GeneralActions [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-11 12:53:21,904 ERROR o.e.h.s.GeneralActions [main] [NumberFormatException]: Entered data is not a number!
+2023-11-11 12:53:35,773 ERROR o.e.h.u.ConsoleMenu [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:53:37,275 ERROR o.e.h.u.ConsoleMenu [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:53:38,513 ERROR o.e.h.u.ConsoleMenu [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-11 12:53:39,468 ERROR o.e.h.u.ConsoleMenu [main] [NumberFormatException]: Entered data is not a number!
+2023-11-11 12:54:45,950 ERROR o.e.h.s.ServicesActions [main] [YesOrNoException]: Entered data must be equal to 'y' or 'n'!
+2023-11-11 12:54:54,876 ERROR o.e.h.s.ServicesActions [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:54:56,228 ERROR o.e.h.s.ServicesActions [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:54:58,115 ERROR o.e.h.s.ServicesActions [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:54:58,142 ERROR o.e.h.s.ServicesActions [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-11 12:55:14,543 ERROR o.e.h.s.ServicesActions [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:55:16,127 ERROR o.e.h.s.ServicesActions [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:55:17,506 ERROR o.e.h.s.ServicesActions [main] [NumberFormatException]: Entered data is not a number!
+2023-11-11 12:55:18,420 ERROR o.e.h.s.ServicesActions [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-11 12:55:30,401 ERROR o.e.h.s.ServicesActions [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:55:32,379 ERROR o.e.h.s.ServicesActions [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:55:33,459 ERROR o.e.h.s.ServicesActions [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-11 12:55:34,581 ERROR o.e.h.s.ServicesActions [main] [NumberFormatException]: Entered data is not a number!
+2023-11-11 12:55:34,609 ERROR o.e.h.s.ServicesActions [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-11 12:56:49,429 ERROR o.e.h.s.GeneralActions [main] [StringFormatException]: Entered data is not a letter character!
+2023-11-11 12:56:50,839 ERROR o.e.h.s.GeneralActions [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-11 12:57:37,265 ERROR o.e.h.s.GeneralActions [main] [NumberFormatException]: Entered data is not a number!
+2023-11-11 12:57:38,196 ERROR o.e.h.s.GeneralActions [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-11 12:57:41,739 ERROR o.e.h.s.GeneralActions [main] [AgeException]: Age can not be more than 122 years
+2023-11-11 12:58:30,330 ERROR o.e.h.u.ConsoleMenu [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:58:31,792 ERROR o.e.h.u.ConsoleMenu [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:58:38,009 ERROR o.e.h.s.ServicesActions [main] [YesOrNoException]: Entered data must be equal to 'y' or 'n'!
+2023-11-11 12:58:48,424 ERROR o.e.h.s.ServicesActions [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:58:51,917 ERROR o.e.h.s.ServicesActions [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 12:58:53,281 ERROR o.e.h.s.ServicesActions [main] [NumberFormatException]: Entered data is not a number!
+2023-11-11 12:58:53,943 ERROR o.e.h.s.ServicesActions [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-11 13:17:59,768 ERROR o.e.h.s.ServicesActions [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-11 13:18:10,629 ERROR o.e.h.u.ConsoleMenu [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-11 13:18:29,549 ERROR o.e.h.s.ServicesActions [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-11 13:18:32,550 ERROR o.e.h.u.ConsoleMenu [main] [EmptyInputException]: Entered data can not be empty!

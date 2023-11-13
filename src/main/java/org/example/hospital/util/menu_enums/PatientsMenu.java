@@ -1,9 +1,9 @@
 package org.example.hospital.util.menu_enums;
 
 public enum PatientsMenu implements IMenu {
+    EXIST_PATIENT("Show all patients and choose one of them"),
     FIND_PATIENT("Find and choose the patient in registry"),
     REGISTER_PATIENT("Register new patient"),
-    EXIST_PATIENT("Show all patients and choose one of them"),
     MAIN_MENU("Go to main menu"),
     EXIT("Exit");
 
