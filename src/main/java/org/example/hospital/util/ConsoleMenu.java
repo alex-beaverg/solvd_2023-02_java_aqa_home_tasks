@@ -9,8 +9,6 @@ import org.example.hospital.structure.*;
 import org.example.hospital.structure.accounting.Accounting;
 import org.example.hospital.util.menu_enums.*;
 
-import java.util.List;
-
 public final class ConsoleMenu {
     private final Hospital hospital;
     public static final Logger LOGGER_LN;
