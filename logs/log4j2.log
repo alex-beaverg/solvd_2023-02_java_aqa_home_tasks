@@ -2,3 +2,13 @@
 2023-11-13 13:12:15,482 ERROR o.e.h.u.ConsoleMenu [main] [EmptyInputException]: Entered data can not be empty!
 2023-11-13 13:15:13,571 ERROR o.e.h.s.GeneralActions [main] [StringFormatException]: Entered data is not a letter character!
 2023-11-13 13:16:11,875 ERROR o.e.h.s.GeneralActions [main] [StringFormatException]: Entered data is not a letter character!
+2023-11-13 14:59:07,475 ERROR o.e.h.s.ServicesActions [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-13 14:59:19,483 ERROR o.e.h.s.ServicesActions [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-13 14:59:23,956 ERROR o.e.h.s.ServicesActions [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-13 14:59:31,439 ERROR o.e.h.u.ConsoleMenu [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-13 15:05:22,201 ERROR o.e.h.s.GeneralActions [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-13 15:07:10,672 ERROR o.e.h.s.GeneralActions [main] [StringFormatException]: Entered data is not a letter character!
+2023-11-13 15:07:21,175 ERROR o.e.h.s.GeneralActions [main] [EmptyInputException]: Entered data can not be empty!
+2023-11-13 15:07:50,767 ERROR o.e.h.u.ConsoleMenu [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-13 15:07:52,111 ERROR o.e.h.u.ConsoleMenu [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-11-13 15:08:48,659 ERROR o.e.h.s.ServicesActions [main] [EmptyInputException]: Entered data can not be empty!

@@ -1,5 +1,7 @@
 package org.example.hospital.util;
 
+import static org.example.hospital.util.LoggerConstants.*;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.hospital.custom_exceptions.*;
@@ -11,13 +13,9 @@ import org.example.hospital.util.menu_enums.*;
 
 public final class ConsoleMenu {
     private final Hospital hospital;
-    private static final Logger LOGGER_LN;
-    private static final Logger LN_LOGGER_LN;
     private static final Logger LOGGER_TO_CONSOLE_AND_FILE;
 
     static {
-        LOGGER_LN = LogManager.getLogger("InsteadOfSOUT_ln");
-        LN_LOGGER_LN = LogManager.getLogger("ln_InsteadOfSOUT_ln");
         LOGGER_TO_CONSOLE_AND_FILE = LogManager.getLogger(ConsoleMenu.class);
     }
 

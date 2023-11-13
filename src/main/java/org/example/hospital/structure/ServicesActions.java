@@ -1,5 +1,7 @@
 package org.example.hospital.structure;
 
+import static org.example.hospital.util.LoggerConstants.*;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.hospital.custom_exceptions.EmptyInputException;
@@ -13,13 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServicesActions {
-    private static final Logger LOGGER_LN;
-    private static final Logger LN_LOGGER_LN;
     private static final Logger LOGGER_TO_CONSOLE_AND_FILE;
 
     static {
-        LOGGER_LN = LogManager.getLogger("InsteadOfSOUT_ln");
-        LN_LOGGER_LN = LogManager.getLogger("ln_InsteadOfSOUT_ln");
         LOGGER_TO_CONSOLE_AND_FILE = LogManager.getLogger(ServicesActions.class);
     }
 
@@ -59,7 +57,7 @@ public class ServicesActions {
                 LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
             }
         } while (true);
-        if (patient.getDoctor() != patient.getDepartment().getEmployeesBySpecialistClass(2).get(answer - 1)) {
+        if (!patient.getDoctor().equals(patient.getDepartment().getEmployeesBySpecialistClass(2).get(answer - 1))) {
             patient.setDoctor(patient.getDepartment().getEmployeesBySpecialistClass(2).get(answer - 1));
         }
         LOGGER_LN.info("Your doctor (" + patient.getDoctor().getFullName() + ") was assigned");

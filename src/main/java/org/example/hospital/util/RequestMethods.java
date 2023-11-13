@@ -1,18 +1,13 @@
 package org.example.hospital.util;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import static org.example.hospital.util.LoggerConstants.*;
+
 import org.example.hospital.custom_exceptions.*;
 
 import java.util.Scanner;
 
 public class RequestMethods {
     private static final Scanner scanner;
-    private static final Logger LOGGER;
-
-    static {
-        LOGGER = LogManager.getLogger("InsteadOfSOUT");
-    }
 
     static {
         scanner = new Scanner(System.in);

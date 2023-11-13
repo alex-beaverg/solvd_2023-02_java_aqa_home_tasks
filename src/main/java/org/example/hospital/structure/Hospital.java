@@ -1,7 +1,7 @@
 package org.example.hospital.structure;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import static org.example.hospital.util.LoggerConstants.*;
+
 import org.example.hospital.people.Diagnosis;
 import org.example.hospital.people.Employee;
 import org.example.hospital.people.Patient;
@@ -14,15 +14,6 @@ public final class Hospital implements IAddPatients, IGetEmployeesBySomething {
     private final Set<Employee> employees;
     private final List<Patient> patients;
     private final Map<Diagnosis, List<Patient>> diagnosesMap;
-    private static final Logger LOGGER;
-    private static final Logger LOGGER_LN;
-    private static final Logger LN_LOGGER_LN;
-
-    static {
-        LOGGER = LogManager.getLogger("InsteadOfSOUT");
-        LOGGER_LN = LogManager.getLogger("InsteadOfSOUT_ln");
-        LN_LOGGER_LN = LogManager.getLogger("ln_InsteadOfSOUT_ln");
-    }
 
     {
         departments = new ArrayList<>();
