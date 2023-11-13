@@ -16,7 +16,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Creator {
-    public static final Logger LOGGER_TO_CONSOLE_AND_FILE;
+    private static final Logger LOGGER_TO_CONSOLE_AND_FILE;
 
     static {
         LOGGER_TO_CONSOLE_AND_FILE = LogManager.getLogger(Creator.class);
