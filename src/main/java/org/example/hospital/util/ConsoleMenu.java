@@ -91,6 +91,10 @@ public final class ConsoleMenu {
                 return runDoctorMenu((Employee) GeneralActions.choosePersonFromList("doctor", hospital));
             }
             case (2) -> {
+                hospital.showDoctorsWithTheirPatients();
+                return runDoctorsMenu();
+            }
+            case (3) -> {
                 return runMainMenu();
             }
             default -> {

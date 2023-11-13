@@ -94,6 +94,17 @@ public final class Hospital implements IAddPatients, IGetEmployeesBySomething {
         }
     }
 
+    public void showDoctorsWithTheirPatients() {
+        LN_LOGGER_LN.info("All doctors with their patients:");
+        for (Employee doctor : getEmployeesBySpecialistClass(2)) {
+            LOGGER.info("- " + doctor.getFullName() + ": ");
+            for (Patient patient : doctor.getPatients()) {
+                LOGGER.info("[" + patient.getFullName() + "] ");
+            }
+            LOGGER_LN.info("");
+        }
+    }
+
     @Override
     public List<Employee> getEmployeesBySpecialistClass(int specialistClass) {
         List<Employee> tempList = new ArrayList<>();

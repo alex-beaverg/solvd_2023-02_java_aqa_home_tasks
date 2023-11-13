@@ -2,6 +2,7 @@ package org.example.hospital.util.menu_enums;
 
 public enum DoctorsMenu implements IMenu {
     DOCTORS("Show all doctors to choose one of them"),
+    DOCTORS_WITH_THEIR_PATIENTS("Show all doctors with their patients"),
     MAIN_MENU("Go to main menu"),
     EXIT("Exit");
 
