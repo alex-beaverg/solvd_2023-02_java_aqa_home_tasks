@@ -19,7 +19,7 @@ public class Patient extends Person implements IAddServices {
     private double vipServicesPrice;
 
     {
-        services = new TreeSet<>();
+        services = new LinkedHashSet<>();
         vipServices = new MyLinkedList<>();
     }
 
