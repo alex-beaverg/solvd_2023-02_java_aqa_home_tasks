@@ -11,9 +11,9 @@ import org.example.hospital.util.menu_enums.*;
 
 public final class ConsoleMenu {
     private final Hospital hospital;
-    public static final Logger LOGGER_LN;
-    public static final Logger LN_LOGGER_LN;
-    public static final Logger LOGGER_TO_CONSOLE_AND_FILE;
+    private static final Logger LOGGER_LN;
+    private static final Logger LN_LOGGER_LN;
+    private static final Logger LOGGER_TO_CONSOLE_AND_FILE;
 
     static {
         LOGGER_LN = LogManager.getLogger("InsteadOfSOUT_ln");

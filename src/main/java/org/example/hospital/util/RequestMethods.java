@@ -7,8 +7,8 @@ import org.example.hospital.custom_exceptions.*;
 import java.util.Scanner;
 
 public class RequestMethods {
-    private final static Scanner scanner;
-    public static final Logger LOGGER;
+    private static final Scanner scanner;
+    private static final Logger LOGGER;
 
     static {
         LOGGER = LogManager.getLogger("InsteadOfSOUT");

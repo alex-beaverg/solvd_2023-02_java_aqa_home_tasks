@@ -14,9 +14,9 @@ public final class Hospital implements IAddPatients, IGetEmployeesBySomething {
     private final Set<Employee> employees;
     private final List<Patient> patients;
     private final Map<Diagnosis, List<Patient>> diagnosesMap;
-    public static final Logger LOGGER;
-    public static final Logger LOGGER_LN;
-    public static final Logger LN_LOGGER_LN;
+    private static final Logger LOGGER;
+    private static final Logger LOGGER_LN;
+    private static final Logger LN_LOGGER_LN;
 
     static {
         LOGGER = LogManager.getLogger("InsteadOfSOUT");
