@@ -2,12 +2,12 @@ package org.example.hospital.util.my_linked_list;
 
 import java.util.Iterator;
 
-public class MyLinkedList<E> implements Iterable<E> {
+public class MyLinkedList2<E> implements Iterable<E> {
     int size = 0;
     Node<E> first;
     Node<E> last;
 
-    public MyLinkedList() { }
+    public MyLinkedList2() { }
 
     private static class Node<E> {
         E item;
@@ -55,8 +55,8 @@ public class MyLinkedList<E> implements Iterable<E> {
         return node(index).item;
     }
 
-    public boolean contains(Object object) {
-        return indexOf(object) >= 0;
+    public boolean contains(Object o) {
+        return indexOf(o) >= 0;
     }
 
     public int size() {
