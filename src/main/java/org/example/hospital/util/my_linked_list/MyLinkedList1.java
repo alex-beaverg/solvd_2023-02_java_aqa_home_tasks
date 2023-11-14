@@ -11,8 +11,9 @@ public class MyLinkedList1<E> implements Iterable<E> {
         innerList.add(element);
     }
 
-    public void remove(E element) {
+    public E remove(E element) {
         innerList.remove(element);
+        return element;
     }
 
     public void add(int index, E element) {
@@ -23,8 +24,9 @@ public class MyLinkedList1<E> implements Iterable<E> {
         return innerList.get(index);
     }
 
-    public void remove(int index) {
+    public E remove(int index) {
         innerList.remove(index);
+        return innerList.get(index);
     }
 
     public int size() {

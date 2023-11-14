@@ -32,22 +32,23 @@ public class MyLinkedList2<E> implements Iterable<E> {
         size++;
     }
 
-    public void remove(Object o) {
+    public boolean remove(Object o) {
         if (o == null) {
             for (Node<E> current = first; current != null; current = current.next) {
                 if (current.item == null) {
                     unlink(current);
-                    return;
+                    return true;
                 }
             }
         } else {
             for (Node<E> current = first; current != null; current = current.next) {
                 if (o.equals(current.item)) {
                     unlink(current);
-                    return;
+                    return true;
                 }
             }
         }
+        return false;
     }
 
     public E get(int index) {
@@ -59,9 +60,28 @@ public class MyLinkedList2<E> implements Iterable<E> {
         return indexOf(o) >= 0;
     }
 
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
     public int size() {
         return size;
     }
+
+    public E remove(int index) {
+        checkElementIndex(index);
+        return unlink(node(index));
+    }
+
+    public E set(int index, E element) {
+        checkElementIndex(index);
+        Node<E> current = node(index);
+        E oldVal = current.item;
+        current.item = element;
+        return oldVal;
+    }
+
+
 
     private void checkElementIndex(int index) {
         if (!isElementIndex(index)) {
@@ -73,7 +93,8 @@ public class MyLinkedList2<E> implements Iterable<E> {
         return index >= 0 && index < size;
     }
 
-    private void unlink(Node<E> current) {
+    private E unlink(Node<E> current) {
+        final E element = current.item;
         final Node<E> next = current.next;
         final Node<E> prev = current.prev;
 
@@ -93,6 +114,7 @@ public class MyLinkedList2<E> implements Iterable<E> {
 
         current.item = null;
         size--;
+        return element;
     }
 
     public int indexOf(Object object) {
