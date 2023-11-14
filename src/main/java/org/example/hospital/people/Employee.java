@@ -98,7 +98,7 @@ public class Employee extends Person implements IAddPatients, IAddServices, IDel
 
     @Override
     public void deletePatient(Patient patient) {
-        patients.remove(patient);
+        this.patients.remove(patient);
     }
 
     public Position getPosition() {
