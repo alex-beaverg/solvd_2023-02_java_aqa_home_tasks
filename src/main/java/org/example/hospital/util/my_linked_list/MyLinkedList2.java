@@ -32,6 +32,14 @@ public class MyLinkedList2<E> implements Iterable<E> {
         size++;
     }
 
+    public void add(int index, E element) {
+        checkPositionIndex(index);
+        if (index == size)
+            linkLast(element);
+        else
+            linkBefore(element, node(index));
+    }
+
     public boolean remove(Object o) {
         if (o == null) {
             for (Node<E> current = first; current != null; current = current.next) {
@@ -81,7 +89,23 @@ public class MyLinkedList2<E> implements Iterable<E> {
         return oldVal;
     }
 
-
+    public int indexOf(Object object) {
+        int index = 0;
+        if (object == null) {
+            for (Node<E> current = first; current != null; current = current.next) {
+                if (current.item == null)
+                    return index;
+                index++;
+            }
+        } else {
+            for (Node<E> current = first; current != null; current = current.next) {
+                if (object.equals(current.item))
+                    return index;
+                index++;
+            }
+        }
+        return -1;
+    }
 
     private void checkElementIndex(int index) {
         if (!isElementIndex(index)) {
@@ -89,8 +113,39 @@ public class MyLinkedList2<E> implements Iterable<E> {
         }
     }
 
+    private void checkPositionIndex(int index) {
+        if (!isPositionIndex(index))
+            throw new IndexOutOfBoundsException("[IndexOutOfBoundsException]: Index " + index + " is out of range from 0 to " + size + "!");
+    }
+
+    private boolean isPositionIndex(int index) {
+        return index >= 0 && index <= size;
+    }
+
     private boolean isElementIndex(int index) {
         return index >= 0 && index < size;
+    }
+
+    private void linkLast(E e) {
+        final Node<E> l = last;
+        final Node<E> newNode = new Node<>(l, e, null);
+        last = newNode;
+        if (l == null)
+            first = newNode;
+        else
+            l.next = newNode;
+        size++;
+    }
+
+    private void linkBefore(E e, Node<E> succ) {
+        final Node<E> pred = succ.prev;
+        final Node<E> newNode = new Node<>(pred, e, succ);
+        succ.prev = newNode;
+        if (pred == null)
+            first = newNode;
+        else
+            pred.next = newNode;
+        size++;
     }
 
     private E unlink(Node<E> current) {
@@ -115,24 +170,6 @@ public class MyLinkedList2<E> implements Iterable<E> {
         current.item = null;
         size--;
         return element;
-    }
-
-    public int indexOf(Object object) {
-        int index = 0;
-        if (object == null) {
-            for (Node<E> current = first; current != null; current = current.next) {
-                if (current.item == null)
-                    return index;
-                index++;
-            }
-        } else {
-            for (Node<E> current = first; current != null; current = current.next) {
-                if (object.equals(current.item))
-                    return index;
-                index++;
-            }
-        }
-        return -1;
     }
 
     private Node<E> node(int index) {
