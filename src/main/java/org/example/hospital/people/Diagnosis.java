@@ -3,7 +3,9 @@ package org.example.hospital.people;
 public enum Diagnosis {
     FLU("Flu", "General"),
     COVID("Covid-19", "General"),
-    BONE_FRACTURE("Bone fracture", "Fractures"),
+    BONE_FRACTURE("Bone fracture", "Injuries"),
+    HAND_INJURY("Hand injury", "Injuries"),
+    LEG_INJURY("Leg injury", "Injuries"),
     UNKNOWN("Unknown diagnosis", "General");
 
     private final String title;

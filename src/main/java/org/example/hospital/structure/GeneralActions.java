@@ -1,6 +1,6 @@
 package org.example.hospital.structure;
 
-import static org.example.hospital.util.LoggerConstants.*;
+import static org.example.hospital.util.Printers.*;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,24 +9,27 @@ import org.example.hospital.data.Creator;
 import org.example.hospital.people.*;
 import org.example.hospital.util.RequestMethods;
 
+import java.util.List;
+import java.util.Map;
+
 public class GeneralActions {
-    private static final Logger LOGGER_TO_CONSOLE_AND_FILE;
+    private static final Logger LOGGER;
 
     static {
-        LOGGER_TO_CONSOLE_AND_FILE = LogManager.getLogger(GeneralActions.class);
+        LOGGER = LogManager.getLogger(GeneralActions.class);
     }
 
     public static Person choosePersonFromList(String personType, Hospital hospital) {
         int index = 1;
-        LN_LOGGER_LN.info("All " + personType + "s in the hospital:");
+        PRINT2LN.info("All " + personType + "s in the hospital:");
         if (personType.equals("doctor")) {
             for (Employee doctor: hospital.getEmployeesBySpecialistClass(2)) {
-                LOGGER_LN.info("[" + index + "] - " + doctor.getPersonToPrintInList());
+                PRINTLN.info("[" + index + "] - " + doctor.getPersonToPrintInList());
                 index++;
             }
         } else {
             for (Patient patient: hospital.getPatients()) {
-                LOGGER_LN.info("[" + index + "] - " + patient.getPersonToPrintInList());
+                PRINTLN.info("[" + index + "] - " + patient.getPersonToPrintInList());
                 index++;
             }
         }
@@ -35,10 +38,10 @@ public class GeneralActions {
             try {
                 answer = RequestMethods.requestingInfoWithChoice("Enter number of " + personType + " to choose him: ", index - 1);
                 break;
-            } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
-                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
+            } catch (EmptyInputException | MenuItemOutOfBoundsException e) {
+                LOGGER.error(e.getMessage());
             } catch (NumberFormatException e) {
-                LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
+                LOGGER.error("[NumberFormatException]: Entered data is not a number!");
             }
         } while (true);
         Person person;
@@ -47,7 +50,7 @@ public class GeneralActions {
         } else {
             person = hospital.getPatients().get(answer - 1);
         }
-        LOGGER_LN.info("Doctor " + person.getFullName() + " was chosen");
+        PRINTLN.info("Doctor " + person.getFullName() + " was chosen");
         return person;
     }
 
@@ -58,29 +61,29 @@ public class GeneralActions {
                 fullName = RequestMethods.requestingInfoString("\nEnter patient full name for searching: ");
                 break;
             } catch (EmptyInputException | StringFormatException e) {
-                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             }
         } while (true);
         for (Patient existPatient: hospital.getPatients()) {
             if ((existPatient.getFullName()).equalsIgnoreCase(fullName)) {
-                LOGGER_LN.info("Patient " + existPatient.getFullName() + " was found and chosen");
+                PRINTLN.info("Patient " + existPatient.getFullName() + " was found and chosen");
                 return existPatient;
             }
         }
-        LOGGER_LN.info("Patient " + fullName + " was not found. Try it again");
+        PRINTLN.info("Patient " + fullName + " was not found. Try it again");
         return null;
     }
 
     public static Patient registerNewPatient(Hospital hospital){
         Patient newPatient = Creator.setPatient();
         Address address = Creator.setAddress();
-        LN_LOGGER_LN.info("Registration of a new patient");
+        PRINT2LN.info("Registration of a new patient");
         do {
             try {
                 newPatient.setFirstName(RequestMethods.requestingInfoString("Enter your first name: "));
                 break;
             } catch (EmptyInputException | StringFormatException e) {
-                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             }
         } while (true);
         do {
@@ -88,7 +91,7 @@ public class GeneralActions {
                 newPatient.setLastName(RequestMethods.requestingInfoString("Enter your last name: "));
                 break;
             } catch (EmptyInputException | StringFormatException e) {
-                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             }
         } while (true);
         do {
@@ -96,7 +99,7 @@ public class GeneralActions {
                 newPatient.setAge(getAgeFromConsole());
                 break;
             } catch (AgeException e) {
-                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             }
         } while (true);
         do {
@@ -104,7 +107,7 @@ public class GeneralActions {
                 address.setCity(RequestMethods.requestingInfoString("Enter your city: "));
                 break;
             } catch (EmptyInputException | StringFormatException e) {
-                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             }
         } while (true);
         do {
@@ -112,7 +115,7 @@ public class GeneralActions {
                 address.setStreet(RequestMethods.requestingInfoString("Enter your street: "));
                 break;
             } catch (EmptyInputException | StringFormatException e) {
-                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             }
         } while (true);
         do {
@@ -120,9 +123,9 @@ public class GeneralActions {
                 address.setHouseNumber(RequestMethods.requestingInfoInt("Enter your house number: "));
                 break;
             } catch (EmptyInputException | NegativeNumberException e) {
-                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             } catch (NumberFormatException e) {
-                LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
+                LOGGER.error("[NumberFormatException]: Entered data is not a number!");
             }
         } while (true);
         do {
@@ -130,14 +133,14 @@ public class GeneralActions {
                 address.setFlatNumber(RequestMethods.requestingInfoInt("Enter your flat number: "));
                 break;
             } catch (EmptyInputException | NegativeNumberException e) {
-                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             } catch (NumberFormatException e) {
-                LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
+                LOGGER.error("[NumberFormatException]: Entered data is not a number!");
             }
         } while (true);
         newPatient.setAddress(address);
         hospital.addPatient(newPatient);
-        LOGGER_LN.info("New patient (" + newPatient.getFullName() + ") was registered");
+        PRINTLN.info("New patient (" + newPatient.getFullName() + ") was registered");
         return newPatient;
     }
 
@@ -150,9 +153,9 @@ public class GeneralActions {
                 }
                 return age;
             } catch (EmptyInputException | NegativeNumberException e) {
-                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
+                LOGGER.error(e.getMessage());
             } catch (NumberFormatException e) {
-                LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
+                LOGGER.error("[NumberFormatException]: Entered data is not a number!");
             }
         } while (true);
     }
@@ -167,9 +170,9 @@ public class GeneralActions {
                         patient.setDoctor(department.getRandomEmployeeBySpecialistClass(2));
                         patient.setNurse(department.getRandomEmployeeBySpecialistClass(1));
                         department.addPatient(patient);
-                        return diagnosis;
                     }
                 }
+                return diagnosis;
             }
             case (2) -> {
                 Diagnosis diagnosis = Diagnosis.COVID;
@@ -179,9 +182,9 @@ public class GeneralActions {
                         patient.setDoctor(department.getRandomEmployeeBySpecialistClass(2));
                         patient.setNurse(department.getRandomEmployeeBySpecialistClass(1));
                         department.addPatient(patient);
-                        return diagnosis;
                     }
                 }
+                return diagnosis;
             }
             case (3) -> {
                 Diagnosis diagnosis = Diagnosis.BONE_FRACTURE;
@@ -191,9 +194,33 @@ public class GeneralActions {
                         patient.setDoctor(department.getRandomEmployeeBySpecialistClass(2));
                         patient.setNurse(department.getRandomEmployeeBySpecialistClass(1));
                         department.addPatient(patient);
-                        return diagnosis;
                     }
                 }
+                return diagnosis;
+            }
+            case (4) -> {
+                Diagnosis diagnosis = Diagnosis.HAND_INJURY;
+                for (Department department : hospital.getDepartments()) {
+                    if (department.getDiseasesType().equals(diagnosis.getType())) {
+                        patient.setDepartment(department);
+                        patient.setDoctor(department.getRandomEmployeeBySpecialistClass(2));
+                        patient.setNurse(department.getRandomEmployeeBySpecialistClass(1));
+                        department.addPatient(patient);
+                    }
+                }
+                return diagnosis;
+            }
+            case (5) -> {
+                Diagnosis diagnosis = Diagnosis.LEG_INJURY;
+                for (Department department : hospital.getDepartments()) {
+                    if (department.getDiseasesType().equals(diagnosis.getType())) {
+                        patient.setDepartment(department);
+                        patient.setDoctor(department.getRandomEmployeeBySpecialistClass(2));
+                        patient.setNurse(department.getRandomEmployeeBySpecialistClass(1));
+                        department.addPatient(patient);
+                    }
+                }
+                return diagnosis;
             }
             default -> {
                 Diagnosis diagnosis = Diagnosis.UNKNOWN;
@@ -203,11 +230,46 @@ public class GeneralActions {
                         patient.setDoctor(department.getRandomEmployeeBySpecialistClass(2));
                         patient.setNurse(department.getRandomEmployeeBySpecialistClass(1));
                         department.addPatient(patient);
-                        return diagnosis;
                     }
                 }
+                return diagnosis;
             }
         }
-        return null;
+    }
+
+    public static void showDepartments(Hospital hospital) {
+        PRINT2LN.info("All departments in hospital:");
+        for (Department department : hospital.getDepartments()) {
+            PRINTLN.info("- " + department);
+        }
+    }
+
+    public static void showEmployees(Hospital hospital) {
+        PRINT2LN.info("All employees in hospital:");
+        for (Employee employee : hospital.getEmployees()) {
+            PRINTLN.info("- " + employee.getPersonToPrintInList());
+        }
+    }
+
+    public static void showDiagnosesMap(Hospital hospital) {
+        PRINT2LN.info("Hospital diagnoses map:");
+        for (Map.Entry<Patient, List<Diagnosis>> entry : hospital.getDiagnosesMap().entrySet()) {
+            PRINT.info("- " + entry.getKey().getFullName() + ": ");
+            for (Diagnosis diagnosis : entry.getValue()) {
+                PRINT.info("[" + diagnosis.getTitle() + "] ");
+            }
+            PRINTLN.info("");
+        }
+    }
+
+    public static void showDoctorsWithTheirPatients(Hospital hospital) {
+        PRINT2LN.info("All doctors with their patients:");
+        for (Employee doctor : hospital.getEmployeesBySpecialistClass(2)) {
+            PRINT.info("- " + doctor.getFullName() + ": ");
+            for (Patient patient : doctor.getPatients()) {
+                PRINT.info("[" + patient.getFullName() + "] ");
+            }
+            PRINTLN.info("");
+        }
     }
 }

@@ -1,26 +1,17 @@
 package org.example.hospital.data;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.example.hospital.people.*;
 import org.example.hospital.structure.Department;
 import org.example.hospital.structure.Hospital;
 import org.example.hospital.structure.Service;
 import org.example.hospital.structure.VipService;
 
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Creator {
-    private static final Logger LOGGER_TO_CONSOLE_AND_FILE;
-
-    static {
-        LOGGER_TO_CONSOLE_AND_FILE = LogManager.getLogger(Creator.class);
-    }
+    private static String diagnosisType;
 
     public static Hospital setHospital(String title) {
         return new Hospital(title);
@@ -37,19 +28,14 @@ public class Creator {
         return new Employee(firstName, lastName, age, address, department, position, schedule);
     }
 
-    public static Employee setEmployee(String firstName, String lastName, int age, Address address,
-                                       Department department, Position position, Schedule schedule) {
-        return new Employee(firstName, lastName, age, address, department, position, schedule);
-    }
-
     public static Patient setPatient() {
         return new Patient();
     }
 
     public static Patient setPatient(String firstName, String lastName, int age, String city, String street,
-                                     int house, int flat, Diagnosis diagnosis, Department department) {
+                                     int house, int flat, List<Diagnosis> diagnoses, Department department) {
         Address address = setAddress(city, street, house, flat);
-        return new Patient(firstName, lastName, age, address, diagnosis, department);
+        return new Patient(firstName, lastName, age, address, diagnoses, department);
     }
 
     public static Address setAddress() {
@@ -58,23 +44,6 @@ public class Creator {
 
     public static Address setAddress(String city, String street, int house, int flat) {
         return new Address(city, street, house, flat);
-    }
-
-    public static Address setAddress(String path) {
-        try (FileReader fileReader = new FileReader(path)) {
-            Scanner scanner = new Scanner(fileReader);
-            String city = scanner.nextLine();
-            String street = scanner.nextLine();
-            int house = Integer.parseInt(scanner.nextLine());
-            int flat = Integer.parseInt(scanner.nextLine());
-            return new Address(city, street, house, flat);
-        } catch (IOException e) {
-            LOGGER_TO_CONSOLE_AND_FILE.error("[IOException]: File not found!");
-            return null;
-        } catch (NumberFormatException e) {
-            LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
-            return null;
-        }
     }
 
     public static Hospital generateHospital() {
@@ -144,7 +113,7 @@ public class Creator {
     private static List<Department> generateDepartments() {
         List<Department> departments = new ArrayList<>();
         departments.add(setDepartment("Therapeutic department", 103, "General"));
-        departments.add(setDepartment("Surgery department", 202, "Fractures"));
+        departments.add(setDepartment("Surgery department", 202, "Injuries"));
         return departments;
     }
 
@@ -173,16 +142,37 @@ public class Creator {
         return employees;
     }
 
+    private static List<Diagnosis> generateRandomDiagnosesList() {
+        List<Diagnosis> diagnoses = new ArrayList<>();
+        Random random = new Random();
+        do {
+            Diagnosis diagnosis = Diagnosis.values()[random.nextInt(Diagnosis.values().length)];
+            if (diagnoses.isEmpty()) {
+                diagnoses.add(diagnosis);
+                diagnosisType = diagnosis.getType();
+                continue;
+            }
+            if (!diagnoses.contains(diagnosis) && diagnoses.get(0).getType().equals(diagnosis.getType())) {
+                diagnoses.add(diagnosis);
+            }
+        } while (diagnoses.size() < 2);
+        return diagnoses;
+    }
+
     private static List<Patient> generatePatients(Hospital hospital) {
         List<Patient> patients = new ArrayList<>();
         patients.add(setPatient("Eric", "Adams", 30, "Minsk", "Main street",
-                22, 11, Diagnosis.FLU, hospital.getDepartments().get(0)));
+                22, 11, generateRandomDiagnosesList(),
+                hospital.getDepartments().get(diagnosisType.equals("General") ? 0 : 1)));
         patients.add(setPatient("Lisa", "Bourne", 28, "Minsk", "Green street",
-                45, 9, Diagnosis.BONE_FRACTURE, hospital.getDepartments().get(1)));
+                45, 9, generateRandomDiagnosesList(),
+                hospital.getDepartments().get(diagnosisType.equals("General") ? 0 : 1)));
         patients.add(setPatient("Rose", "Dart", 23, "Brest", "Old avenue",
-                4, 66, Diagnosis.COVID, hospital.getDepartments().get(0)));
+                4, 66, generateRandomDiagnosesList(),
+                hospital.getDepartments().get(diagnosisType.equals("General") ? 0 : 1)));
         patients.add(setPatient("Max", "Corn", 33, "Minsk", "Red street",
-                5, 97, Diagnosis.UNKNOWN, hospital.getDepartments().get(0)));
+                5, 97, generateRandomDiagnosesList(),
+                hospital.getDepartments().get(diagnosisType.equals("General") ? 0 : 1)));
         return patients;
     }
 }

@@ -1,7 +1,5 @@
 package org.example.hospital.structure;
 
-import static org.example.hospital.util.LoggerConstants.*;
-
 import org.example.hospital.people.Diagnosis;
 import org.example.hospital.people.Employee;
 import org.example.hospital.people.Patient;
@@ -13,7 +11,7 @@ public final class Hospital implements IAddPatients, IGetEmployeesBySomething {
     private final List<Department> departments;
     private final Set<Employee> employees;
     private final List<Patient> patients;
-    private final Map<Diagnosis, List<Patient>> diagnosesMap;
+    private final Map<Patient, List<Diagnosis>> diagnosesMap;
 
     {
         departments = new ArrayList<>();
@@ -34,6 +32,10 @@ public final class Hospital implements IAddPatients, IGetEmployeesBySomething {
         return employees;
     }
 
+    public Map<Patient, List<Diagnosis>> getDiagnosesMap() {
+        return diagnosesMap;
+    }
+
     @Override
     public void addPatient(Patient patient) {
         patients.add(patient);
@@ -52,48 +54,7 @@ public final class Hospital implements IAddPatients, IGetEmployeesBySomething {
     }
 
     public void addPatientToDiagnosesMap(Patient patient) {
-        List<Patient> tempList = diagnosesMap.get(patient.getDiagnosis());
-        if (tempList == null) {
-            tempList = new ArrayList<>();
-        }
-        tempList.add(patient);
-        diagnosesMap.put(patient.getDiagnosis(), tempList);
-    }
-
-    public void showDepartments() {
-        LN_LOGGER_LN.info("All departments in hospital:");
-        for (Department department : getDepartments()) {
-            LOGGER_LN.info("- " + department);
-        }
-    }
-
-    public void showEmployees() {
-        LN_LOGGER_LN.info("All employees in hospital:");
-        for (Employee employee : getEmployees()) {
-            LOGGER_LN.info("- " + employee.getPersonToPrintInList());
-        }
-    }
-
-    public void showDiagnosesMap() {
-        LN_LOGGER_LN.info("Hospital diagnoses map:");
-        for (Map.Entry<Diagnosis, List<Patient>> entry : diagnosesMap.entrySet()) {
-            LOGGER.info("- " + entry.getKey() + ": ");
-            for (Patient patient : entry.getValue()) {
-                LOGGER.info("[" + patient.getFullName() + "] ");
-            }
-            LOGGER_LN.info("");
-        }
-    }
-
-    public void showDoctorsWithTheirPatients() {
-        LN_LOGGER_LN.info("All doctors with their patients:");
-        for (Employee doctor : getEmployeesBySpecialistClass(2)) {
-            LOGGER.info("- " + doctor.getFullName() + ": ");
-            for (Patient patient : doctor.getPatients()) {
-                LOGGER.info("[" + patient.getFullName() + "] ");
-            }
-            LOGGER_LN.info("");
-        }
+        diagnosesMap.put(patient, patient.getDiagnoses());
     }
 
     @Override
@@ -107,16 +68,16 @@ public final class Hospital implements IAddPatients, IGetEmployeesBySomething {
         return tempList;
     }
 
-    private StringBuilder combineObjectTitles(List<Department> departs) {
-        StringBuilder combiningObjectTitles = new StringBuilder();
-        for (Department department: departs) {
-            combiningObjectTitles.append("[").append(department.getTitle()).append("] ");
+    private String combineDepartments() {
+        StringBuilder combiningDepartments = new StringBuilder();
+        for (Department department: departments) {
+            combiningDepartments.append("[").append(department.getTitle()).append("] ");
         }
-        return combiningObjectTitles;
+        return combiningDepartments.toString().trim();
     }
 
     @Override
     public String toString() {
-        return "Hospital '" + title + "' / Departments: " + combineObjectTitles(departments);
+        return "Hospital '" + title + "' / Departments: " + combineDepartments();
     }
 }

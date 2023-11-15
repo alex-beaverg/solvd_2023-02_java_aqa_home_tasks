@@ -30,7 +30,9 @@ public class Department implements IAddPatients, IGetEmployeesBySomething {
 
     @Override
     public final void addPatient(Patient patient) {
-        patients.add(patient);
+        if (!patients.contains(patient)) {
+            patients.add(patient);
+        }
     }
 
     public final String getTitle() {
@@ -71,20 +73,20 @@ public class Department implements IAddPatients, IGetEmployeesBySomething {
         return tempList.get(random.nextInt(tempList.size()));
     }
 
-    private StringBuilder combineEmployees() {
+    private String combineEmployees() {
         StringBuilder combiningEmployees = new StringBuilder();
         for (Employee employee: employees) {
             combiningEmployees.append("[").append(employee.getFullName()).append("] ");
         }
-        return combiningEmployees;
+        return combiningEmployees.toString().trim();
     }
 
-    private StringBuilder combinePatients() {
+    private String combinePatients() {
         StringBuilder combiningPatients = new StringBuilder();
         for (Patient patient: patients) {
             combiningPatients.append("[").append(patient.getFullName()).append("] ");
         }
-        return combiningPatients;
+        return combiningPatients.toString().trim();
     }
 
     @Override

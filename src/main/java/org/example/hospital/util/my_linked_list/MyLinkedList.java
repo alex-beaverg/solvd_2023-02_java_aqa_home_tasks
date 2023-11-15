@@ -2,12 +2,12 @@ package org.example.hospital.util.my_linked_list;
 
 import java.util.Iterator;
 
-public class MyLinkedList2<E> implements Iterable<E> {
+public class MyLinkedList<E> implements Iterable<E> {
     int size = 0;
     Node<E> first;
     Node<E> last;
 
-    public MyLinkedList2() { }
+    public MyLinkedList() { }
 
     private static class Node<E> {
         E item;
@@ -59,13 +59,34 @@ public class MyLinkedList2<E> implements Iterable<E> {
         return false;
     }
 
+    public E remove(int index) {
+        checkElementIndex(index);
+        return unlink(node(index));
+    }
+
     public E get(int index) {
         checkElementIndex(index);
         return node(index).item;
     }
 
-    public boolean contains(Object o) {
-        return indexOf(o) >= 0;
+    public E set(int index, E element) {
+        checkElementIndex(index);
+        Node<E> current = node(index);
+        E oldVal = current.item;
+        current.item = element;
+        return oldVal;
+    }
+
+    public void clear() {
+        for (Node<E> current = first; current != null; ) {
+            Node<E> next = current.next;
+            current.item = null;
+            current.next = null;
+            current.prev = null;
+            current = next;
+        }
+        first = last = null;
+        size = 0;
     }
 
     public boolean isEmpty() {
@@ -76,17 +97,8 @@ public class MyLinkedList2<E> implements Iterable<E> {
         return size;
     }
 
-    public E remove(int index) {
-        checkElementIndex(index);
-        return unlink(node(index));
-    }
-
-    public E set(int index, E element) {
-        checkElementIndex(index);
-        Node<E> current = node(index);
-        E oldVal = current.item;
-        current.item = element;
-        return oldVal;
+    public boolean contains(Object o) {
+        return indexOf(o) >= 0;
     }
 
     public int indexOf(Object object) {

@@ -2,7 +2,7 @@ package org.example.hospital.people;
 
 import org.example.hospital.structure.*;
 import org.example.hospital.structure.accounting.Accounting;
-import org.example.hospital.util.my_linked_list.MyLinkedList1;
+import org.example.hospital.util.my_linked_list.MyLinkedList;
 
 import java.util.*;
 
@@ -12,14 +12,14 @@ public class Employee extends Person implements IAddPatients, IAddServices, IDel
     private final Schedule schedule;
     private double salary;
     private final List<Service> services;
-    private final MyLinkedList1<VipService> vipServices;
+    private final MyLinkedList<VipService> vipServices;
     private double servicesPrice;
     private double vipServicesPrice;
     private final List<Patient> patients;
 
     {
         services = new LinkedList<>();
-        vipServices = new MyLinkedList1<>();
+        vipServices = new MyLinkedList<>();
         patients = new LinkedList<>();
     }
 
@@ -55,7 +55,7 @@ public class Employee extends Person implements IAddPatients, IAddServices, IDel
         return services;
     }
 
-    public MyLinkedList1<VipService> getVipServices() {
+    public MyLinkedList<VipService> getVipServices() {
         return vipServices;
     }
 

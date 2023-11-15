@@ -4,23 +4,24 @@ import org.example.hospital.structure.accounting.Accounting;
 import org.example.hospital.structure.Service;
 import org.example.hospital.structure.Department;
 import org.example.hospital.structure.VipService;
-import org.example.hospital.util.my_linked_list.MyLinkedList2;
+import org.example.hospital.util.my_linked_list.MyLinkedList;
 
 import java.util.*;
 
 public class Patient extends Person implements IAddServices {
-    private Diagnosis diagnosis;
+    private List<Diagnosis> diagnoses;
     private Department department;
     private Employee doctor;
     private Employee nurse;
     private final Set<Service> services;
-    private final MyLinkedList2<VipService> vipServices;
+    private final MyLinkedList<VipService> vipServices;
     private double servicesPrice;
     private double vipServicesPrice;
 
     {
+        diagnoses = new ArrayList<>();
         services = new LinkedHashSet<>();
-        vipServices = new MyLinkedList2<>();
+        vipServices = new MyLinkedList<>();
     }
 
     public Patient() {
@@ -32,22 +33,22 @@ public class Patient extends Person implements IAddServices {
                    String lastName,
                    int age,
                    Address address,
-                   Diagnosis diagnosis,
+                   List<Diagnosis> diagnoses,
                    Department department) {
         super(firstName, lastName, age, address);
-        this.diagnosis = diagnosis;
+        this.diagnoses = diagnoses;
         this.department = department;
     }
 
-    public Diagnosis getDiagnosis() {
-        return diagnosis;
+    public List<Diagnosis> getDiagnoses() {
+        return diagnoses;
     }
 
     public Set<Service> getServices() {
         return services;
     }
 
-    public MyLinkedList2<VipService> getVipServices() {
+    public MyLinkedList<VipService> getVipServices() {
         return vipServices;
     }
 
@@ -68,8 +69,10 @@ public class Patient extends Person implements IAddServices {
         vipServicesPrice = Accounting.calculateVipServicesPrice(this);
     }
 
-    public void setDiagnosis(Diagnosis diagnosis) {
-        this.diagnosis = diagnosis;
+    public void addDiagnosis(Diagnosis diagnosis) {
+        if (!diagnoses.contains(diagnosis)) {
+            diagnoses.add(diagnosis);
+        }
     }
 
     public void setDepartment(Department department) {
@@ -96,23 +99,31 @@ public class Patient extends Person implements IAddServices {
 
     @Override
     public String getPersonToPrintInList() {
-        return firstName + " " + lastName + " (" + diagnosis.getTitle() + ", " + department.getTitle() + ")";
+        return firstName + " " + lastName + " (" + combineDiagnoses() + ", " + department.getTitle() + ")";
     }
 
-    private StringBuilder combineServices() {
+    private String combineDiagnoses() {
+        StringBuilder combiningDiagnoses = new StringBuilder();
+        for (Diagnosis diagnosis: diagnoses) {
+            combiningDiagnoses.append("[").append(diagnosis.getTitle()).append("] ");
+        }
+        return combiningDiagnoses.toString().trim();
+    }
+
+    private String combineServices() {
         StringBuilder combiningServices = new StringBuilder();
         for (Service service: services) {
             combiningServices.append("[").append(service.getTitle()).append("] ");
         }
-        return combiningServices;
+        return combiningServices.toString().trim();
     }
 
-    private StringBuilder combineVipServices() {
+    private String combineVipServices() {
         StringBuilder combiningVipServices = new StringBuilder();
         for (VipService vipService: vipServices) {
             combiningVipServices.append("[").append(vipService.getTitle()).append("] ");
         }
-        return combiningVipServices;
+        return combiningVipServices.toString().trim();
     }
 
     @Override
@@ -127,9 +138,6 @@ public class Patient extends Person implements IAddServices {
         result = 31 * result + age;
         result = 31 * result + (address == null ? 0 : address.hashCode());
         result = 31 * result + (department == null ? 0 : department.hashCode());
-        result = 31 * result + (diagnosis == null ? 0 : diagnosis.hashCode());
-        result = 31 * result + services.hashCode();
-        result = 31 * result + vipServices.hashCode();
         result = 31 * result + (int) servicesPrice;
         result = 31 * result + (int) vipServicesPrice;
         return result;
@@ -144,9 +152,6 @@ public class Patient extends Person implements IAddServices {
         if (!Objects.equals(lastName, that.lastName)) return false;
         if (!Objects.equals(address, that.address)) return false;
         if (!Objects.equals(department, that.department)) return false;
-        if (!Objects.equals(diagnosis, that.diagnosis)) return false;
-        if (!Objects.equals(services, that.services)) return false;
-        if (!Objects.equals(vipServices, that.vipServices)) return false;
         if ((int) servicesPrice != (int) that.servicesPrice) return false;
         if ((int) vipServicesPrice != (int) that.vipServicesPrice) return false;
         return age == that.age;
@@ -156,7 +161,7 @@ public class Patient extends Person implements IAddServices {
     public String toString() {
         return "Patient: (" + getRole() + "): " +
                 super.toString() +
-                "\n\tDiagnosis: " + diagnosis.getTitle() +
+                "\n\tDiagnoses: " + combineDiagnoses() +
                 "\n\tDepartment: " + department.getTitle() +
                 "\n\tOffice: " + department.getOfficeNumber() +
                 "\n\tDoctor: " + (doctor != null ? doctor.getFullName() + " (" + doctor.getPosition().getTitle() + ")" : null) +

@@ -1,6 +1,6 @@
 package org.example.hospital.util;
 
-import static org.example.hospital.util.LoggerConstants.*;
+import static org.example.hospital.util.Printers.*;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,12 +11,17 @@ import org.example.hospital.structure.*;
 import org.example.hospital.structure.accounting.Accounting;
 import org.example.hospital.util.menu_enums.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public final class ConsoleMenu {
     private final Hospital hospital;
-    private static final Logger LOGGER_TO_CONSOLE_AND_FILE;
+    private static final Logger LOGGER;
 
     static {
-        LOGGER_TO_CONSOLE_AND_FILE = LogManager.getLogger(ConsoleMenu.class);
+        LOGGER = LogManager.getLogger(ConsoleMenu.class);
     }
 
     {
@@ -24,15 +29,15 @@ public final class ConsoleMenu {
     }
 
     public void runApp() {
-        LN_LOGGER_LN.info("Welcome to the " + hospital);
+        PRINT2LN.info("Welcome to the " + hospital);
         runMainMenu();
     }
 
     private int runAnyMenu(String title, IMenu[] menuItems) {
         int index = 1;
-        LN_LOGGER_LN.info(title);
+        PRINT2LN.info(title);
         for (IMenu item : menuItems) {
-            LOGGER_LN.info("[" + index + "] - " + item.getTitle());
+            PRINTLN.info("[" + index + "] - " + item.getTitle());
             index++;
         }
         int answer;
@@ -40,10 +45,10 @@ public final class ConsoleMenu {
             try {
                 answer = RequestMethods.requestingInfoWithChoice("Enter the menu item number: ", index - 1);
                 break;
-            } catch (EmptyInputException | MenuItemNumberOutOfBoundsException e) {
-                LOGGER_TO_CONSOLE_AND_FILE.error(e.getMessage());
+            } catch (EmptyInputException | MenuItemOutOfBoundsException e) {
+                LOGGER.error(e.getMessage());
             } catch (NumberFormatException e) {
-                LOGGER_TO_CONSOLE_AND_FILE.error("[NumberFormatException]: Entered data is not a number!");
+                LOGGER.error("[NumberFormatException]: Entered data is not a number!");
             }
         } while (true);
         return answer;
@@ -51,7 +56,7 @@ public final class ConsoleMenu {
 
     private ConsoleMenu tearDown() {
         RequestMethods.closeScanner();
-        LOGGER_LN.info("Good bye!");
+        PRINTLN.info("Good bye!");
         return null;
     }
 
@@ -59,15 +64,15 @@ public final class ConsoleMenu {
         int answer = runAnyMenu("Main menu:", MainMenu.values());
         switch (answer) {
             case (1) -> {
-                hospital.showDepartments();
+                GeneralActions.showDepartments(hospital);
                 return runMainMenu();
             }
             case (2) -> {
-                hospital.showEmployees();
+                GeneralActions.showEmployees(hospital);
                 return runMainMenu();
             }
             case (3) -> {
-                hospital.showDiagnosesMap();
+                GeneralActions.showDiagnosesMap(hospital);
                 return runMainMenu();
             }
             case (4) -> {
@@ -89,7 +94,7 @@ public final class ConsoleMenu {
                 return runDoctorMenu((Employee) GeneralActions.choosePersonFromList("doctor", hospital));
             }
             case (2) -> {
-                hospital.showDoctorsWithTheirPatients();
+                GeneralActions.showDoctorsWithTheirPatients(hospital);
                 return runDoctorsMenu();
             }
             case (3) -> {
@@ -105,11 +110,11 @@ public final class ConsoleMenu {
         int answer = runAnyMenu("Doctor (" + doctor.getFullName() + ") menu:", DoctorMenu.values());
         switch (answer) {
             case (1) -> {
-                LN_LOGGER_LN.info(doctor);
+                PRINT2LN.info(doctor);
                 return runDoctorMenu(doctor);
             }
             case (2) -> {
-                LN_LOGGER_LN.info(Accounting.getPayslip(doctor));
+                PRINT2LN.info(Accounting.getPayslip(doctor));
                 return runDoctorMenu(doctor);
             }
             case (3) -> {
@@ -166,7 +171,7 @@ public final class ConsoleMenu {
                 return runPatientMenu(ServicesActions.addVipServices(patient));
             }
             case (4) -> {
-                LN_LOGGER_LN.info(patient);
+                PRINT2LN.info(patient);
                 return runPatientMenu(patient);
             }
             case (5) -> {
@@ -182,10 +187,43 @@ public final class ConsoleMenu {
     }
 
     private ConsoleMenu runComplaintsMenu(Patient patient) {
-        int answer = runAnyMenu("Complaints menu:", ComplaintsMenu.values());
-        patient.setDiagnosis(GeneralActions.getDiagnose(hospital, patient, answer));
-        hospital.addPatientToDiagnosesMap(patient);
-        LOGGER_LN.info("Diagnosis (" + patient.getDiagnosis().getTitle() + ") was made");
+        do {
+            int answer;
+            Diagnosis diagnosis;
+            Map<Integer, Integer> tempMap = new HashMap<>();
+            int index = 0;
+            if (patient.getDiagnoses().isEmpty()) {
+                answer = runAnyMenu("Complaints menu:", ComplaintsMenu.values());
+                diagnosis = GeneralActions.getDiagnose(hospital, patient, answer);
+            } else {
+                List<ComplaintsMenu> reducedComplaintsMenu = new ArrayList<>();
+                for (ComplaintsMenu item : ComplaintsMenu.values()) {
+                    index++;
+                    if (item.getType().equals(patient.getDiagnoses().get(0).getType())) {
+                        reducedComplaintsMenu.add(item);
+                        tempMap.put(reducedComplaintsMenu.size(), index);
+                    }
+                }
+                answer = runAnyMenu("Complaints menu:", reducedComplaintsMenu.toArray(new IMenu[0]));
+                diagnosis = GeneralActions.getDiagnose(hospital, patient, tempMap.get(answer));
+            }
+            patient.addDiagnosis(diagnosis);
+            hospital.addPatientToDiagnosesMap(patient);
+            PRINTLN.info("Diagnosis (" + diagnosis.getTitle() + ") was made");
+            String answerString;
+            do {
+                try {
+                    answerString = RequestMethods.requestingInfoWithYesOrNo("\nDo you have another complaint? (y/n): ");
+                    break;
+                } catch (EmptyInputException | YesOrNoException e) {
+                    LOGGER.error(e.getMessage());
+                }
+            } while (true);
+            if (answerString.equals("n")) {
+                PRINTLN.info("OK!");
+                break;
+            }
+        } while (true);
         return runPatientMenu(ServicesActions.addService(ServicesActions.requestForAssignDoctor(patient)));
     }
 }
