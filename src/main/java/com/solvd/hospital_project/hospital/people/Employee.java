@@ -96,7 +96,9 @@ public class Employee extends Person implements IAddPatients, IAddServices, IDel
 
     @Override
     public void addPatient(Patient patient) {
-        patients.add(patient);
+        if (!patients.contains(patient)) {
+            patients.add(patient);
+        }
     }
 
     @Override
