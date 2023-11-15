@@ -1,6 +1,7 @@
 package com.solvd.hospital_project.hospital.util;
 
 import static com.solvd.hospital_project.hospital.util.Printers.*;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import com.solvd.hospital_project.hospital.custom_exceptions.*;
