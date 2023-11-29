@@ -23,7 +23,7 @@ public class GeneralActions {
     private static final Function<String, String> elementToPrintFromList = element -> "[" + element + "] ";
 
     public static Person choosePersonFromList(String personType, Hospital hospital) {
-        IPrintPersonArrayAsMenu<Person> printPersons = array -> {
+        IPrintPersonArrayAsMenu<Integer, Person> printPersons = array -> {
             for (int i = 0; i < array.length; i++) {
                 PRINTLN.info("[" + (i + 1) + "] - " + array[i].getPersonToPrintInList());
             }
