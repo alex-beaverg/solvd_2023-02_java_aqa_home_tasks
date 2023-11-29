@@ -2,41 +2,45 @@ package com.solvd.hospital_project.hospital.structure;
 
 import static com.solvd.hospital_project.hospital.util.Printers.*;
 
+import com.solvd.hospital_project.hospital.structure.my_functinal_interfaces.IAddDiagnosisToSystem;
+import com.solvd.hospital_project.hospital.structure.my_functinal_interfaces.IPrintPersonArrayAsMenu;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import com.solvd.hospital_project.hospital.util.RequestMethods;
 import com.solvd.hospital_project.hospital.custom_exceptions.*;
 import com.solvd.hospital_project.hospital.people.*;
 import com.solvd.hospital_project.hospital.data.Creator;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class GeneralActions {
-    private static final Logger LOGGER;
-
-    static {
-        LOGGER = LogManager.getLogger(GeneralActions.class);
-    }
+    private static final Logger LOGGER = LogManager.getLogger(GeneralActions.class);
+    private static final Function<String, String> lineToPrintFromList = item -> "- " + item;
+    private static final Function<String, String> elementToPrintFromList = element -> "[" + element + "] ";
 
     public static Person choosePersonFromList(String personType, Hospital hospital) {
-        int index = 1;
+        IPrintPersonArrayAsMenu<Person> printPersons = array -> {
+            for (int i = 0; i < array.length; i++) {
+                PRINTLN.info("[" + (i + 1) + "] - " + array[i].getPersonToPrintInList());
+            }
+            return array.length;
+        };
+        Predicate<String> isDoctor = person -> person.equals("doctor");
         PRINT2LN.info("All " + personType + "s in the hospital:");
-        if (personType.equals("doctor")) {
-            for (Employee doctor: hospital.getEmployeesBySpecialistClass(2)) {
-                PRINTLN.info("[" + index + "] - " + doctor.getPersonToPrintInList());
-                index++;
-            }
+        int index;
+        if (isDoctor.test(personType)) {
+            index = printPersons.print(hospital.getEmployeesBySpecialistClass(2).toArray(new Person[0]));
         } else {
-            for (Patient patient: hospital.getPatients()) {
-                PRINTLN.info("[" + index + "] - " + patient.getPersonToPrintInList());
-                index++;
-            }
+            index = printPersons.print(hospital.getPatients().toArray(new Person[0]));
         }
         int answer;
         do {
             try {
-                answer = RequestMethods.requestingInfoWithChoice("Enter number of " + personType + " to choose him: ", index - 1);
+                answer = RequestMethods.requestingInfoWithChoice("Enter number of " + personType + " to choose him: ", index);
                 break;
             } catch (EmptyInputException | MenuItemOutOfBoundsException e) {
                 LOGGER.error(e.getMessage());
@@ -45,12 +49,12 @@ public class GeneralActions {
             }
         } while (true);
         Person person;
-        if (personType.equals("doctor")) {
+        if (isDoctor.test(personType)) {
             person = hospital.getEmployeesBySpecialistClass(2).get(answer - 1);
         } else {
             person = hospital.getPatients().get(answer - 1);
         }
-        PRINTLN.info("Doctor " + person.getFullName() + " was chosen");
+        PRINTLN.info(StringUtils.capitalize(personType) + " " + person.getFullName() + " was chosen");
         return person;
     }
 
@@ -161,77 +165,45 @@ public class GeneralActions {
     }
 
     public static Diagnosis getDiagnose(Hospital hospital, Patient patient, int number) {
+        IAddDiagnosisToSystem<Diagnosis> addDiagnosisToSystem = diagnosis -> {
+            for (Department department : hospital.getDepartments()) {
+                if (department.getDiseasesType().equals(diagnosis.getType())) {
+                    patient.setDepartment(department);
+                    patient.setDoctor(department.getRandomEmployeeBySpecialistClass(2));
+                    patient.setNurse(department.getRandomEmployeeBySpecialistClass(1));
+                    department.addPatient(patient);
+                }
+            }
+        };
         switch (number) {
             case (1) -> {
                 Diagnosis diagnosis = Diagnosis.FLU;
-                for (Department department : hospital.getDepartments()) {
-                    if (department.getDiseasesType().equals(diagnosis.getType())) {
-                        patient.setDepartment(department);
-                        patient.setDoctor(department.getRandomEmployeeBySpecialistClass(2));
-                        patient.setNurse(department.getRandomEmployeeBySpecialistClass(1));
-                        department.addPatient(patient);
-                    }
-                }
+                addDiagnosisToSystem.add(diagnosis);
                 return diagnosis;
             }
             case (2) -> {
                 Diagnosis diagnosis = Diagnosis.COVID;
-                for (Department department : hospital.getDepartments()) {
-                    if (department.getDiseasesType().equals(diagnosis.getType())) {
-                        patient.setDepartment(department);
-                        patient.setDoctor(department.getRandomEmployeeBySpecialistClass(2));
-                        patient.setNurse(department.getRandomEmployeeBySpecialistClass(1));
-                        department.addPatient(patient);
-                    }
-                }
+                addDiagnosisToSystem.add(diagnosis);
                 return diagnosis;
             }
             case (3) -> {
                 Diagnosis diagnosis = Diagnosis.BONE_FRACTURE;
-                for (Department department : hospital.getDepartments()) {
-                    if (department.getDiseasesType().equals(diagnosis.getType())) {
-                        patient.setDepartment(department);
-                        patient.setDoctor(department.getRandomEmployeeBySpecialistClass(2));
-                        patient.setNurse(department.getRandomEmployeeBySpecialistClass(1));
-                        department.addPatient(patient);
-                    }
-                }
+                addDiagnosisToSystem.add(diagnosis);
                 return diagnosis;
             }
             case (4) -> {
                 Diagnosis diagnosis = Diagnosis.HAND_INJURY;
-                for (Department department : hospital.getDepartments()) {
-                    if (department.getDiseasesType().equals(diagnosis.getType())) {
-                        patient.setDepartment(department);
-                        patient.setDoctor(department.getRandomEmployeeBySpecialistClass(2));
-                        patient.setNurse(department.getRandomEmployeeBySpecialistClass(1));
-                        department.addPatient(patient);
-                    }
-                }
+                addDiagnosisToSystem.add(diagnosis);
                 return diagnosis;
             }
             case (5) -> {
                 Diagnosis diagnosis = Diagnosis.LEG_INJURY;
-                for (Department department : hospital.getDepartments()) {
-                    if (department.getDiseasesType().equals(diagnosis.getType())) {
-                        patient.setDepartment(department);
-                        patient.setDoctor(department.getRandomEmployeeBySpecialistClass(2));
-                        patient.setNurse(department.getRandomEmployeeBySpecialistClass(1));
-                        department.addPatient(patient);
-                    }
-                }
+                addDiagnosisToSystem.add(diagnosis);
                 return diagnosis;
             }
             default -> {
                 Diagnosis diagnosis = Diagnosis.UNKNOWN;
-                for (Department department : hospital.getDepartments()) {
-                    if (department.getDiseasesType().equals(diagnosis.getType())) {
-                        patient.setDepartment(department);
-                        patient.setDoctor(department.getRandomEmployeeBySpecialistClass(2));
-                        patient.setNurse(department.getRandomEmployeeBySpecialistClass(1));
-                        department.addPatient(patient);
-                    }
-                }
+                addDiagnosisToSystem.add(diagnosis);
                 return diagnosis;
             }
         }
@@ -240,14 +212,14 @@ public class GeneralActions {
     public static void showDepartments(Hospital hospital) {
         PRINT2LN.info("All departments in hospital:");
         for (Department department : hospital.getDepartments()) {
-            PRINTLN.info("- " + department);
+            PRINTLN.info(lineToPrintFromList.apply(department.toString()));
         }
     }
 
     public static void showEmployees(Hospital hospital) {
         PRINT2LN.info("All employees in hospital:");
         for (Employee employee : hospital.getEmployees()) {
-            PRINTLN.info("- " + employee.getPersonToPrintInList());
+            PRINTLN.info(lineToPrintFromList.apply(employee.getPersonToPrintInList()));
         }
     }
 
@@ -256,7 +228,7 @@ public class GeneralActions {
         for (Map.Entry<Patient, List<Diagnosis>> entry : hospital.getDiagnosesMap().entrySet()) {
             PRINT.info("- " + entry.getKey().getFullName() + ": ");
             for (Diagnosis diagnosis : entry.getValue()) {
-                PRINT.info("[" + diagnosis.getTitle() + "] ");
+                PRINT.info(elementToPrintFromList.apply(diagnosis.getTitle()));
             }
             PRINTLN.info("");
         }
@@ -267,7 +239,7 @@ public class GeneralActions {
         for (Employee doctor : hospital.getEmployeesBySpecialistClass(2)) {
             PRINT.info("- " + doctor.getFullName() + ": ");
             for (Patient patient : doctor.getPatients()) {
-                PRINT.info("[" + patient.getFullName() + "] ");
+                PRINT.info(elementToPrintFromList.apply(patient.getFullName()));
             }
             PRINTLN.info("");
         }

@@ -2,6 +2,7 @@ package com.solvd.hospital_project.hospital.structure;
 
 import static com.solvd.hospital_project.hospital.util.Printers.*;
 
+import com.solvd.hospital_project.hospital.structure.my_functinal_interfaces.IRequestYesOrNo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import com.solvd.hospital_project.hospital.custom_exceptions.*;
@@ -12,22 +13,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServicesActions {
-    private static final Logger LOGGER;
+    private static final Logger LOGGER = LogManager.getLogger(ServicesActions.class);
 
-    static {
-        LOGGER = LogManager.getLogger(ServicesActions.class);
-    }
-
-    public static Patient requestForAssignDoctor(Patient patient) {
+    private static final IRequestYesOrNo<String, String> requestYesOrNo = question -> {
         String answerString;
         do {
             try {
-                answerString = RequestMethods.requestingInfoWithYesOrNo("\nDo you want to assign doctor? (y/n): ");
+                answerString = RequestMethods.requestingInfoWithYesOrNo(question);
                 break;
             } catch (EmptyInputException | YesOrNoException e) {
                 LOGGER.error(e.getMessage());
             }
         } while (true);
+        return answerString;
+    };
+
+    public static Patient requestForAssignDoctor(Patient patient) {
+        String answerString = requestYesOrNo.ask("\nDo you want to assign doctor? (y/n): ");
         if (answerString.equals("y")) {
             assignDoctor(patient);
         } else {
@@ -134,27 +136,13 @@ public class ServicesActions {
             } else {
                 PRINTLN.info("The patient has all services");
             }
-            do {
-                try {
-                    answerString = RequestMethods.requestingInfoWithYesOrNo("Do you want to choose another service? (y/n): ");
-                    break;
-                } catch (EmptyInputException | YesOrNoException e) {
-                    LOGGER.error(e.getMessage());
-                }
-            } while (true);
+            answerString = requestYesOrNo.ask("Do you want to choose another service? (y/n): ");
             if (answerString.equals("n")) {
                 PRINTLN.info("OK!");
                 break;
             }
         } while (true);
-        do {
-            try {
-                answerString = RequestMethods.requestingInfoWithYesOrNo("\nDo you want to choose VIP service? (y/n): ");
-                break;
-            } catch (EmptyInputException | YesOrNoException e) {
-                LOGGER.error(e.getMessage());
-            }
-        } while (true);
+        answerString = requestYesOrNo.ask("\nDo you want to choose VIP service? (y/n): ");
         if (answerString.equals("y")) {
             return addVipServices(patient);
         } else {
@@ -195,15 +183,7 @@ public class ServicesActions {
             } else {
                 PRINTLN.info("The patient has all VIP services");
             }
-            String answer;
-            do {
-                try {
-                    answer = RequestMethods.requestingInfoWithYesOrNo("Do you want to choose another VIP service? (y/n): ");
-                    break;
-                } catch (EmptyInputException | YesOrNoException e) {
-                    LOGGER.error(e.getMessage());
-                }
-            } while (true);
+            String answer = requestYesOrNo.ask("Do you want to choose another VIP service? (y/n): ");
             if (answer.equals("n")) {
                 PRINTLN.info("OK!");
                 break;
@@ -240,15 +220,7 @@ public class ServicesActions {
             } else {
                 PRINTLN.info("The patient has no VIP services");
             }
-            String answer;
-            do {
-                try {
-                    answer = RequestMethods.requestingInfoWithYesOrNo("Do you want to delete another VIP service? (y/n): ");
-                    break;
-                } catch (EmptyInputException | YesOrNoException e) {
-                    LOGGER.error(e.getMessage());
-                }
-            } while (true);
+            String answer = requestYesOrNo.ask("Do you want to delete another VIP service? (y/n): ");
             if (answer.equals("n")) {
                 PRINTLN.info("OK!");
                 break;

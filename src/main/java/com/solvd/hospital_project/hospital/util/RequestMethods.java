@@ -5,11 +5,7 @@ import com.solvd.hospital_project.hospital.custom_exceptions.*;
 import java.util.Scanner;
 
 public class RequestMethods {
-    private static final Scanner scanner;
-
-    static {
-        scanner = new Scanner(System.in);
-    }
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static int requestingInfoWithChoice(String text, int menuItemsNumber)
             throws EmptyInputException, NumberFormatException, MenuItemOutOfBoundsException {

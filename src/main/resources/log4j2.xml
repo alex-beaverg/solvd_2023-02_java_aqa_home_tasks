@@ -51,10 +51,6 @@
             <AppenderRef ref="rollingFile"/>
             <AppenderRef ref="InsteadOfSOUT_ln_For_Errors"/>
         </Logger>
-        <Logger name="com.solvd.hospital_project.hospital.data.Creator" level="error" additivity="false">
-            <AppenderRef ref="rollingFile"/>
-            <AppenderRef ref="InsteadOfSOUT_ln_For_Errors"/>
-        </Logger>
         <Root level="info">
             <AppenderRef ref="Console"/>
         </Root>

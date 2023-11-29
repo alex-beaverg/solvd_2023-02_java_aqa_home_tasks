@@ -17,23 +17,15 @@ import java.util.List;
 import java.util.Map;
 
 public final class ConsoleMenu {
-    private final Hospital hospital;
-    private static final Logger LOGGER;
-
-    static {
-        LOGGER = LogManager.getLogger(ConsoleMenu.class);
-    }
-
-    {
-        hospital = Creator.generateHospital();
-    }
+    private final Hospital hospital = Creator.generateHospital();
+    private static final Logger LOGGER = LogManager.getLogger(ConsoleMenu.class);
 
     public void runApp() {
         PRINT2LN.info("Welcome to the " + hospital);
         runMainMenu();
     }
 
-    private int runAnyMenu(String title, IMenu[] menuItems) {
+    private int drawAnyMenuAndChooseMenuItem(String title, IMenu[] menuItems) {
         int index = 1;
         PRINT2LN.info(title);
         for (IMenu item : menuItems) {
@@ -61,7 +53,7 @@ public final class ConsoleMenu {
     }
 
     private ConsoleMenu runMainMenu() {
-        int answer = runAnyMenu("Main menu:", MainMenu.values());
+        int answer = drawAnyMenuAndChooseMenuItem("Main menu:", MainMenu.values());
         switch (answer) {
             case (1) -> {
                 GeneralActions.showDepartments(hospital);
@@ -88,7 +80,7 @@ public final class ConsoleMenu {
     }
 
     private ConsoleMenu runDoctorsMenu() {
-        int answer = runAnyMenu("Doctors menu:", DoctorsMenu.values());
+        int answer = drawAnyMenuAndChooseMenuItem("Doctors menu:", DoctorsMenu.values());
         switch (answer) {
             case (1) -> {
                 return runDoctorMenu((Employee) GeneralActions.choosePersonFromList("doctor", hospital));
@@ -107,7 +99,7 @@ public final class ConsoleMenu {
     }
 
     private ConsoleMenu runDoctorMenu(Employee doctor) {
-        int answer = runAnyMenu("Doctor (" + doctor.getFullName() + ") menu:", DoctorMenu.values());
+        int answer = drawAnyMenuAndChooseMenuItem("Doctor (" + doctor.getFullName() + ") menu:", DoctorMenu.values());
         switch (answer) {
             case (1) -> {
                 PRINT2LN.info(doctor);
@@ -131,7 +123,7 @@ public final class ConsoleMenu {
 
     private ConsoleMenu runPatientsMenu() {
         Patient patient;
-        int answer = runAnyMenu("Patients menu:", PatientsMenu.values());
+        int answer = drawAnyMenuAndChooseMenuItem("Patients menu:", PatientsMenu.values());
         switch (answer) {
             case (1) -> {
                 patient = (Patient) GeneralActions.choosePersonFromList("patient", hospital);
@@ -159,7 +151,7 @@ public final class ConsoleMenu {
     }
 
     private ConsoleMenu runPatientMenu(Patient patient) {
-        int answer = runAnyMenu("Patient (" + patient.getFullName() + ") menu:", PatientMenu.values());
+        int answer = drawAnyMenuAndChooseMenuItem("Patient (" + patient.getFullName() + ") menu:", PatientMenu.values());
         switch (answer) {
             case (1) -> {
                 return runPatientMenu(ServicesActions.changeDoctor(patient));
@@ -193,7 +185,7 @@ public final class ConsoleMenu {
             Map<Integer, Integer> tempMap = new HashMap<>();
             int index = 0;
             if (patient.getDiagnoses().isEmpty()) {
-                answer = runAnyMenu("Complaints menu:", ComplaintsMenu.values());
+                answer = drawAnyMenuAndChooseMenuItem("Complaints menu:", ComplaintsMenu.values());
                 diagnosis = GeneralActions.getDiagnose(hospital, patient, answer);
             } else {
                 List<ComplaintsMenu> reducedComplaintsMenu = new ArrayList<>();
@@ -204,7 +196,7 @@ public final class ConsoleMenu {
                         tempMap.put(reducedComplaintsMenu.size(), index);
                     }
                 }
-                answer = runAnyMenu("Complaints menu:", reducedComplaintsMenu.toArray(new IMenu[0]));
+                answer = drawAnyMenuAndChooseMenuItem("Complaints menu:", reducedComplaintsMenu.toArray(new IMenu[0]));
                 diagnosis = GeneralActions.getDiagnose(hospital, patient, tempMap.get(answer));
             }
             patient.addDiagnosis(diagnosis);

@@ -5,6 +5,8 @@ import com.solvd.hospital_project.hospital.people.Patient;
 import com.solvd.hospital_project.hospital.structure.Service;
 import com.solvd.hospital_project.hospital.structure.VipService;
 
+import java.util.function.BiFunction;
+
 public final class Accounting {
     private static final double BASE_SALARY;
     private static final double TAX;
@@ -15,7 +17,8 @@ public final class Accounting {
     }
 
     public static double calculateEmployeeSalary(Employee employee) {
-        double serviceAllowance = (employee.getServicesPrice() + employee.getVipServicesPrice()) / 6;
+        BiFunction<Double, Double, Double> calculateServiceAllowance = (sP, vipSP) -> (sP + vipSP) / 6;
+        double serviceAllowance = calculateServiceAllowance.apply(employee.getServicesPrice(), employee.getVipServicesPrice());
         double specialistClass = employee.getPosition().getSpecialistClass();
         double categoryCoefficient = getCategoryCoefficient(employee.getPosition().getCategory());
         double salaryWithoutTax = (BASE_SALARY + serviceAllowance) * specialistClass * categoryCoefficient;
