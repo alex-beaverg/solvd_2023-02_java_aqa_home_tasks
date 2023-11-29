@@ -2,7 +2,7 @@ package com.solvd.hospital_project.hospital.structure;
 
 import static com.solvd.hospital_project.hospital.util.Printers.*;
 
-import com.solvd.hospital_project.hospital.structure.my_functinal_interfaces.IRequestYesOrNo;
+import com.solvd.hospital_project.hospital.structure.my_functional_interfaces.IRequestYesOrNo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import com.solvd.hospital_project.hospital.custom_exceptions.*;

@@ -1,4 +1,4 @@
-package com.solvd.hospital_project.hospital.structure.my_functinal_interfaces;
+package com.solvd.hospital_project.hospital.structure.my_functional_interfaces;
 
 @FunctionalInterface
 public interface IAddDiagnosisToSystem<T> {

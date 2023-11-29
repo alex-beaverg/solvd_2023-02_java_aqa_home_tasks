@@ -2,8 +2,8 @@ package com.solvd.hospital_project.hospital.structure;
 
 import static com.solvd.hospital_project.hospital.util.Printers.*;
 
-import com.solvd.hospital_project.hospital.structure.my_functinal_interfaces.IAddDiagnosisToSystem;
-import com.solvd.hospital_project.hospital.structure.my_functinal_interfaces.IPrintPersonArrayAsMenu;
+import com.solvd.hospital_project.hospital.structure.my_functional_interfaces.IAddDiagnosisToSystem;
+import com.solvd.hospital_project.hospital.structure.my_functional_interfaces.IPrintPersonArrayAsMenu;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import com.solvd.hospital_project.hospital.util.RequestMethods;
