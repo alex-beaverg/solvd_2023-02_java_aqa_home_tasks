@@ -14,13 +14,15 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class GeneralActions {
     private static final Logger LOGGER = LogManager.getLogger(GeneralActions.class);
-    private static final Function<String, String> lineToPrintFromList = item -> "- " + item;
+    private static final Function<String, String> lineToPrintFromList = line -> "- " + line;
     private static final Function<String, String> elementToPrintFromList = element -> "[" + element + "] ";
+    private static final Consumer<String> printTitleFromList = title -> PRINT.info("- " + title + ": ");
 
     public static Person choosePersonFromList(String personType, Hospital hospital) {
         IPrintPersonArrayAsMenu<Integer, Person> printPersons = array -> {
@@ -226,7 +228,7 @@ public class GeneralActions {
     public static void showDiagnosesMap(Hospital hospital) {
         PRINT2LN.info("Hospital diagnoses map:");
         for (Map.Entry<Patient, List<Diagnosis>> entry : hospital.getDiagnosesMap().entrySet()) {
-            PRINT.info("- " + entry.getKey().getFullName() + ": ");
+            printTitleFromList.accept(entry.getKey().getFullName());
             for (Diagnosis diagnosis : entry.getValue()) {
                 PRINT.info(elementToPrintFromList.apply(diagnosis.getTitle()));
             }
@@ -237,7 +239,7 @@ public class GeneralActions {
     public static void showDoctorsWithTheirPatients(Hospital hospital) {
         PRINT2LN.info("All doctors with their patients:");
         for (Employee doctor : hospital.getEmployeesBySpecialistClass(2)) {
-            PRINT.info("- " + doctor.getFullName() + ": ");
+            printTitleFromList.accept(doctor.getFullName());
             for (Patient patient : doctor.getPatients()) {
                 PRINT.info(elementToPrintFromList.apply(patient.getFullName()));
             }
