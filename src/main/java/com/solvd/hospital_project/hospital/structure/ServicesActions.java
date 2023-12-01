@@ -2,7 +2,8 @@ package com.solvd.hospital_project.hospital.structure;
 
 import static com.solvd.hospital_project.hospital.util.Printers.*;
 
-import com.solvd.hospital_project.hospital.structure.my_functional_interfaces.IRequestYesOrNo;
+import com.solvd.hospital_project.hospital.structure.my_functional_interfaces.IPrintAsMenu;
+import com.solvd.hospital_project.hospital.structure.my_functional_interfaces.IRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import com.solvd.hospital_project.hospital.custom_exceptions.*;
@@ -14,8 +15,8 @@ import java.util.List;
 
 public class ServicesActions {
     private static final Logger LOGGER = LogManager.getLogger(ServicesActions.class);
-
-    private static final IRequestYesOrNo<String, String> requestYesOrNo = question -> {
+    private static final IPrintAsMenu<Integer, String> printAsMenu = (index, line) -> PRINTLN.info("[" + index + "] - " + line);
+    private static final IRequest<String, String> requestYesOrNo = question -> {
         String answerString;
         do {
             try {
@@ -42,7 +43,7 @@ public class ServicesActions {
         int index = 1;
         PRINT2LN.info("All available doctors in your department:");
         for (Employee doctor: patient.getDepartment().getEmployeesBySpecialistClass(2)) {
-            PRINTLN.info("[" + index + "] - " + doctor.getPersonToPrintInList());
+            printAsMenu.print(index, doctor.getPersonToPrintInList());
             index++;
         }
 
@@ -70,7 +71,7 @@ public class ServicesActions {
         PRINT2LN.info("All available doctors in your department:");
         for (Employee doctor: patient.getDepartment().getEmployeesBySpecialistClass(2)) {
             if (doctor != patient.getDoctor()) {
-                PRINTLN.info("[" + index + "] - " + doctor.getPersonToPrintInList());
+                printAsMenu.print(index, doctor.getPersonToPrintInList());
                 tempList.add(doctor);
                 index++;
             }
@@ -117,7 +118,7 @@ public class ServicesActions {
                 PRINT2LN.info("All available general services:");
                 for (Service service : Service.values()) {
                     if (!patient.getServices().contains(service)) {
-                        PRINTLN.info("[" + index + "] - " + service.getTitle());
+                        printAsMenu.print(index, service.getTitle());
                         tempList.add(service);
                         index++;
                     }
@@ -164,7 +165,7 @@ public class ServicesActions {
                 PRINT2LN.info("All available VIP services:");
                 for (VipService vipService: VipService.values()) {
                     if (!patient.getVipServices().contains(vipService)) {
-                        PRINTLN.info("[" + index + "] - " + vipService.getTitle());
+                        printAsMenu.print(index, vipService.getTitle());
                         tempList.add(vipService);
                         index++;
                     }
@@ -203,7 +204,7 @@ public class ServicesActions {
                 int index = 1;
                 PRINT2LN.info("All your available VIP services to delete:");
                 for (VipService vipService : patient.getVipServices()) {
-                    PRINTLN.info("[" + index + "] - " + vipService.getTitle());
+                    printAsMenu.print(index, vipService.getTitle());
                     index++;
                 }
                 int answer;

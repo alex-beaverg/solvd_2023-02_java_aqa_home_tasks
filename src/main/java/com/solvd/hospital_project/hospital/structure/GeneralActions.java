@@ -2,7 +2,6 @@ package com.solvd.hospital_project.hospital.structure;
 
 import static com.solvd.hospital_project.hospital.util.Printers.*;
 
-import com.solvd.hospital_project.hospital.structure.my_functional_interfaces.IAddDiagnosisToSystem;
 import com.solvd.hospital_project.hospital.structure.my_functional_interfaces.IPrintPersonArrayAsMenu;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -172,48 +171,24 @@ public class GeneralActions {
     }
 
     public static Diagnosis getDiagnose(Hospital hospital, Patient patient, int number) {
-        IAddDiagnosisToSystem<Diagnosis> addDiagnosisToSystem = diagnosis -> {
-            for (Department department : hospital.getDepartments()) {
-                if (department.getDiseasesType().equals(diagnosis.getType())) {
-                    patient.setDepartment(department);
-                    patient.setDoctor(department.getRandomEmployeeBySpecialistClass(2));
-                    patient.setNurse(department.getRandomEmployeeBySpecialistClass(1));
-                    department.addPatient(patient);
-                }
-            }
-        };
+        Diagnosis diagnosis;
         switch (number) {
-            case (1) -> {
-                Diagnosis diagnosis = Diagnosis.FLU;
-                addDiagnosisToSystem.add(diagnosis);
-                return diagnosis;
-            }
-            case (2) -> {
-                Diagnosis diagnosis = Diagnosis.COVID;
-                addDiagnosisToSystem.add(diagnosis);
-                return diagnosis;
-            }
-            case (3) -> {
-                Diagnosis diagnosis = Diagnosis.BONE_FRACTURE;
-                addDiagnosisToSystem.add(diagnosis);
-                return diagnosis;
-            }
-            case (4) -> {
-                Diagnosis diagnosis = Diagnosis.HAND_INJURY;
-                addDiagnosisToSystem.add(diagnosis);
-                return diagnosis;
-            }
-            case (5) -> {
-                Diagnosis diagnosis = Diagnosis.LEG_INJURY;
-                addDiagnosisToSystem.add(diagnosis);
-                return diagnosis;
-            }
-            default -> {
-                Diagnosis diagnosis = Diagnosis.UNKNOWN;
-                addDiagnosisToSystem.add(diagnosis);
-                return diagnosis;
+            case (1) -> diagnosis = Diagnosis.FLU;
+            case (2) -> diagnosis = Diagnosis.COVID;
+            case (3) -> diagnosis = Diagnosis.BONE_FRACTURE;
+            case (4) -> diagnosis = Diagnosis.HAND_INJURY;
+            case (5) -> diagnosis = Diagnosis.LEG_INJURY;
+            default -> diagnosis = Diagnosis.UNKNOWN;
+        }
+        for (Department department : hospital.getDepartments()) {
+            if (department.getDiseasesType().equals(diagnosis.getType())) {
+                patient.setDepartment(department);
+                patient.setDoctor(department.getRandomEmployeeBySpecialistClass(2));
+                patient.setNurse(department.getRandomEmployeeBySpecialistClass(1));
+                department.addPatient(patient);
             }
         }
+        return diagnosis;
     }
 
     public static void showDepartments(Hospital hospital) {
