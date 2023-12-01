@@ -6,17 +6,17 @@ public enum CategoryCoefficient implements IGetValue {
     CAT3_COEF("3rd category coefficient", 1.89);
 
     private final String title;
-    private final double categoryCoefficient;
+    private final double value;
 
     CategoryCoefficient(String title,
-                        double categoryCoefficient) {
+                        double value) {
         this.title = title;
-        this.categoryCoefficient = categoryCoefficient;
+        this.value = value;
     }
 
     @Override
     public double getValue() {
-        return categoryCoefficient;
+        return value;
     }
 
     @Override

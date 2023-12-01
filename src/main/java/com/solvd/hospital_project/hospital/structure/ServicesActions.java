@@ -45,6 +45,7 @@ public class ServicesActions {
             PRINTLN.info("[" + index + "] - " + doctor.getPersonToPrintInList());
             index++;
         }
+
         int answer;
         do {
             try {
@@ -56,6 +57,7 @@ public class ServicesActions {
                 LOGGER.error("[NumberFormatException]: Entered data is not a number!");
             }
         } while (true);
+
         if (!patient.getDoctor().equals(patient.getDepartment().getEmployeesBySpecialistClass(2).get(answer - 1))) {
             patient.setDoctor(patient.getDepartment().getEmployeesBySpecialistClass(2).get(answer - 1));
         }
@@ -73,6 +75,7 @@ public class ServicesActions {
                 index++;
             }
         }
+
         int answer;
         do {
             try {
@@ -84,6 +87,7 @@ public class ServicesActions {
                 LOGGER.error("[NumberFormatException]: Entered data is not a number!");
             }
         } while (true);
+
         for (Service service: patient.getServices()) {
             patient.getDoctor().deleteService(service);
         }

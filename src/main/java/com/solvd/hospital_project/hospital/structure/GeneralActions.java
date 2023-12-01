@@ -31,7 +31,9 @@ public class GeneralActions {
             }
             return array.length;
         };
-        Predicate<String> isDoctor = person -> person.equals("doctor");
+
+        Predicate<String> isDoctor = typeOfPerson -> typeOfPerson.equals("doctor");
+
         PRINT2LN.info("All " + personType + "s in the hospital:");
         int index;
         if (isDoctor.test(personType)) {
@@ -39,6 +41,7 @@ public class GeneralActions {
         } else {
             index = printPersons.print(hospital.getPatients().toArray(new Person[0]));
         }
+
         int answer;
         do {
             try {
@@ -50,6 +53,7 @@ public class GeneralActions {
                 LOGGER.error("[NumberFormatException]: Entered data is not a number!");
             }
         } while (true);
+
         Person person;
         if (isDoctor.test(personType)) {
             person = hospital.getEmployeesBySpecialistClass(2).get(answer - 1);
@@ -70,6 +74,7 @@ public class GeneralActions {
                 LOGGER.error(e.getMessage());
             }
         } while (true);
+
         for (Patient existPatient: hospital.getPatients()) {
             if ((existPatient.getFullName()).equalsIgnoreCase(fullName)) {
                 PRINTLN.info("Patient " + existPatient.getFullName() + " was found and chosen");

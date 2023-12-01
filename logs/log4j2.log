@@ -1,5 +1,1 @@
-2023-11-30 12:40:02,665 ERROR c.s.h.h.u.ConsoleMenu [main] [EmptyInputException]: Entered data can not be empty!
-2023-11-30 12:40:08,107 ERROR c.s.h.h.u.ConsoleMenu [main] [EmptyInputException]: Entered data can not be empty!
-2023-11-30 12:40:11,723 ERROR c.s.h.h.s.ServicesActions [main] [EmptyInputException]: Entered data can not be empty!
-2023-11-30 12:40:28,647 ERROR c.s.h.h.s.ServicesActions [main] [EmptyInputException]: Entered data can not be empty!
-2023-11-30 12:40:42,805 ERROR c.s.h.h.s.ServicesActions [main] [EmptyInputException]: Entered data can not be empty!
+2023-12-01 12:59:50,208 ERROR c.s.h.h.u.ConsoleMenu [main] [EmptyInputException]: Entered data can not be empty!

@@ -122,15 +122,13 @@ public final class ConsoleMenu {
     }
 
     private ConsoleMenu runPatientsMenu() {
-        Patient patient;
         int answer = drawAnyMenuAndChooseMenuItem("Patients menu:", PatientsMenu.values());
         switch (answer) {
             case (1) -> {
-                patient = (Patient) GeneralActions.choosePersonFromList("patient", hospital);
-                return runPatientMenu(patient);
+                return runPatientMenu((Patient) GeneralActions.choosePersonFromList("patient", hospital));
             }
             case (2) -> {
-                patient = GeneralActions.findExistPatient(hospital);
+                Patient patient = GeneralActions.findExistPatient(hospital);
                 if (patient != null) {
                     return runPatientMenu(patient);
                 } else {
@@ -138,8 +136,7 @@ public final class ConsoleMenu {
                 }
             }
             case (3) -> {
-                patient = GeneralActions.registerNewPatient(hospital);
-                return runComplaintsMenu(patient);
+                return runComplaintsMenu(GeneralActions.registerNewPatient(hospital));
             }
             case (4) -> {
                 return runMainMenu();

@@ -12,17 +12,17 @@ public enum ServiceCoefficient implements IGetValue {
     SC3_CAT3_COEF("3rd specialist class with 3rd category coefficient", 2.29);
 
     private final String title;
-    private final double serviceCoefficient;
+    private final double value;
 
     ServiceCoefficient(String title,
-                       double serviceCoefficient) {
+                       double value) {
         this.title = title;
-        this.serviceCoefficient = serviceCoefficient;
+        this.value = value;
     }
 
     @Override
     public double getValue() {
-        return serviceCoefficient;
+        return value;
     }
 
     @Override
