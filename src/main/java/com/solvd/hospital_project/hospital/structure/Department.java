@@ -54,21 +54,27 @@ public class Department implements IAddPatients, IGetEmployeesBySomething {
     @Override
     public final List<Employee> getEmployeesBySpecialistClass(int specialistClass) {
         List<Employee> tempList = new ArrayList<>();
-        for (Employee employee: employees) {
-            if (employee.getPosition().getSpecialistClass() == specialistClass) {
-                tempList.add(employee);
-            }
-        }
+        employees.stream()
+                .filter(employee -> employee.getPosition().getSpecialistClass() == specialistClass)
+                .forEach(tempList::add);
+//        for (Employee employee: employees) {
+//            if (employee.getPosition().getSpecialistClass() == specialistClass) {
+//                tempList.add(employee);
+//            }
+//        }
         return tempList;
     }
 
     public final Employee getRandomEmployeeBySpecialistClass(int specialistClass) {
         ArrayList<Employee> tempList = new ArrayList<>();
-        for (Employee employee: employees) {
-            if (employee.getPosition().getSpecialistClass() == specialistClass) {
-                tempList.add(employee);
-            }
-        }
+        employees.stream()
+                .filter(employee -> employee.getPosition().getSpecialistClass() == specialistClass)
+                .forEach(tempList::add);
+//        for (Employee employee: employees) {
+//            if (employee.getPosition().getSpecialistClass() == specialistClass) {
+//                tempList.add(employee);
+//            }
+//        }
         Random random = new Random();
         return tempList.get(random.nextInt(tempList.size()));
     }

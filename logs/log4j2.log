@@ -1,3 +1,3 @@
-2023-12-01 12:59:50,208 ERROR c.s.h.h.u.ConsoleMenu [main] [EmptyInputException]: Entered data can not be empty!
-2023-12-01 16:23:34,392 ERROR c.s.h.h.u.ConsoleMenu [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
-2023-12-01 16:23:38,161 ERROR c.s.h.h.u.ConsoleMenu [main] [MenuItemNumberOutOfBoundsException]: Entered data must be equal to some menu item!
+2023-12-02 16:05:27,265 ERROR c.s.h.h.s.ServicesActions [main] [EmptyInputException]: Entered data can not be empty!
+2023-12-02 16:05:47,482 ERROR c.s.h.h.u.ConsoleMenu [main] [EmptyInputException]: Entered data can not be empty!
+2023-12-02 16:05:52,480 ERROR c.s.h.h.u.ConsoleMenu [main] [EmptyInputException]: Entered data can not be empty!

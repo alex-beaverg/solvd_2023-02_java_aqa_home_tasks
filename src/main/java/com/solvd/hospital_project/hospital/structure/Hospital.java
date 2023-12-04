@@ -58,11 +58,14 @@ public final class Hospital implements IAddPatients, IGetEmployeesBySomething {
     @Override
     public List<Employee> getEmployeesBySpecialistClass(int specialistClass) {
         List<Employee> tempList = new ArrayList<>();
-        for (Employee employee: employees) {
-            if (employee.getPosition().getSpecialistClass() == specialistClass) {
-                tempList.add(employee);
-            }
-        }
+        employees.stream()
+                .filter(employee -> employee.getPosition().getSpecialistClass() == specialistClass)
+                .forEach(tempList::add);
+//        for (Employee employee: employees) {
+//            if (employee.getPosition().getSpecialistClass() == specialistClass) {
+//                tempList.add(employee);
+//            }
+//        }
         return tempList;
     }
 
