@@ -12,6 +12,7 @@ import java.util.Random;
 
 public class Creator {
     private static String diagnosisType;
+    public static volatile RegistrationPool registrationPool = RegistrationPool.getInstance(2);
 
     public static Hospital setHospital(String title) {
         return new Hospital(title);
@@ -32,7 +33,7 @@ public class Creator {
         return new Patient();
     }
 
-    public static Patient setPatient(String firstName, String lastName, int age, String city, String street,
+    public synchronized static Patient setPatient(String firstName, String lastName, int age, String city, String street,
                                      int house, int flat, List<Diagnosis> diagnoses, Department department) {
         Address address = setAddress(city, street, house, flat);
         return new Patient(firstName, lastName, age, address, diagnoses, department);
@@ -161,18 +162,48 @@ public class Creator {
 
     private static List<Patient> generatePatients(Hospital hospital) {
         List<Patient> patients = new ArrayList<>();
-        patients.add(setPatient("Eric", "Adams", 30, "Minsk", "Main street",
-                22, 11, generateRandomDiagnosesList(),
-                hospital.getDepartments().get(diagnosisType.equals("General") ? 0 : 1)));
-        patients.add(setPatient("Lisa", "Bourne", 28, "Minsk", "Green street",
-                45, 9, generateRandomDiagnosesList(),
-                hospital.getDepartments().get(diagnosisType.equals("General") ? 0 : 1)));
-        patients.add(setPatient("Rose", "Dart", 23, "Brest", "Old avenue",
-                4, 66, generateRandomDiagnosesList(),
-                hospital.getDepartments().get(diagnosisType.equals("General") ? 0 : 1)));
-        patients.add(setPatient("Max", "Corn", 33, "Minsk", "Red street",
-                5, 97, generateRandomDiagnosesList(),
-                hospital.getDepartments().get(diagnosisType.equals("General") ? 0 : 1)));
+        Registration registration1 = registrationPool.getRegistration();
+        Thread threadRegistration1 = new Thread(() -> {
+            registration1.run();
+            patients.add(setPatient("Eric", "Adams", 30, "Minsk", "Main street",
+                    22, 11, generateRandomDiagnosesList(),
+                    hospital.getDepartments().get(diagnosisType.equals("General") ? 0 : 1)));
+        });
+        threadRegistration1.start();
+
+        Registration registration2 = registrationPool.getRegistration();
+        Thread threadRegistration2 = new Thread(() -> {
+            registration2.run();
+            patients.add(setPatient("Lisa", "Bourne", 28, "Minsk", "Green street",
+                    45, 9, generateRandomDiagnosesList(),
+                    hospital.getDepartments().get(diagnosisType.equals("General") ? 0 : 1)));
+        });
+        threadRegistration2.start();
+
+        Registration registration3 = registrationPool.getRegistration();
+        Thread threadRegistration3 = new Thread(() -> {
+            registration3.run();
+            patients.add(setPatient("Rose", "Dart", 23, "Brest", "Old avenue",
+                    4, 66, generateRandomDiagnosesList(),
+                    hospital.getDepartments().get(diagnosisType.equals("General") ? 0 : 1)));
+        });
+        threadRegistration3.start();
+
+        Registration registration4 = registrationPool.getRegistration();
+        Thread threadRegistration4 = new Thread(() -> {
+            registration4.run();
+            patients.add(setPatient("Max", "Corn", 33, "Minsk", "Red street",
+                    5, 97, generateRandomDiagnosesList(),
+                    hospital.getDepartments().get(diagnosisType.equals("General") ? 0 : 1)));
+        });
+        threadRegistration4.start();
+
+        while (true) {
+            if (registrationPool.getNumberOfAvailableRegistrations() == registrationPool.getPoolSize()) {
+                break;
+            }
+        } // it is used to complete previous block of code
+
         return patients;
     }
 }

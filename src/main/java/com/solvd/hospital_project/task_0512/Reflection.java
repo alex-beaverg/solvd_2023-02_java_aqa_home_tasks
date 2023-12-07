@@ -20,7 +20,7 @@ public class Reflection {
             ExperimentalClass expInstance = expConstructor.newInstance("Hello", 100, 1.1, 5000L);
             // Getting private method printData():
             Method printData = EXP_CLASS.getDeclaredMethod("printData");
-            // Getting access to private method printData():
+            // Setting access to private method printData():
             printData.setAccessible(true);
             // Invoking private method printData():
             PRINTLN.info("Results of invoking private method printData():");
@@ -30,6 +30,7 @@ public class Reflection {
             // Invoking public method toString():
             PRINT2LN.info("Results of invoking public method toString():");
             PRINTLN.info(toStringMethod.invoke(expInstance));
+            PRINTLN.info("");
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
                  InvocationTargetException e) {
             throw new RuntimeException(e);

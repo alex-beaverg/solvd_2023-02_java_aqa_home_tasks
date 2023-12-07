@@ -14,8 +14,7 @@ public class ClassInformation {
     private final Class<?> EXP_CLASS = getMyClass(EXP_CLASS_NAME);
 
     public void runClassInformation() {
-        PRINT2LN.info("Classes:");
-        PRINTLN.info("");
+        PRINT2LN.info("Classes:\n");
 
         // Class:
         PRINTLN.info("Simple class name: " + EXP_CLASS.getSimpleName());
