@@ -11,6 +11,7 @@ import com.solvd.hospital_project.hospital.people.*;
 import com.solvd.hospital_project.hospital.util.RequestMethods;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ServicesActions {
@@ -66,21 +67,28 @@ public class ServicesActions {
     }
 
     public static Patient changeDoctor(Patient patient) {
-        int index = 1;
+//        int index = 1;
         List<Employee> tempList = new ArrayList<>();
         PRINT2LN.info("All available doctors in your department:");
-        for (Employee doctor: patient.getDepartment().getEmployeesBySpecialistClass(2)) {
-            if (doctor != patient.getDoctor()) {
-                printAsMenu.print(index, doctor.getPersonToPrintInList());
-                tempList.add(doctor);
-                index++;
-            }
-        }
+        patient.getDepartment().getEmployeesBySpecialistClass(2).stream()
+                .filter(doctor -> doctor != patient.getDoctor())
+                .forEach(doctor -> {
+                    tempList.add(doctor);
+                    printAsMenu.print(tempList.size(), doctor.getPersonToPrintInList());
+                });
+
+//        for (Employee doctor: patient.getDepartment().getEmployeesBySpecialistClass(2)) {
+//            if (doctor != patient.getDoctor()) {
+//                printAsMenu.print(index, doctor.getPersonToPrintInList());
+//                tempList.add(doctor);
+//                index++;
+//            }
+//        }
 
         int answer;
         do {
             try {
-                answer = RequestMethods.requestingInfoWithChoice("Enter number of doctor to choose him: ", index - 1);
+                answer = RequestMethods.requestingInfoWithChoice("Enter number of doctor to choose him: ", tempList.size());
                 break;
             } catch (EmptyInputException | MenuItemOutOfBoundsException e) {
                 LOGGER.error(e.getMessage());
@@ -113,20 +121,26 @@ public class ServicesActions {
         String answerString;
         do {
             if (patient.getServices().size() < Service.values().length) {
-                int index = 1;
+//                int index = 1;
                 List<Service> tempList = new ArrayList<>();
                 PRINT2LN.info("All available general services:");
-                for (Service service : Service.values()) {
-                    if (!patient.getServices().contains(service)) {
-                        printAsMenu.print(index, service.getTitle());
-                        tempList.add(service);
-                        index++;
-                    }
-                }
+                Arrays.stream(Service.values())
+                        .filter(service -> !patient.getServices().contains(service))
+                        .forEach(service -> {
+                            tempList.add(service);
+                            printAsMenu.print(tempList.size(), service.getTitle());
+                        });
+//                for (Service service : Service.values()) {
+//                    if (!patient.getServices().contains(service)) {
+//                        printAsMenu.print(index, service.getTitle());
+//                        tempList.add(service);
+//                        index++;
+//                    }
+//                }
                 int answer;
                 do {
                     try {
-                        answer = RequestMethods.requestingInfoWithChoice("Enter number of service to choose it: ", index - 1);
+                        answer = RequestMethods.requestingInfoWithChoice("Enter number of service to choose it: ", tempList.size());
                         break;
                     } catch (EmptyInputException | MenuItemOutOfBoundsException e) {
                         LOGGER.error(e.getMessage());
@@ -160,20 +174,26 @@ public class ServicesActions {
     public static Patient addVipServices(Patient patient) {
         do {
             if (patient.getVipServices().size() < VipService.values().length) {
-                int index = 1;
+//                int index = 1;
                 List<VipService> tempList = new ArrayList<>();
                 PRINT2LN.info("All available VIP services:");
-                for (VipService vipService: VipService.values()) {
-                    if (!patient.getVipServices().contains(vipService)) {
-                        printAsMenu.print(index, vipService.getTitle());
-                        tempList.add(vipService);
-                        index++;
-                    }
-                }
+                Arrays.stream(VipService.values())
+                        .filter(vipService -> !patient.getVipServices().contains(vipService))
+                        .forEach(vipService -> {
+                            tempList.add(vipService);
+                            printAsMenu.print(tempList.size(), vipService.getTitle());
+                        });
+//                for (VipService vipService: VipService.values()) {
+//                    if (!patient.getVipServices().contains(vipService)) {
+//                        printAsMenu.print(index, vipService.getTitle());
+//                        tempList.add(vipService);
+//                        index++;
+//                    }
+//                }
                 int answer;
                 do {
                     try {
-                        answer = RequestMethods.requestingInfoWithChoice("Enter number of VIP service to add it: ", index - 1);
+                        answer = RequestMethods.requestingInfoWithChoice("Enter number of VIP service to add it: ", tempList.size());
                         break;
                     } catch (EmptyInputException | MenuItemOutOfBoundsException e) {
                         LOGGER.error(e.getMessage());

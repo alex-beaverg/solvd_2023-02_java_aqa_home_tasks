@@ -9,6 +9,10 @@ import com.solvd.hospital_project.hospital.people.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import static com.solvd.hospital_project.hospital.util.Printers.PRINTLN;
 
 public class Creator {
     private static String diagnosisType;
@@ -32,7 +36,7 @@ public class Creator {
         return new Patient();
     }
 
-    public static Patient setPatient(String firstName, String lastName, int age, String city, String street,
+    public synchronized static Patient setPatient(String firstName, String lastName, int age, String city, String street,
                                      int house, int flat, List<Diagnosis> diagnoses, Department department) {
         Address address = setAddress(city, street, house, flat);
         return new Patient(firstName, lastName, age, address, diagnoses, department);
@@ -161,18 +165,54 @@ public class Creator {
 
     private static List<Patient> generatePatients(Hospital hospital) {
         List<Patient> patients = new ArrayList<>();
-        patients.add(setPatient("Eric", "Adams", 30, "Minsk", "Main street",
-                22, 11, generateRandomDiagnosesList(),
-                hospital.getDepartments().get(diagnosisType.equals("General") ? 0 : 1)));
-        patients.add(setPatient("Lisa", "Bourne", 28, "Minsk", "Green street",
-                45, 9, generateRandomDiagnosesList(),
-                hospital.getDepartments().get(diagnosisType.equals("General") ? 0 : 1)));
-        patients.add(setPatient("Rose", "Dart", 23, "Brest", "Old avenue",
-                4, 66, generateRandomDiagnosesList(),
-                hospital.getDepartments().get(diagnosisType.equals("General") ? 0 : 1)));
-        patients.add(setPatient("Max", "Corn", 33, "Minsk", "Red street",
-                5, 97, generateRandomDiagnosesList(),
-                hospital.getDepartments().get(diagnosisType.equals("General") ? 0 : 1)));
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        executor.submit(() -> {
+            PRINTLN.info("1st patient registration started");
+            patients.add(setPatient("Eric", "Adams", 30, "Minsk", "Main street",
+                    22, 11, generateRandomDiagnosesList(),
+                    hospital.getDepartments().get(diagnosisType.equals("General") ? 0 : 1)));
+            PRINTLN.info("1st patient registration finished (duration = " + setAndGetDuration() + "ms)");
+        });
+
+        executor.submit(() -> {
+            PRINTLN.info("2nd patient registration started");
+            patients.add(setPatient("Lisa", "Bourne", 28, "Minsk", "Green street",
+                    45, 9, generateRandomDiagnosesList(),
+                    hospital.getDepartments().get(diagnosisType.equals("General") ? 0 : 1)));
+            PRINTLN.info("2nd patient registration finished (duration = " + setAndGetDuration() + "ms)");
+        });
+
+        executor.submit(() -> {
+            PRINTLN.info("3rd patient registration started");
+            patients.add(setPatient("Rose", "Dart", 23, "Brest", "Old avenue",
+                    4, 66, generateRandomDiagnosesList(),
+                    hospital.getDepartments().get(diagnosisType.equals("General") ? 0 : 1)));
+            PRINTLN.info("3rd patient registration finished (duration = " + setAndGetDuration() + "ms)");
+        });
+
+        executor.submit(() -> {
+            PRINTLN.info("4th patient registration started");
+            patients.add(setPatient("Max", "Corn", 33, "Minsk", "Red street",
+                    5, 97, generateRandomDiagnosesList(),
+                    hospital.getDepartments().get(diagnosisType.equals("General") ? 0 : 1)));
+            PRINTLN.info("4th patient registration finished (duration = " + setAndGetDuration() + "ms)");
+        });
+        executor.shutdown();
+        while (true) {
+            if (executor.isTerminated()) {
+                break;
+            }
+        } // it is used to complete previous block of code
         return patients;
+    }
+
+    private static int setAndGetDuration() {
+        int duration = new Random().nextInt(1000);
+        try {
+            Thread.sleep(duration); // it is used for visualization
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return duration;
     }
 }
